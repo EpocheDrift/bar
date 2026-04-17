@@ -51,7 +51,7 @@ All inter-page data passes through `st.session_state`:
 
 Uses a **system prompt + user prompt** pattern. The system prompt instructs Claude to return **only a JSON array** (no prose, no markdown fences). Parse with `json.loads`; return `[]` on `JSONDecodeError` for graceful degradation. Cache results in `st.session_state["ai_recommendations"]` so page re-renders don't re-call the API.
 
-Model: `claude-opus-4-5` (specified in Architecture.md). Access key via `st.secrets["ANTHROPIC_API_KEY"]`.
+Model: `claude-opus-4-5` (specified in `docs/Architecture.md`). Access key via `st.secrets["ANTHROPIC_API_KEY"]`.
 
 ### Recipe data model
 
