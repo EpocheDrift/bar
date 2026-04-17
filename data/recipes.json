@@ -1,0 +1,44 @@
+[
+  {
+    "id": "margarita-classic",
+    "name": "Classic Margarita",
+    "description": "A tart, citrusy tequila cocktail with a salted rim.",
+    "difficulty": "easy",
+    "serving_size": 1,
+    "base_spirit": "tequila",
+    "flavor_tags": ["citrus", "tart", "refreshing"],
+    "ingredients": [
+      { "name": "tequila",     "amount": 2,   "unit": "oz" },
+      { "name": "lime juice",  "amount": 1,   "unit": "oz" },
+      { "name": "triple sec",  "amount": 0.5, "unit": "oz" },
+      { "name": "salt",        "amount": null,"unit": "pinch" }
+    ],
+    "steps": [
+      { "order": 1, "action": "Rim a glass with salt.", "tip": "Use a lime wedge to wet the rim first." },
+      { "order": 2, "action": "Combine tequila, lime juice, and triple sec in a shaker with ice." },
+      { "order": 3, "action": "Shake vigorously for 15 seconds.", "tip": "Shake until the outside of the shaker feels cold." },
+      { "order": 4, "action": "Strain into the prepared glass over fresh ice." }
+    ]
+  },
+  {
+    "id": "moscow-mule",
+    "name": "Moscow Mule",
+    "description": "A refreshing vodka cocktail with ginger beer and lime.",
+    "difficulty": "easy",
+    "serving_size": 1,
+    "base_spirit": "vodka",
+    "flavor_tags": ["spicy", "citrus", "refreshing"],
+    "ingredients": [
+      { "name": "vodka",        "amount": 2,   "unit": "oz" },
+      { "name": "ginger beer",  "amount": 4,   "unit": "oz" },
+      { "name": "lime juice",   "amount": 0.5, "unit": "oz" },
+      { "name": "mint",         "amount": null,"unit": "sprig" }
+    ],
+    "steps": [
+      { "order": 1, "action": "Fill a copper mug with ice." },
+      { "order": 2, "action": "Pour in vodka and lime juice." },
+      { "order": 3, "action": "Top with ginger beer and stir gently." },
+      { "order": 4, "action": "Garnish with a mint sprig and lime wedge.", "tip": "Slap the mint before placing to release aroma." }
+    ]
+  }
+]
