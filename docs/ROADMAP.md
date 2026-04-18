@@ -19,9 +19,9 @@
 
 ## Feature Backlog
 
-### Phase 1 — Foundation (Issues #2, #9) · ~1–2 days
+### Phase 1 — Foundation (Issue #2) · ~1–2 days
 - [ ] Confirm and lock data schema (`data/recipes.json`) — `base_spirit` field now canonical
-- [ ] Seed `recipes.json` with 15+ real recipes covering diverse spirits and difficulties (Issue #9)
+- [ ] Seed `recipes.json` with 15+ real recipes covering diverse spirits and difficulties
 - [ ] Configure `.streamlit/config.toml` theme
 - [ ] Verify `streamlit run app.py` runs clean with the new `pages/` structure
 - [ ] Set up `.streamlit/secrets.toml` locally with `MINIMAX_API_KEY` (not committed)
