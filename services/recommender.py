@@ -67,6 +67,7 @@ def get_recommendations(preference: str) -> list[dict]:
                     ),
                 },
             ],
+            max_tokens=1024,
             temperature=0.7,
         )
         content = response.choices[0].message.content or "[]"
