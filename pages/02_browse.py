@@ -18,6 +18,69 @@ def get_recipes() -> list[dict]:
     return [recipe for recipe in recipes if isinstance(recipe, dict)]
 
 
+def _facet_key(value: str) -> str:
+    return " ".join(value.strip().lower().replace("-", " ").split())
+
+
+def _name_key(value: str) -> str:
+    return value.strip().casefold()
+
+
+def _sorted_unique_values(recipes: list[dict], field: str) -> list[str]:
+    values: set[str] = set()
+    for recipe in recipes:
+        raw_value = recipe.get(field)
+        if isinstance(raw_value, str) and raw_value.strip():
+            values.add(raw_value.strip())
+    return sorted(values, key=_facet_key)
+
+
+def _sorted_unique_tags(recipes: list[dict]) -> list[str]:
+    values: set[str] = set()
+    for recipe in recipes:
+        for tag in recipe.get("flavor_tags") or []:
+            if isinstance(tag, str) and tag.strip():
+                values.add(tag.strip())
+    return sorted(values, key=_facet_key)
+
+
+def _reset_filters() -> None:
+    st.session_state["browse_name_query"] = ""
+    st.session_state["browse_base_spirit_filters"] = []
+    st.session_state["browse_flavor_profile_filters"] = []
+    st.session_state["browse_difficulty_filters"] = []
+    st.rerun()
+
+
+def _matches_filters(
+    recipe: dict,
+    name_query: str,
+    base_spirit_filters: list[str],
+    flavor_profile_filters: list[str],
+    difficulty_filters: list[str],
+) -> bool:
+    if name_query and _name_key(name_query) not in _name_key(str(recipe.get("name", ""))):
+        return False
+
+    if base_spirit_filters and _facet_key(str(recipe.get("base_spirit", ""))) not in {
+        _facet_key(value) for value in base_spirit_filters
+    }:
+        return False
+
+    if difficulty_filters and _facet_key(str(recipe.get("difficulty", ""))) not in {
+        _facet_key(value) for value in difficulty_filters
+    }:
+        return False
+
+    if flavor_profile_filters:
+        recipe_flavors = {_facet_key(tag) for tag in (recipe.get("flavor_tags") or []) if isinstance(tag, str)}
+        selected_flavors = {_facet_key(value) for value in flavor_profile_filters}
+        if not recipe_flavors.intersection(selected_flavors):
+            return False
+
+    return True
+
+
 def render_recipe_grid(recipes: list[dict]) -> None:
     """Render recipes in a responsive grid."""
     if not recipes:
@@ -37,6 +100,57 @@ st.title("Browse Cocktails")
 st.caption("Browse the full recipe catalog and open any cocktail to view details.")
 
 recipes = get_recipes()
-st.write(f"{len(recipes)} cocktails available")
+base_spirit_options = _sorted_unique_values(recipes, "base_spirit")
+flavor_profile_options = _sorted_unique_tags(recipes)
+difficulty_options = _sorted_unique_values(recipes, "difficulty")
 
-render_recipe_grid(recipes)
+st.subheader("Search and filters")
+controls_top, controls_button = st.columns([6, 1], vertical_alignment="bottom")
+with controls_top:
+    name_query = st.text_input(
+        "Search by cocktail name",
+        key="browse_name_query",
+        placeholder="Type part of a cocktail name",
+    )
+with controls_button:
+    if st.button("Clear filters", use_container_width=True):
+        _reset_filters()
+
+filter_col_1, filter_col_2, filter_col_3 = st.columns(3)
+with filter_col_1:
+    base_spirit_filters = st.multiselect(
+        "Base spirit",
+        options=base_spirit_options,
+        key="browse_base_spirit_filters",
+        placeholder="All base spirits",
+    )
+with filter_col_2:
+    flavor_profile_filters = st.multiselect(
+        "Flavor profile",
+        options=flavor_profile_options,
+        key="browse_flavor_profile_filters",
+        placeholder="All flavor profiles",
+    )
+with filter_col_3:
+    difficulty_filters = st.multiselect(
+        "Difficulty",
+        options=difficulty_options,
+        key="browse_difficulty_filters",
+        placeholder="All difficulty levels",
+    )
+
+filtered_recipes = [
+    recipe
+    for recipe in recipes
+    if _matches_filters(recipe, name_query, base_spirit_filters, flavor_profile_filters, difficulty_filters)
+]
+
+st.write(f"{len(filtered_recipes)} of {len(recipes)} cocktails match your filters.")
+
+if not filtered_recipes:
+    st.info(
+        "No cocktails match the current search and filter combination. "
+        "Try clearing one filter, broadening your search, or click Clear filters to restore the full list."
+    )
+else:
+    render_recipe_grid(filtered_recipes)
