@@ -1,7 +1,7 @@
-"""AI-powered cocktail recommendations via Anthropic Claude API."""
+"""AI-powered cocktail recommendations via Minimax API (OpenAI-compatible)."""
 import json
 import streamlit as st
-import anthropic
+from openai import OpenAI
 
 SYSTEM_PROMPT = (
     "You are a professional cocktail consultant. When given a flavor preference or mood, "
@@ -12,9 +12,9 @@ SYSTEM_PROMPT = (
 
 
 def get_recommendations(preference: str) -> list[dict]:
-    """Call Claude API and return 3-5 structured recipe suggestions.
+    """Call Minimax API and return 3-5 structured recipe suggestions.
 
-    Results are intended to be cached in st.session_state['ai_recommendations']
-    by the caller to avoid redundant API calls on re-render.
+    Returns [] on API failure or unparseable response.
+    Caller should cache results in st.session_state['ai_recommendations'].
     """
     raise NotImplementedError

@@ -5,26 +5,26 @@
 
 ---
 
-## Design Inconsistencies to Resolve Before Implementing
+## Design Decisions (resolved 2026-04-17)
 
-| # | Issue | Where |
-|---|---|---|
-| 1 | Browse page (Issue #4) and search/filter (Issue #5) are not in Architecture.md | Add to Architecture.md or remove issues |
-| 2 | AI recommendation feature has no GitHub Issue | Create Issue #9 |
-| 3 | `base_spirit` field required by Issues #4/#5 but absent from data model | Added to `data/recipes.json` — update Architecture.md |
-| 4 | AI model name conflict: README says `claude-3-5-sonnet`, Architecture.md says `claude-opus-4-5` | Pick one and align |
-| 5 | SPEC allows "OpenAI API" as alternative — Architecture.md has already committed to Claude | Close the ambiguity in SPEC |
+| # | Decision |
+|---|---|
+| 1 | Browse page + search/filter formally added to architecture (`pages/02_browse.py`) |
+| 2 | AI recommendation ACs added to Issue #3; no separate issue needed |
+| 3 | `base_spirit` field added to canonical data model and `recipes.json` |
+| 4 | AI model: **Minimax API (CN Endpoint)** — OpenAI-compatible, `openai` package with custom `base_url` |
+| 5 | SPEC OpenAI fallback retained; Minimax is primary; OpenAI as contingency if Minimax is unavailable |
 
 ---
 
 ## Feature Backlog
 
-### Phase 1 — Foundation (Issue #2) · ~1–2 days
-- [ ] Confirm and lock data schema (`data/recipes.json`) — especially `base_spirit` field
-- [ ] Seed `recipes.json` with 10–15 real recipes
+### Phase 1 — Foundation (Issues #2, #10) · ~1–2 days
+- [ ] Confirm and lock data schema (`data/recipes.json`) — `base_spirit` field now canonical
+- [ ] Seed `recipes.json` with 15+ real recipes covering diverse spirits and difficulties (Issue #10)
 - [ ] Configure `.streamlit/config.toml` theme
 - [ ] Verify `streamlit run app.py` runs clean with the new `pages/` structure
-- [ ] Set up `.streamlit/secrets.toml` locally (not committed)
+- [ ] Set up `.streamlit/secrets.toml` locally with `MINIMAX_API_KEY` (not committed)
 
 ### Phase 2 — Core Browsing (Issues #4, #5) · ~3–4 days
 - [ ] `pages/02_browse.py` — grid/list of all recipes using `recipe_card` component
@@ -50,9 +50,9 @@
 - [ ] `components/progress_bar.py` — labeled progress tracker
 - [ ] Completion message after final step
 
-### Phase 6 — AI Recommendations (Issue #9 — to be created) · ~2–3 days
-- [ ] Resolve model name (claude-3-5-sonnet vs claude-opus-4-5)
-- [ ] `services/recommender.py` — system prompt, API call, JSON parse with fallback
+### Phase 6 — AI Recommendations (Issues #3 partial, #9) · ~2–3 days
+- [ ] Complete Issue #9: configure Minimax API client, test endpoint, validate JSON output shape
+- [ ] `services/recommender.py` — system prompt, API call, JSON parse with `[]` fallback
 - [ ] Wire into `pages/01_home.py` (flavor/mood input)
 - [ ] Display in `pages/03_results.py` alongside ingredient matches
 - [ ] Loading spinner + cache results in `st.session_state['ai_recommendations']`
