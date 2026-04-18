@@ -19,9 +19,9 @@
 
 ## Feature Backlog
 
-### Phase 1 — Foundation (Issues #2, #10) · ~1–2 days
+### Phase 1 — Foundation (Issues #2, #9) · ~1–2 days
 - [ ] Confirm and lock data schema (`data/recipes.json`) — `base_spirit` field now canonical
-- [ ] Seed `recipes.json` with 15+ real recipes covering diverse spirits and difficulties (Issue #10)
+- [ ] Seed `recipes.json` with 15+ real recipes covering diverse spirits and difficulties (Issue #9)
 - [ ] Configure `.streamlit/config.toml` theme
 - [ ] Verify `streamlit run app.py` runs clean with the new `pages/` structure
 - [ ] Set up `.streamlit/secrets.toml` locally with `MINIMAX_API_KEY` (not committed)
@@ -50,8 +50,8 @@
 - [ ] `components/progress_bar.py` — labeled progress tracker
 - [ ] Completion message after final step
 
-### Phase 6 — AI Recommendations (Issues #3 partial, #9) · ~2–3 days
-- [ ] Complete Issue #9: configure Minimax API client, test endpoint, validate JSON output shape
+### Phase 6 — AI Recommendations (Issues #3 partial, #10) · ~2–3 days
+- [ ] Complete Issue #10: configure Minimax API client, test endpoint, validate JSON output shape
 - [ ] `services/recommender.py` — system prompt, API call, JSON parse with `[]` fallback
 - [ ] Wire into `pages/01_home.py` (flavor/mood input)
 - [ ] Display in `pages/03_results.py` alongside ingredient matches

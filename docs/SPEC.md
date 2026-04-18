@@ -45,13 +45,18 @@
 - The website sends the prompt to an AI model and returns 3–5 personalized recipe suggestions with brief explanations.
 - Recommendations include ingredient list, preparation steps, and flavor profile tags.
 
-### 3. Interactive Step-by-Step Mixing Simulation
+### 3. Browse & Search
+- User can browse all available cocktails in a grid/list layout without entering ingredients.
+- User can search by name and filter by base spirit, flavor profile, and difficulty.
+- Multiple filters can be applied simultaneously.
+
+### 4. Interactive Step-by-Step Mixing Simulation
 - User selects a recipe and enters a guided mixing mode.
 - Each step is shown one at a time with a "Next Step" button.
 - Steps include action description, ingredient amounts, and optional tips.
 - A progress bar shows how far along the user is in the process.
 
-### 4. Recipe Detail View
+### 5. Recipe Detail View
 - Displays full recipe: name, description, ingredients with quantities, steps, flavor tags, difficulty, and serving size.
 - User can adjust serving size (e.g., ×1, ×2, ×4) and ingredient quantities update proportionally.
 
@@ -63,7 +68,7 @@
 |---|---|
 | **Language** | Python 3.10+ |
 | **Framework** | Streamlit |
-| **AI Integration** | Anthropic Claude API (or OpenAI API) via `st.secrets` for key management |
+| **AI Integration** | Minimax API (CN Endpoint, OpenAI-compatible) via `st.secrets`; OpenAI API as contingency |
 | **Data Storage** | JSON file or SQLite for recipe data |
 | **Deployment** | Streamlit Community Cloud (or local) |
 | **Version Control** | GitHub |

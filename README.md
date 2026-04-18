@@ -19,7 +19,7 @@ An AI-powered cocktail simulator website built with Python and Streamlit. Visit 
 |---|---|
 | **Language** | Python 3.10+ |
 | **Framework** | Streamlit |
-| **AI Integration** | Anthropic Claude API via `st.secrets` |
+| **AI Integration** | Minimax API (CN Endpoint, OpenAI-compatible) via `st.secrets` |
 | **Data Storage** | JSON file or SQLite for recipe data |
 | **Deployment** | Streamlit Community Cloud |
 
