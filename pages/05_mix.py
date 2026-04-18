@@ -7,10 +7,12 @@ import unicodedata
 
 import streamlit as st
 
+from components.brand import apply_global_style, render_brand_header
 from components.progress_bar import mixing_progress
 from services.scaler import format_quantity, scale_recipe
 
 st.set_page_config(page_title="Mix It Up", page_icon="🍹", layout="centered")
+apply_global_style()
 
 _PREFIXES = {"white", "aged", "dark", "light", "fresh"}
 _SUFFIXES = {"juice", "leaves", "leaf", "wedge", "wheel", "piece", "pieces", "sprig", "peel", "shell"}
@@ -125,7 +127,11 @@ def _render_ingredients(ingredients: list[dict]) -> None:
 _ensure_session_state()
 recipe = st.session_state.get("selected_recipe") or {}
 if not recipe or not recipe.get("steps"):
-    st.title("Mix It Up")
+    render_brand_header(
+        "Mix It Up",
+        "Step through the build one move at a time, with measured guidance that keeps the drink on track.",
+        kicker="Pour Decisions",
+    )
     st.info("Choose a recipe on the detail page, then click Start Mixing.")
     if st.button("Go to recipe detail", use_container_width=True):
         st.switch_page("pages/04_detail.py")
@@ -139,8 +145,11 @@ current_step_index = min(int(st.session_state.get("current_step_index", 0)), tot
 if current_step_index != st.session_state.get("current_step_index", 0):
     st.session_state["current_step_index"] = current_step_index
 
-st.title(f"Mix It Up: {scaled_recipe['name']}")
-st.caption(f"Serving size x{multiplier}. One step at a time.")
+render_brand_header(
+    f"Mix It Up: {scaled_recipe['name']}",
+    f"Serving size x{multiplier}. Keep the flow deliberate and readable while you build the drink.",
+    kicker="Pour Decisions",
+)
 mixing_progress(current_step_index, total_steps)
 
 if current_step_index >= total_steps:

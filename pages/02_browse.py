@@ -4,11 +4,13 @@ from __future__ import annotations
 
 import streamlit as st
 
+from components.brand import apply_global_style, render_brand_header
 from components.recipe_card import recipe_card
 from services.matcher import load_recipes
 
 
 st.set_page_config(page_title="Browse Cocktails", page_icon="🍹", layout="wide")
+apply_global_style()
 
 
 @st.cache_data(show_spinner=False)
@@ -96,8 +98,11 @@ def render_recipe_grid(recipes: list[dict]) -> None:
                 recipe_card(recipe)
 
 
-st.title("Browse Cocktails")
-st.caption("Browse the full recipe catalog and open any cocktail to view details.")
+render_brand_header(
+    "Browse the Back Bar",
+    "Scan the full catalog, then narrow it with search and layered filters until the right glass stands out.",
+    kicker="Pour Decisions",
+)
 
 recipes = get_recipes()
 base_spirit_options = _sorted_unique_values(recipes, "base_spirit")

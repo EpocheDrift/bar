@@ -2,11 +2,13 @@
 
 import streamlit as st
 
+from components.brand import apply_global_style, render_brand_header
 from services.matcher import load_recipes
 from services.scaler import format_quantity, scale_recipe
 
 
 st.set_page_config(page_title="Recipe Detail", page_icon="🍹", layout="centered")
+apply_global_style()
 
 
 def _ensure_session_state() -> None:
@@ -79,7 +81,11 @@ current_multiplier = st.session_state["serving_multiplier"]
 multiplier_options = [1, 2, 4]
 multiplier_index = multiplier_options.index(current_multiplier) if current_multiplier in multiplier_options else 0
 
-st.title("Recipe Detail")
+render_brand_header(
+    "Recipe Detail",
+    "Inspect the full build, adjust serving size, and move straight into the guided mix when the recipe feels right.",
+    kicker="Pour Decisions",
+)
 
 selected_recipe_id = st.selectbox(
     "Recipe",
@@ -97,7 +103,7 @@ if selected_recipe_id != current_recipe_id:
 base_recipe = recipes_by_id[selected_recipe_id]
 st.session_state["selected_recipe"] = base_recipe
 
-st.write(base_recipe["description"])
+st.markdown(f"<div class='pd-panel'>{base_recipe['description']}</div>", unsafe_allow_html=True)
 
 multiplier = st.radio(
     "Serving size",

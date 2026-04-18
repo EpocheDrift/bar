@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import streamlit as st
 
+from components.brand import apply_global_style, render_brand_header
 from services.matcher import load_recipes
 from services.recommender import get_recommendations
 
 
-st.set_page_config(page_title="Pour Decisions 🍹", page_icon="🍹", layout="centered")
+st.set_page_config(page_title="Pour Decisions 🍹", page_icon="🍹", layout="wide")
 
 
 @st.cache_data(show_spinner=False)
@@ -68,24 +69,42 @@ def _submit_ai_search(preference: str) -> None:
     st.switch_page("pages/03_results.py")
 
 
-st.title("Pour Decisions 🍹")
-st.caption("Search by what you already have, or ask for ideas based on your mood.")
+apply_global_style()
+render_brand_header(
+    "Find Your Next Pour",
+    "Start with ingredients you already have, or describe the mood and let the app shape a cocktail direction for you.",
+    kicker="Pour Decisions",
+)
+st.markdown(
+    """
+    <div class="pd-chip-row">
+      <span class="pd-chip">Warm citrus</span>
+      <span class="pd-chip">Spirit-forward classics</span>
+      <span class="pd-chip">Fruity low-effort picks</span>
+      <span class="pd-chip">No blank results</span>
+    </div>
+    """,
+    unsafe_allow_html=True,
+)
 
 ingredient_options = _ingredient_options()
 
-with st.form("ingredient-match-form"):
-    st.subheader("Match cocktails from your bar")
-    selected_ingredients = st.multiselect(
-        "Select ingredients you already have",
-        options=ingredient_options,
-        placeholder="Choose one or more ingredients",
-    )
-    custom_ingredients = st.text_area(
-        "Add custom ingredients",
-        placeholder="Example: orange juice, soda water, cinnamon syrup",
-        help="Use commas or new lines to enter ingredients not listed above.",
-    )
-    ingredient_submitted = st.form_submit_button("Find matching cocktails", use_container_width=True)
+search_col, ai_col = st.columns([1, 1], gap="large")
+
+with search_col:
+    with st.form("ingredient-match-form"):
+        st.subheader("Match cocktails from your bar")
+        selected_ingredients = st.multiselect(
+            "Select ingredients you already have",
+            options=ingredient_options,
+            placeholder="Choose one or more ingredients",
+        )
+        custom_ingredients = st.text_area(
+            "Add custom ingredients",
+            placeholder="Example: orange juice, soda water, cinnamon syrup",
+            help="Use commas or new lines to enter ingredients not listed above.",
+        )
+        ingredient_submitted = st.form_submit_button("Find matching cocktails", use_container_width=True)
 
 if ingredient_submitted:
     if not selected_ingredients and not custom_ingredients.strip():
@@ -93,13 +112,14 @@ if ingredient_submitted:
     else:
         _submit_ingredient_search(selected_ingredients, custom_ingredients)
 
-with st.form("ai-recommendation-form"):
-    st.subheader("Get AI recommendations")
-    preference = st.text_area(
-        "Describe your mood or flavor preference",
-        placeholder="Example: something citrusy and refreshing, or rich and spirit-forward",
-    )
-    ai_submitted = st.form_submit_button("Get AI suggestions", use_container_width=True)
+with ai_col:
+    with st.form("ai-recommendation-form"):
+        st.subheader("Get AI recommendations")
+        preference = st.text_area(
+            "Describe your mood or flavor preference",
+            placeholder="Example: something citrusy and refreshing, or rich and spirit-forward",
+        )
+        ai_submitted = st.form_submit_button("Get AI suggestions", use_container_width=True)
 
 if ai_submitted:
     if not preference.strip():

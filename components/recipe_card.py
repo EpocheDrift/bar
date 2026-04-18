@@ -23,7 +23,7 @@ def recipe_card(recipe: dict, show_missing: bool = False) -> None:
     flavor_tags = recipe.get("flavor_tags") or []
     missing = recipe.get("missing") or []
 
-    with st.container():
+    with st.container(border=True):
         st.markdown(f"#### {name}")
         st.caption(f"{difficulty} • {base_spirit}")
 

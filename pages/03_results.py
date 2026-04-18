@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import streamlit as st
 
+from components.brand import apply_global_style, render_brand_header
 from services.matcher import load_recipes, match_recipes
 
 
 st.set_page_config(page_title="Results", page_icon="🍹", layout="wide")
+apply_global_style()
 
 
 @st.cache_data(show_spinner=False)
@@ -64,8 +66,11 @@ def _render_ai_card(recommendation: dict, index: int) -> None:
         st.markdown(f"**Why this fits:** {why}")
 
 
-st.title("Results")
-st.caption("Review ingredient matches and AI-powered cocktail ideas in one place.")
+render_brand_header(
+    "Results Worth Pouring",
+    "Compare exact matches, near misses, and AI suggestions without losing the thread between search and selection.",
+    kicker="Pour Decisions",
+)
 
 recipes = _recipes()
 user_ingredients = st.session_state.get("user_ingredients", [])
