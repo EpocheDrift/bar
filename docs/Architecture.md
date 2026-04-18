@@ -209,7 +209,7 @@ All recipe data is stored as JSON objects. Below is the canonical schema.
 | `description` | `string` | One-line summary |
 | `difficulty` | `enum` | `easy` \| `medium` \| `hard` |
 | `serving_size` | `int` | Base number of servings (default: 1) |
-| `base_spirit` | `string` | Primary spirit (e.g. `vodka`, `rum`, `gin`, `tequila`, `whiskey`, `none`) |
+| `base_spirit` | `string` | Primary spirit (e.g. `vodka`, `rum`, `gin`, `tequila`, `whiskey`, `non-alcoholic`) |
 | `flavor_tags` | `string[]` | Used for AI matching and display filters |
 | `ingredients[].name` | `string` | Canonical ingredient name (used for matching) |
 | `ingredients[].amount` | `float \| null` | Quantity at base serving size; `null` = to taste |
