@@ -1,5 +1,7 @@
 """Recipe detail page with serving size scaler."""
 
+from __future__ import annotations
+
 import streamlit as st
 
 from components.brand import apply_global_style, render_brand_header
