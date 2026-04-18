@@ -10,6 +10,8 @@ DEFAULT_SESSION_STATE = {
     "current_step_index": 0,
     "serving_multiplier": 1,
     "ai_recommendations": [],
+    "ai_preference": "",
+    "ai_recommendations_error": False,
 }
 
 
