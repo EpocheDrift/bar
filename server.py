@@ -1,0 +1,134 @@
+from __future__ import annotations
+
+import os
+import random
+import re
+from pathlib import Path
+from typing import Any
+
+from dotenv import load_dotenv
+from flask import Flask, abort, jsonify, request, send_from_directory
+from flask_cors import CORS
+
+try:
+    from openai import OpenAI
+except ImportError:  # pragma: no cover - local setup should install requirements
+    OpenAI = None
+
+
+BASE_DIR = Path(__file__).resolve().parent
+PROMPT_PATH = BASE_DIR / "docs" / "character" / "Phoenix-Prompt.md"
+COCKTAIL_LIST_PATH = BASE_DIR / "docs" / "project" / "Cocktail-List.md"
+GAME_MARKER_RE = re.compile(r"\[GAME:([^\]]+)\]")
+
+
+def read_text(path: Path) -> str:
+    return path.read_text(encoding="utf-8").strip()
+
+
+def extract_system_prompt(markdown: str) -> str:
+    match = re.search(r"## SYSTEM PROMPT\s*```(?:\w+)?\s*(.*?)\s*```", markdown, re.S)
+    return match.group(1).strip() if match else markdown.strip()
+
+
+class PhoenixAI:
+    fallback_lines = (
+        "The line went dead. Typical.",
+        "Something broke. Pretend that was atmospheric.",
+        "The bar is quiet. Try again if you must.",
+    )
+
+    def __init__(self) -> None:
+        load_dotenv()
+        prompt_text = extract_system_prompt(read_text(PROMPT_PATH))
+        cocktail_list = read_text(COCKTAIL_LIST_PATH)
+        prompt_text = prompt_text.replace(
+            "[INJECT: full contents of docs/project/Cocktail-List.md at server startup]",
+            cocktail_list,
+        )
+
+        game_protocol = (
+            "GAME TRIGGER PROTOCOL\n"
+            "When you decide to challenge the customer with the Mixing Game, append "
+            "[GAME:Exact Cocktail Name] to the end of your response. Use a cocktail "
+            "name from the cocktail list. Do not explain the marker."
+        )
+        self.system_message = f"{prompt_text}\n\n---\n\n{game_protocol}"
+        self.model = os.getenv("MINIMAX_MODEL", "MiniMax-Text-01")
+        api_key = os.getenv("MINIMAX_API_KEY") or os.getenv("OPENAI_API_KEY")
+        base_url = os.getenv("MINIMAX_BASE_URL", "https://api.minimax.chat/v1")
+        self.client = OpenAI(api_key=api_key, base_url=base_url) if api_key and OpenAI else None
+
+    def chat(self, messages: list[dict[str, Any]]) -> tuple[str, str | None]:
+        clean_messages = self._clean_messages(messages)
+        if self._is_opening(clean_messages):
+            return "Welcome.", None
+        if self.client is None:
+            return self._fallback(), None
+
+        try:
+            response = self.client.chat.completions.create(
+                model=self.model,
+                messages=[{"role": "system", "content": self.system_message}, *clean_messages],
+                temperature=0.85,
+                max_tokens=260,
+            )
+            reply = response.choices[0].message.content or ""
+            return self._strip_game_marker(reply)
+        except Exception:
+            return self._fallback(), None
+
+    def _clean_messages(self, messages: list[dict[str, Any]]) -> list[dict[str, str]]:
+        clean: list[dict[str, str]] = []
+        for message in messages:
+            role = message.get("role")
+            content = message.get("content")
+            if role in {"user", "assistant"} and isinstance(content, str):
+                clean.append({"role": role, "content": content})
+        return clean
+
+    def _is_opening(self, messages: list[dict[str, str]]) -> bool:
+        if not messages:
+            return True
+        last = messages[-1]
+        return last["role"] == "user" and last["content"].strip() in {"", "__init__"}
+
+    def _strip_game_marker(self, reply: str) -> tuple[str, str | None]:
+        match = GAME_MARKER_RE.search(reply)
+        game = match.group(1).strip() if match else None
+        display_text = GAME_MARKER_RE.sub("", reply).strip()
+        return display_text or "...", game
+
+    def _fallback(self) -> str:
+        return random.choice(self.fallback_lines)
+
+
+app = Flask(__name__, static_folder=None)
+CORS(app, resources={r"/*": {"origins": "*"}}, send_wildcard=True)
+phoenix = PhoenixAI()
+
+
+@app.get("/")
+def index():
+    return send_from_directory(BASE_DIR, "index.html")
+
+
+@app.get("/<path:filename>")
+def static_files(filename: str):
+    if filename.startswith(".") or "/." in filename:
+        abort(404)
+    return send_from_directory(BASE_DIR, filename)
+
+
+@app.post("/chat")
+def chat():
+    payload = request.get_json(silent=True) or {}
+    messages = payload.get("messages", [])
+    if not isinstance(messages, list):
+        messages = []
+    reply, game = phoenix.chat(messages)
+    return jsonify({"reply": reply, "game": game})
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.getenv("PORT", "5000")), debug=True)
