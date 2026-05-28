@@ -1,105 +1,53 @@
-# Lisa's Workspace — Phoenix's Bar
+# Lisa × Phoenix's Bar
 
 > 最后更新：2026-05-28
 
 ---
 
-## 这个文档是什么，怎么用
+## 项目
 
-这是你在这个项目里的**工作台**，也是我们两个人之间保持同步的方式。
+像素风 AI 酒吧游戏。用户在义体手术的麻醉间隙，进入一间无名酒吧和 Phoenix 对话，得到一杯专属鸡尾酒。
 
-**对你来说：** 打开这里就知道现在要做什么、做到哪了、参考文档在哪。不用翻其他地方。
-
-**对我们合作来说：** 你在这里更新状态，我就不需要单独来问你进展了——你的进度对我直接可见。遇到问题或者不确定的时候，把状态改成 ❓，我看到了会来找你聊。
-
-**怎么更新：** 改 emoji 就行，不需要写说明。
-
-```
-🔲 待做  →  🔄 进行中  →  ✅ 完成
-                           ❓ 有问题或需要对齐
-```
-
-**关于优先级：** 标 🔴 的任务是 Zayn 在等的——这些东西不交付，代码就写不下去。标 🟡 的可以稍后，但也别拖太久。
+Lisa 负责视觉全线。Zayn 负责开发。
 
 ---
 
-## ⚡ 现在要做的事
+## 当前聚焦
 
-| 优先级 | 任务 | 说明 | 状态 |
-|---|---|---|---|
-| 🔴 | Phoenix 说话帧 | `phoenix_talk.png`，画布 600×900，透明背景。AI 回复时切换这张图 | 🔲 |
-| 🔴 | Phoenix 眨眼帧 | `phoenix_blink.png`，画布 600×900，透明背景。idle 状态偶尔切换 | 🔲 |
-| 🔴 | 创意款配方步骤 | 填写 `docs/project/Cocktail-Steps-Needed.md`，游戏里 Mixing Game 出题用 | 🔲 |
-| 🟡 | 对话 UI 设计（G4） | 聊天框放哪里、什么风格——见下面 G4 说明 | 🔲 |
-| 🟡 | 资产最终版确认 | 现有的图哪些是定稿，哪些还会改——告诉我就行 | 🔲 |
+`phoenix_talk.png` · `phoenix_blink.png` · 对话 UI（G4）· 创意款配方步骤
 
 ---
 
-## 🎨 设计资产
+## 开放中
 
-### 已交付
-
-| 文件 | 内容 | 状态 |
-|---|---|---|
-| `splash.png` | 入口屏 | ✅ |
-| `home.png` | 主酒吧场景 | ✅ |
-| `browse.png` | 暗色酒吧场景 | ✅ ❓这张是用在哪个状态的？ |
-| `standing.png` | Phoenix 站立 / idle | ✅ |
-| `shake_1.png` | Phoenix 摇酒动作 | ✅ |
-| `Gin / Rum / Whiskey / Vodka / Tequila / Brandy / Cointreau.png` | 7 种酒瓶 | ✅ |
-
-### 还需要
-
-| 文件 | 说明 | 状态 |
-|---|---|---|
-| `phoenix_talk.png` | 说话帧，画布 600×900，透明背景 | 🔲 |
-| `phoenix_blink.png` | 眨眼帧，画布 600×900，透明背景 | 🔲 |
-
-> 交付规范在这里：`docs/assets/Asset-Spec.md`
-
----
-
-## 🎮 游戏设计决策
-
-这些需要你做决定或者我们一起对齐，我现在没法自己定。
-
-| # | 任务 | 需要你做什么 | 状态 |
-|---|---|---|---|
-| G2 | 入口屏交互细节 | START / QUIT 之外还有别的元素吗？点击有动画吗？ | 🔲 |
-| G3 | 酒吧场景交互地图 | 吧台上哪些东西可以点？点了有什么视觉反馈？ | 🔲 |
-| G4 | 对话 UI | 聊天框在屏幕的哪个位置？什么风格？需要出稿 | 🔲 |
-| G6 | 配方呈现方式 | Phoenix 推荐一款酒之后，配方怎么展示？纯文字还是弹出卡片？ | 🔲 |
-| G8 | Mixing Game UI | 题目怎么排版，进度条，成功/失败画面——等我确认 G7 之后开始 | 🔲 |
-
----
-
-## 📋 内容补充
-
-| 任务 | 说明 | 状态 |
-|---|---|---|
-| 填写创意款配方步骤 | `docs/project/Cocktail-Steps-Needed.md`，15 款自创配方需要你写出 3-5 个步骤 | 🔲 |
-
----
-
-## ✅ 已完成
-
-| 事项 |
-|---|
-| 世界观设定（义体化近未来，麻醉缝隙酒吧）|
-| Phoenix 性格问卷填写 |
-| 像素字体选型：ARCADECLASSIC |
-| 设计资产初版交付（入口 / 酒吧 / Phoenix / 酒瓶）|
-| 鸡尾酒菜单整理（31 款，含秘密配方 #31 Sight）|
-
----
-
-## 📁 参考文档
-
-| 文档 | 是什么 |
+| 事项 | 状态 |
 |---|---|
-| `docs/project/Worldbuilding.md` | 世界观全文（你写的）|
-| `docs/design/Flow-v2.md` | 游戏流程，用户怎么和 Phoenix 互动 |
-| `docs/character/Phoenix-Prompt.md` | Phoenix 的完整性格设定和行为规则 |
-| `docs/project/Cocktail-List.md` | 31 款鸡尾酒完整菜单 |
-| `docs/project/Cocktail-Steps-Needed.md` | 需要你补充步骤的创意款配方 |
-| `docs/assets/Asset-Spec.md` | 资产交付规范（尺寸、格式、命名）|
+| `phoenix_talk.png` — 说话帧，600×900，透明背景 | 🔲 |
+| `phoenix_blink.png` — 眨眼帧，600×900，透明背景 | 🔲 |
+| 资产最终版确认（哪些定稿，哪些还会改）| 🔲 |
+| G2 — 入口屏互动设计 | 🔲 |
+| G3 — 酒吧场景交互地图 | 🔲 |
+| G4 — 对话 UI 设计 | 🔲 |
+| G6 — 配方呈现方式 | 🔲 |
+| G8 — Mixing Game UI | 🔲 |
+| 创意款配方步骤（`Cocktail-Steps-Needed.md`）| 🔲 |
+| `browse.png` 用途确认 | ❓ |
+
+---
+
+## 已完成
+
+世界观设定 · Phoenix 问卷 · 像素字体（ARCADECLASSIC）· 设计资产初版 · 鸡尾酒菜单（31款）
+
+---
+
+## 参考
+
+| | |
+|---|---|
+| 世界观 | `docs/project/Worldbuilding.md` |
+| 游戏流程 | `docs/design/Flow-v2.md` |
+| Phoenix 设定 | `docs/character/Phoenix-Prompt.md` |
+| 鸡尾酒菜单 | `docs/project/Cocktail-List.md` |
+| 待补充步骤 | `docs/project/Cocktail-Steps-Needed.md` |
+| 资产规范 | `docs/assets/Asset-Spec.md` |
