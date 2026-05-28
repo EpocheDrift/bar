@@ -50,7 +50,7 @@
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 可与 G2/G3 并行 |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 · → 解锁 T6 |
 | G6 | 配方呈现方式（纯文字 / 弹出卡片 / 其他） | Zayn + Lisa | 🔲 待做 | 可与 G2/G3 并行 |
-| G7 | Mixing Game 题目来源 | Zayn | 🔄 进行中 | 经典款步骤 Zayn 直接写；创意款由 Phoenix 补充（见 project/Cocktail-Steps-Needed.md）|
+| G7 | Mixing Game 题目来源 | Zayn | 🔄 进行中 | 18款经典步骤已写入 Cocktail-List.md ✅；13款创意款等 Phoenix 补充（见 Cocktail-Steps-Needed.md）|
 | G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | 🔲 待做 | ← G7 |
 | G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | ✅ 完成 | 结构化标记 `[GAME:cocktail_name]`，前端剥离后触发游戏 |
 
@@ -72,7 +72,7 @@
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
 | T1 | 确定内部渲染分辨率 | Zayn | 🔲 待做 | ← D1 · 可先用 1024×576 占位 |
-| T2 | 搭建项目骨架（index.html + main.js + server.py） | Zayn | 🔲 待做 | 可先开始，分辨率后期可改一行 · → 解锁 T3 |
+| T2 | 搭建项目骨架（index.html + main.js + chat.js + style.css + server.py） | Zayn | 🔲 待做 | 1024×576 + crisp:true · HTML overlay 聊天框 · PhoenixAI harness · CORS · → 解锁 T3 |
 | T3 | Kaplay 接入，两个场景可切换 | Zayn | 🔲 待做 | ← T2 · → 解锁 T4, T8, T9 |
 | T4 | HTML overlay 聊天框基础实现 | Zayn | 🔲 待做 | ← T3 · → 解锁 T6, T7 |
 | T5 | Flask /chat 路由接入 AI API | Zayn | 🔲 待做 | ← A1 ✅, G9 · 可与 T3/T4 并行 |
@@ -81,9 +81,9 @@
 | T8 | 灯光闪烁动画 | Zayn | 🔲 待做 | ← T3 |
 | T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | ← T3 |
 | T10 | 更新 CLAUDE.md（新技术栈） | Zayn | ✅ 完成 | — |
-| T11 | 部署方案确认 | Zayn | ✅ 完成 | 线上部署 + repo 提交，前端 Vercel / 后端 Render |
-| T13 | Flask 加 CORS（跨域，Vercel↔Render 必须） | Zayn | 🔲 待做 | ← T2 · 加 flask-cors，一行配置 |
-| T14 | 换用 Gunicorn 作生产服务器 | Zayn | 🔲 待做 | ← T2 · gunicorn -w 4 server:app · 支持并发多用户 |
+| T11 | 部署方案确认 | Zayn | ✅ 完成 | Docker 打包 → 自有云服务器 + 自有域名，前端静态文件由 nginx 托管 |
+| T13 | 编写 Dockerfile + docker-compose.yml | Zayn | 🔲 待做 | ← T2 完成后 · nginx + gunicorn + Flask 打进同一个 compose |
+| T14 | 换用 Gunicorn 作生产服务器 | Zayn | 🔲 待做 | ← T2 · gunicorn -w 4 server:app · 写进 Dockerfile CMD |
 | T15 | Phoenix AI Harness（PhoenixAI 类，包住 Minimax API） | Zayn | 🔲 待做 | ← T2 · 负责 prompt 拼装 / [GAME:] 解析 / 错误处理 |
 | T12 | Phoenix 知识库注入方式 | Zayn | ✅ 完成 | 全量注入，见 project/Cocktail-List.md（31款）|
 
