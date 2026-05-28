@@ -50,7 +50,7 @@
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 可与 G2/G3 并行 |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 · → 解锁 T6 |
 | G6 | 配方呈现方式（纯文字 / 弹出卡片 / 其他） | Zayn + Lisa | 🔲 待做 | 可与 G2/G3 并行 |
-| G7 | Mixing Game 题目来源 | Zayn | 🔄 进行中 | 18款经典步骤已写入 Cocktail-List.md ✅；13款创意款等 Phoenix 补充（见 Cocktail-Steps-Needed.md）|
+| G7 | Mixing Game 题目来源 | Zayn | ✅ 完成 | 全部 31 款步骤已整合进 Cocktail-List.md，含秘密配方 #31 Sight |
 | G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | 🔲 待做 | ← G7 |
 | G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | ✅ 完成 | 结构化标记 `[GAME:cocktail_name]`，前端剥离后触发游戏 |
 

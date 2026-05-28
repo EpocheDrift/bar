@@ -30,7 +30,7 @@ Lisa 负责视觉全线。Zayn 负责开发。
 | G4 — 对话 UI 设计 | 🔲 |
 | G6 — 配方呈现方式 | 🔲 |
 | G8 — Mixing Game UI | 🔲 |
-| 创意款配方步骤（`Cocktail-Steps-Needed.md`）| 🔲 |
+| 创意款配方步骤（`Cocktail-Steps-Needed.md`）| ✅ |
 | `browse.png` 用途确认 | ❓ |
 
 ---

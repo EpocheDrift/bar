@@ -2,7 +2,7 @@
 
 ***Basic liquor choices: Whiskey, Tequila, Vodka, Gin, Rum, Cointreau***
 
-> Steps marked ✅ are ready for Mixing Game. Steps marked ⬜ need Phoenix to fill (see Cocktail-Steps-Needed.md).
+> All steps ✅ — ready for Mixing Game.
 
 ---
 
@@ -21,13 +21,13 @@
 ---
 
 ### 2. Bloody Mary (shake) ✅
-- 45 mL Tequila
+- 45 mL Vodka
 - 90 mL Tomato juice
 - 20 mL lemon juice
 
 **Steps:**
 1. Fill shaker with ice
-2. Add tequila, tomato juice, and lemon juice
+2. Add vodka, tomato juice, and lemon juice
 3. Shake briefly — 5-8 seconds only, do not over-shake
 4. Strain into a tall glass over ice
 5. Garnish with a celery stick or lemon wedge
@@ -62,74 +62,133 @@
 
 ---
 
-### 5. Iced Lychee (shake) ⬜
+### 5. Iced Lychee (shake) ✅
 - 45 mL Gin
-- 3-5 pieces of lychee
+- 5-6 pieces of lychee
 - 30 mL lychee juice
+
+**Steps:**
+1. Muddle 5-6 lychee pieces in the shaker
+2. Add gin and lychee juice
+3. Fill with ice and shake until the shaker frosts
+4. Strain into a glass over a large ice cube
 
 ---
 
-### 6. Jasmine Sea Breeze (shake) ⬜
+### 6. Jasmine Sea Breeze (shake) ✅
 - 45 mL Rum
 - 30 mL milk
 - 20 mL light cream
 - 20 mL jasmine tea
+- 15 mL syrup
 - 1 gram of sea salt
+
+**Steps:**
+1. Fill shaker with ice
+2. Add rum, milk, light cream, jasmine tea, syrup, and sea salt
+3. Shake until the shaker frosts (Boston shaker recommended)
+4. Strain into a glass over a large ice cube
 
 ---
 
-### 7. Night Grape (shake) ⬜
+### 7. Night Grape (shake) ✅
 - 30 mL Rum or Gin
 - 90 mL grape juice
 - 30 mL milk
 
+**Steps:**
+1. Fill shaker with ice
+2. Add rum or gin, grape juice, and milk
+3. Shake until the shaker frosts (Boston shaker recommended)
+4. Strain into a glass over a large ice cube
+
 ---
 
-### 8. Osmanthus / Logan Whiskey (shake) ⬜
+### 8. Osmanthus / Logan Whiskey (shake) ✅
 - 45 mL whiskey
 - 25 mL osmanthus or longa syrup based on user preference
-- 60 mL black tea
+- 90 mL black tea
+
+**Steps:**
+1. Add osmanthus or longa syrup to the shaker
+2. Fill with ice
+3. Add whiskey and black tea
+4. Shake until the shaker frosts
+5. Strain into a glass over a large ice cube
 
 ---
 
-### 9. Dog Hair (shake) ⬜
-- 45 mL whiskey
+### 9. Dog Hair (shake) ✅
+- 30 mL whiskey
 - 25 mL honey
-- 30-45 mL milk based on player preference
+- 30 mL milk
+- 15 mL light cream
+
+**Steps:**
+1. Fill shaker with ice
+2. Add honey, whiskey, milk, and light cream
+3. Shake until the shaker frosts
+4. Strain into a pre-chilled glass
 
 ---
 
-### 10. Daydreaming (shake) ⬜
+### 10. Daydreaming (shake) ✅
 - 30 mL Tequila
 - 10 mL elderflower syrup
 - 15 mL pineapple juice
 - 10 mL greek yogurt or milk based on player preference
 
+**Steps:**
+1. Fill shaker with ice
+2. Add elderflower syrup, tequila, pineapple juice, and greek yogurt or milk
+3. Shake until the shaker frosts
+4. Strain into a pre-chilled glass
+
 ---
 
-### 11. Negroni Sour (shake) ⬜
+### 11. Negroni Sour (shake) ✅
 - 45 mL Gin
 - 10 mL grenadine
 - 50 mL orange juice
 - 50 mL pineapple juice
 - 30 mL greek yogurt or milk based on player preference
 
+**Steps:**
+1. Fill shaker with ice
+2. Add gin, orange juice, pineapple juice, greek yogurt or milk, and grenadine
+3. Shake until the shaker frosts
+4. Strain into a glass over a large ice cube
+
 ---
 
-### 12. Orange Fragrance (shake) ⬜
+### 12. Orange Fragrance (shake) ✅
 - 45 mL whiskey
 - 10 mL elderflower syrup
 - 45 mL oolong or jasmine tea based on player preference
 - 45 mL orange juice
 - 15 mL lemon juice
 
+**Steps:**
+1. Fill shaker with ice
+2. Add whiskey, elderflower syrup, tea, orange juice, and lemon juice
+3. Shake until the shaker frosts
+4. Strain into a glass over a large ice cube
+
 ---
 
-### 13. Coconut Amora (shake) ⬜
+### 13. Coconut Amora (shake) ✅
 - 30 mL Rum
 - 25 mL osmanthus syrup
 - 90 mL coconut water
 - Fill with light cream after shaking
+
+**Steps:**
+1. Add osmanthus syrup to the shaker
+2. Fill with ice
+3. Add rum and coconut water
+4. Shake until the shaker frosts
+5. Strain into a glass over a large ice cube
+6. Slowly pour light cream over the back of a bar spoon to float on top — do not stir
 
 ---
 
@@ -151,7 +210,7 @@
 ### 15. Daiquiri (shake) ✅
 - 60 mL Rum
 - 30 mL lemon juice
-- 15 mL syrup (can change to osmanthus/elderflower/longa syrup based on player preference)
+- 15 mL syrup (can change to osmanthus/elderflower/longa/passion fruit syrup based on player preference)
 
 **Steps:**
 1. Fill shaker with ice
@@ -183,6 +242,7 @@
 - 20 mL syrup
 - 20 mL lime juice
 - Fill with soda
+- Add mint leaves
 
 **Steps:**
 1. Add lime juice and syrup to the glass
@@ -253,11 +313,17 @@
 
 ---
 
-### 22. Perfume Gin (shake) ⬜
+### 22. Perfume Gin (shake) ✅
 - 45 mL Gin
 - 15 mL Cointreau
 - 20 mL lime juice
 - 10 mL elderflower syrup
+
+**Steps:**
+1. Fill shaker with ice
+2. Add gin, Cointreau, lime juice, and elderflower syrup
+3. Shake until the shaker frosts
+4. Strain into a glass over a large ice cube
 
 ---
 
@@ -267,11 +333,11 @@
 - 15 mL lime juice
 
 **Steps:**
-1. Moisten the rim of the glass with lime, then dip in sugar to create a sugar rim
+1. Chill a coupe glass; moisten the rim with lime and dip in sugar
 2. Fill shaker with ice
 3. Add vodka, Cointreau, and lime juice
-4. Shake for 10-12 seconds
-5. Strain into the prepared glass and garnish with a mint leaf
+4. Shake until the shaker frosts
+5. Strain into the prepared glass
 
 ---
 
@@ -284,16 +350,24 @@
 **Steps:**
 1. Fill shaker with ice
 2. Add tequila, Cointreau, and lemon juice
-3. Shake for 10-12 seconds
-4. Strain into a glass
-5. Drizzle grenadine over the surface after pouring — do not stir
+3. Shake until the shaker frosts
+4. Strain into a pre-chilled glass
+5. Pour grenadine slowly down the inside of the glass — let it sink to the bottom, do not stir
 
 ---
 
-### 25. Night of Rendezvous (shake) ⬜
+### 25. Night of Rendezvous (shake) ✅
 - 30 mL Cointreau
 - 60 mL jasmine tea
 - 15 mL lemon juice
+- 10 mL osmanthus syrup
+
+**Steps:**
+1. Add osmanthus syrup to the shaker
+2. Fill with ice
+3. Add Cointreau, jasmine tea, and lemon juice
+4. Shake until the shaker frosts
+5. Strain into a glass over a large ice cube
 
 ---
 
@@ -318,11 +392,11 @@
 - 15 mL passion fruit syrup
 
 **Steps:**
-1. Fill shaker with ice
-2. Add vodka, Cointreau, lemon juice, and passion fruit syrup
-3. Shake vigorously for 12-15 seconds
-4. Strain into a chilled martini glass
-5. Garnish with a passion fruit half or lime twist
+1. Add passion fruit syrup to the shaker
+2. Fill with ice
+3. Add vodka, Cointreau, and lemon juice
+4. Shake until the shaker frosts
+5. Strain into a glass over a large ice cube
 
 ---
 
@@ -369,10 +443,18 @@
 
 ---
 
-### ***31. Sight (secret cocktail)*** (shake) ⬜
+### ***31. Sight (secret cocktail)*** (shake) ✅
 - 45 mL Rum
 - 10 mL Greek yogurt
 - 10 mL lemon juice
 - 60 mL Guava juice
 - 10 mL passion fruit syrup
 - 5-10 mL Tequila based on player preference
+
+**Steps:**
+1. Add passion fruit syrup to the shaker
+2. Fill with ice
+3. Add rum, guava juice, greek yogurt, and lemon juice
+4. Add tequila last
+5. Shake until the shaker frosts
+6. Strain into a glass over a large ice cube
