@@ -73,7 +73,7 @@ phoenix_blink.png     ← 眨眼帧（idle 动画用）
 
 ## 四、还需要 Lisa 交付的内容
 
-| 资产 | 说明 | 优先级 |
+| 资产 | 说明 | 优先级 | 状态｜
 |---|---|---|
 | `phoenix_talk.png` | Phoenix 说话时的帧——嘴部微开或表情有变化，画布尺寸同上统一 | 🔴 高 |
 | `phoenix_blink.png` | Phoenix 眨眼的帧，idle 状态偶尔切换用，画布尺寸同上统一 | 🟡 中 |
