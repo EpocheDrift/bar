@@ -1,7 +1,7 @@
 # Game Design Flow — v1 融合方案
 
 > 融合来源：Direction A（开放式）+ Direction B（仪式感）+ Lisa Flow（Mixing Game + AI 海报）  
-> 状态：待评估 · 2026-05-27
+> ~~待评估~~ · **已存档，未采用，参考用** · 2026-05-27
 
 ---
 

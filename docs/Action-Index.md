@@ -1,7 +1,7 @@
 # Action Index
 
 > 所有行动事项的单一入口。每次工作前看这里，完成后更新状态。  
-> 最后更新：2026-05-27
+> 最后更新：2026-05-27（G1 已定：采用 v2 高自由度方案）
 
 ---
 
@@ -14,7 +14,7 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| G1 | 确定用户旅程方向（v1/v2/混合） | Zayn + Lisa | 🔄 进行中 | 见 design/Flow-v1.md · design/Flow-v2.md |
+| G1 | 确定用户旅程方向 | Zayn + Lisa | ✅ 完成 | 采用 v2 高自由度方案，见 design/Flow-v2.md |
 | G2 | 场景设计：入口屏交互细节 | Zayn + Lisa | 🔲 待做 | START/QUIT 之外有没有别的元素 |
 | G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | 🔲 待做 | 哪些东西可点、点了之后发生什么 |
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 在屏幕哪里、像素风聊天框长什么样 |
@@ -27,8 +27,8 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| A1 | Phoenix system prompt 设计 | Zayn | 🔲 待做 | Phx-Answer.md 已收到，素材够了 |
-| A2 | 对话状态管理方案 | Zayn | 🔲 待做 | 依赖 G1 旅程方向确定 |
+| A1 | Phoenix system prompt 设计 | Zayn | 🔲 待做 | character/Phoenix-Answers.md 已收到，素材够了 |
+| A2 | 对话状态管理方案（v2：Phoenix 主导） | Zayn | 🔲 待做 | G1 已定，可开始设计 |
 | A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 1 张额外图，idle 动画前提 |
 | A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 1 张额外图，AI 生成中动画前提 |
 
@@ -74,3 +74,4 @@
 | 建立 docs 索引（README.md） | 2026-05-27 |
 | Kaboom.js 技术笔记整理 | 2026-05-27 |
 | 用户旅程 Brainstorm 原料存档 | 2026-05-27 |
+| 确认用户旅程方向：v2 高自由度（Phoenix 主导） | 2026-05-27 |
