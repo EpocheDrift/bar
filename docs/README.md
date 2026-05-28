@@ -17,6 +17,7 @@
 | 文件 | 内容 | 状态 |
 |---|---|---|
 | [project/Pivot.md](./project/Pivot.md) | 项目整体 pivot 方向、技术栈决策、动画优先级、待办清单 | ✅ 持续更新 |
+| [project/Worldbuilding.md](./project/Worldbuilding.md) | 世界观设定 v1（Lisa）— 义体化近未来，麻醉缝隙酒吧 | ✅ 完成 |
 
 ---
 
@@ -38,7 +39,7 @@
 |---|---|---|
 | [character/Phoenix-Sheet.md](./character/Phoenix-Sheet.md) | 发给 Phoenix 的性格问卷模板 | ✅ 已发送 |
 | [character/Phoenix-Answers.md](./character/Phoenix-Answers.md) | Phoenix 填写完成的问卷（system prompt 原料）| ✅ 已收到 |
-| [character/Phoenix-Prompt.md](./character/Phoenix-Prompt.md) | Phoenix AI system prompt（性格部分完成，世界观待填）| 🔄 进行中 |
+| [character/Phoenix-Prompt.md](./character/Phoenix-Prompt.md) | Phoenix AI system prompt（性格 + 世界观均已完成）| ✅ 完成 |
 
 ---
 
