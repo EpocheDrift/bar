@@ -8,18 +8,45 @@
 ## 状态标记
 `🔲 待做` · `🔄 进行中` · `⛔ 阻塞` · `✅ 完成`
 
+## 依赖标记（备注列）
+`← X` 表示"需要 X 完成才能开始" · `→ X,Y` 表示"完成后解锁 X、Y"
+
+---
+
+## ⚡ 现在可以并行推进的事项
+
+> 不等任何人、不依赖任何前置的任务，可以立刻同时开始：
+
+| 事项 | 负责 |
+|---|---|
+| W1 — 确定时代背景/世界设定 | Lisa 主导 |
+| A3 — Phoenix 眨眼帧 | Lisa |
+| A4 — Phoenix 说话帧 | Lisa |
+| D4 — 像素字体选型 | Lisa |
+| T10 — 更新 CLAUDE.md | Zayn |
+
+---
+
+## 🌍 世界观设定
+
+| # | 事项 | 负责 | 状态 | 备注 |
+|---|---|---|---|---|
+| W1 | 确定时代背景 / 世界设定（赛博朋克 / 蒸汽朋克 / 黑色电影 / 其他） | Lisa 主导 | 🔄 进行中 | → 解锁 W2, W3, G2, G3, D1 |
+| W2 | 酒吧的名字、定位、"隐藏感"设定 | Zayn + Lisa | 🔲 待做 | ← W1 · → 解锁 G2, G3 |
+| W3 | 世界观对 Phoenix 角色的影响（身份/背景） | Zayn | 🔲 待做 | ← W1 · → 解锁 A1 |
+
 ---
 
 ## 🎮 游戏设计
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| G1 | 确定用户旅程方向 | Zayn + Lisa | ✅ 完成 | 采用 v2 高自由度方案，见 design/Flow-v2.md |
-| G2 | 场景设计：入口屏交互细节 | Zayn + Lisa | 🔲 待做 | START/QUIT 之外有没有别的元素 |
-| G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | 🔲 待做 | 哪些东西可点、点了之后发生什么 |
-| G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 在屏幕哪里、像素风聊天框长什么样 |
-| G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | 点击后注入什么 context 给 Phoenix |
-| G6 | 配方呈现方式 | Zayn + Lisa | 🔲 待做 | 纯文字对话 / 弹出卡片 / 其他 |
+| G1 | 确定用户旅程方向 | Zayn + Lisa | ✅ 完成 | 采用 v2，见 design/Flow-v2.md |
+| G2 | 场景设计：入口屏交互细节 | Zayn + Lisa | ⛔ 阻塞 | ← W1, W2 |
+| G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | ⛔ 阻塞 | ← W1, W2 · → 解锁 G5 |
+| G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 可与 G2/G3 并行 |
+| G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 · → 解锁 T6 |
+| G6 | 配方呈现方式 | Zayn + Lisa | 🔲 待做 | 可与 G2/G3 并行 |
 
 ---
 
@@ -27,10 +54,10 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| A1 | Phoenix system prompt 设计 | Zayn | 🔲 待做 | character/Phoenix-Answers.md 已收到，素材够了 |
-| A2 | 对话状态管理方案（v2：Phoenix 主导） | Zayn | 🔲 待做 | G1 已定，可开始设计 |
-| A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 1 张额外图，idle 动画前提 |
-| A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 1 张额外图，AI 生成中动画前提 |
+| A1 | Phoenix system prompt 设计 | Zayn | ⛔ 阻塞 | ← W3 · → 解锁 A2, T5 |
+| A2 | 对话状态管理方案（v2：Phoenix 主导） | Zayn | 🔲 待做 | ← A1 |
+| A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
+| A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
 
 ---
 
@@ -38,16 +65,16 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| T1 | 确定内部渲染分辨率 | Zayn | 🔲 待做 | 根据 Lisa 资产实际尺寸决定 |
-| T2 | 搭建项目骨架（index.html + main.js + server.py） | Zayn | 🔲 待做 | 依赖 T1 |
-| T3 | Kaboom.js 接入，两个场景可切换 | Zayn | 🔲 待做 | 依赖 T2 |
-| T4 | HTML overlay 聊天框基础实现 | Zayn | 🔲 待做 | 依赖 T3 |
-| T5 | Flask /chat 路由接入 AI API | Zayn | 🔲 待做 | 依赖 A1 |
-| T6 | 酒瓶点击 → 注入 context 打通 | Zayn | 🔲 待做 | 依赖 T4 + G5 |
-| T7 | Typewriter 打字效果 | Zayn | 🔲 待做 | 第一梯队动画，优先级最高 |
-| T8 | 灯光闪烁动画 | Zayn | 🔲 待做 | 第一梯队动画 |
-| T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | 第一梯队动画 |
-| T10 | 更新 CLAUDE.md（新技术栈） | Zayn | 🔲 待做 | — |
+| T1 | 确定内部渲染分辨率 | Zayn | 🔲 待做 | ← D1（需知资产最终尺寸） |
+| T2 | 搭建项目骨架（index.html + main.js + server.py） | Zayn | 🔲 待做 | ← T1 · → 解锁 T3 |
+| T3 | Kaboom.js 接入，两个场景可切换 | Zayn | 🔲 待做 | ← T2 · → 解锁 T4, T8, T9 |
+| T4 | HTML overlay 聊天框基础实现 | Zayn | 🔲 待做 | ← T3 · → 解锁 T6, T7 |
+| T5 | Flask /chat 路由接入 AI API | Zayn | 🔲 待做 | ← A1 · 可与 T3/T4 并行开发 |
+| T6 | 酒瓶点击 → 注入 context 打通 | Zayn | 🔲 待做 | ← T4 + G5 |
+| T7 | Typewriter 打字效果 | Zayn | 🔲 待做 | ← T4 |
+| T8 | 灯光闪烁动画 | Zayn | 🔲 待做 | ← T3 |
+| T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | ← T3 |
+| T10 | 更新 CLAUDE.md（新技术栈） | Zayn | 🔲 待做 | 无前置，可立即开始 |
 
 ---
 
@@ -55,10 +82,10 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| D1 | 确认所有现有资产为最终版 or reference | Lisa | 🔲 待做 | 目前全部为 reference |
-| D2 | Phoenix 眨眼帧交付 | Lisa | 🔲 待做 | 见 A3 |
-| D3 | Phoenix 说话帧交付 | Lisa | 🔲 待做 | 见 A4 |
-| D4 | 像素字体选型 | Lisa | 🔲 待做 | 用于聊天框 & UI 文字 |
+| D1 | 确认所有现有资产为最终版（Entrance 正在修改） | Lisa | ⛔ 阻塞 | ← W1 · → 解锁 T1 |
+| D2 | Phoenix 眨眼帧交付 | Lisa | 🔲 待做 | = A3，无前置 |
+| D3 | Phoenix 说话帧交付 | Lisa | 🔲 待做 | = A4，无前置 |
+| D4 | 像素字体选型 | Lisa | 🔲 待做 | 无前置，可立即开始 |
 
 ---
 
@@ -70,7 +97,7 @@
 | 确认技术栈（Kaplay + Flask） | 2026-05-27 |
 | 建立 v2 branch，清理 v1 代码 | 2026-05-27 |
 | 设计资产初版交付（bar/entrance/Phoenix/6瓶子） | 2026-05-27 |
-| Phoenix 性格问卷收回（Phx-Answer.md） | 2026-05-27 |
+| Phoenix 性格问卷收回（character/Phoenix-Answers.md） | 2026-05-27 |
 | 建立 docs 索引（README.md） | 2026-05-27 |
 | Kaboom.js 技术笔记整理 | 2026-05-27 |
 | 用户旅程 Brainstorm 原料存档 | 2026-05-27 |
