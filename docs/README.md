@@ -16,7 +16,7 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [Pivot.md](./Pivot.md) | 项目整体 pivot 方向、技术栈决策、动画优先级、待办清单 | ✅ 持续更新 |
+| [project/Pivot.md](./project/Pivot.md) | 项目整体 pivot 方向、技术栈决策、动画优先级、待办清单 | ✅ 持续更新 |
 
 ---
 
@@ -24,9 +24,10 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [Brainstorm-Journey.md](./Brainstorm-Journey.md) | 用户旅程方向 A（开放式）& B（仪式感）的 brainstorm 原料 | 📝 原料储备 |
-| [Design-Flow-v1.md](./Design-Flow-v1.md) | 融合方案：结构化旅程（A+B+Lisa） | 📝 待评估 |
-| [Design-Flow-v2.md](./Design-Flow-v2.md) | 高自由度方案：Phoenix 主导，无固定路径 | 📝 待评估 |
+| [design/Brainstorm.md](./design/Brainstorm.md) | 用户旅程方向 A（开放式）& B（仪式感）的 brainstorm 原料 | 📝 原料储备 |
+| [design/Flow-Lisa.md](./design/Flow-Lisa.md) | Lisa 的原始 Flow 设计稿 | 📝 参考 |
+| [design/Flow-v1.md](./design/Flow-v1.md) | 融合方案：结构化旅程（A + B + Lisa） | 📝 待评估 |
+| [design/Flow-v2.md](./design/Flow-v2.md) | 高自由度方案：Phoenix 主导，无固定路径 | 📝 待评估 |
 
 ---
 
@@ -34,8 +35,8 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [Phoenix-Character-Sheet.md](./Phoenix-Character-Sheet.md) | 发给 Phoenix 的性格问卷模板 | ✅ 已发送 |
-| [Phx-Answer.md](./Phx-Answer.md) | Phoenix 填写完成的问卷（system prompt 原料）| ✅ 已收到 |
+| [character/Phoenix-Sheet.md](./character/Phoenix-Sheet.md) | 发给 Phoenix 的性格问卷模板 | ✅ 已发送 |
+| [character/Phoenix-Answers.md](./character/Phoenix-Answers.md) | Phoenix 填写完成的问卷（system prompt 原料）| ✅ 已收到 |
 
 ---
 
@@ -43,23 +44,23 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [TechNotes-Kaboom.md](./TechNotes-Kaboom.md) | Kaplay/Kaboom.js 核心概念、像素风渲染配置、常用 API | ✅ 完成 |
+| [tech/Kaboom.md](./tech/Kaboom.md) | Kaplay/Kaboom.js 核心概念、像素风渲染配置、常用 API | ✅ 完成 |
 
 ---
 
 ## 🖼 设计资产
 
-| 路径 | 内容 |
+| 文件 | 内容 |
 |---|---|
-| [pics/Entrance.png](./pics/Entrance.png) | 入口屏（暗黑哥特风，START/QUIT） |
-| [pics/bar.png](./pics/bar.png) | 主酒吧场景（水族馆背景 + Phoenix + 吧台） |
-| [pics/Figure-Phx.png](./pics/Figure-Phx.png) | Phoenix 全身立绘 |
-| [pics/Gin.png](./pics/Gin.png) | Gin 瓶子 sprite |
-| [pics/Rum.png](./pics/Rum.png) | Rum 瓶子 sprite |
-| [pics/Whisky.png](./pics/Whisky.png) | Whiskey 瓶子 sprite |
-| [pics/Vodka.png](./pics/Vodka.png) | Vodka 瓶子 sprite |
-| [pics/Tequila.png](./pics/Tequila.png) | Tequila 瓶子 sprite |
-| [pics/Brandy.png](./pics/Brandy.png) | Brandy 瓶子 sprite |
+| [assets/Entrance.png](./assets/Entrance.png) | 入口屏（暗黑哥特风，START/QUIT） |
+| [assets/bar.png](./assets/bar.png) | 主酒吧场景（水族馆背景 + Phoenix + 吧台） |
+| [assets/Figure-Phx.png](./assets/Figure-Phx.png) | Phoenix 全身立绘 |
+| [assets/Gin.png](./assets/Gin.png) | Gin 瓶子 sprite |
+| [assets/Rum.png](./assets/Rum.png) | Rum 瓶子 sprite |
+| [assets/Whisky.png](./assets/Whisky.png) | Whiskey 瓶子 sprite |
+| [assets/Vodka.png](./assets/Vodka.png) | Vodka 瓶子 sprite |
+| [assets/Tequila.png](./assets/Tequila.png) | Tequila 瓶子 sprite |
+| [assets/Brandy.png](./assets/Brandy.png) | Brandy 瓶子 sprite |
 
 > 所有资产均为 reference，可根据最终设计调整。
 
@@ -67,4 +68,4 @@
 
 ## 📋 下一步待做
 
-见 [Pivot.md → 待讨论清单](./Pivot.md#待讨论--下次继续)
+见 [Action-Index.md → 游戏设计部分](./Action-Index.md)
