@@ -25,6 +25,8 @@
 | 文件 | 内容 | 状态 |
 |---|---|---|
 | [Brainstorm-Journey.md](./Brainstorm-Journey.md) | 用户旅程方向 A（开放式）& B（仪式感）的 brainstorm 原料 | 📝 原料储备 |
+| [Design-Flow-v1.md](./Design-Flow-v1.md) | 融合方案：结构化旅程（A+B+Lisa） | 📝 待评估 |
+| [Design-Flow-v2.md](./Design-Flow-v2.md) | 高自由度方案：Phoenix 主导，无固定路径 | 📝 待评估 |
 
 ---
 
