@@ -19,7 +19,8 @@
 
 | 事项 | 负责 |
 |---|---|
-| W3 — 世界观对 Phoenix 角色影响 → 填入 prompt | Zayn |
+| G2 — 入口屏交互细节 | Zayn + Lisa |
+| G3 — 酒吧场景交互地图 | Zayn + Lisa |
 | G2 — 入口屏交互细节 | Zayn + Lisa |
 | G3 — 酒吧场景交互地图 | Zayn + Lisa |
 | A3 — Phoenix 眨眼帧 | Lisa |
@@ -38,7 +39,7 @@
 |---|---|---|---|---|
 | W1 | 确定时代背景 / 世界设定 | Lisa 主导 | ✅ 完成 | 近未来义体化，见 project/Worldbuilding.md |
 | W2 | 酒吧的名字、定位、"隐藏感"设定 | Zayn + Lisa | ✅ 完成 | 无名酒吧，存在于麻醉缝隙，无需命名 |
-| W3 | 世界观对 Phoenix 角色的影响（身份/背景）→ 填入 prompt | Zayn | 🔄 进行中 | W1 已定 · → 解锁 A1 完整版 |
+| W3 | 世界观对 Phoenix 角色的影响（身份/背景）→ 填入 prompt | Zayn | ✅ 完成 | 已写入 Phoenix-Prompt.md |
 
 ---
 
@@ -62,7 +63,7 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| A1 | Phoenix system prompt 设计 | Zayn | 🔄 进行中 | 性格 ✅ · 世界观 ✅ · W3 细节填入进行中 · → 解锁 A2, T5 |
+| A1 | Phoenix system prompt 设计 | Zayn | ✅ 完成 | 见 character/Phoenix-Prompt.md · 鸡尾酒知识待 T12 追加 |
 | A2 | 对话状态管理方案（v2：Phoenix 主导） | Zayn | 🔲 待做 | ← A1 |
 | A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
 | A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
@@ -119,3 +120,5 @@
 | W1 完成：近未来义体化赛博朋克世界观（Lisa） | 2026-05-27 |
 | W2 完成：酒吧无名，存在于麻醉缝隙 | 2026-05-27 |
 | Phoenix system prompt 世界观部分填入完成 | 2026-05-27 |
+| W3 完成：Phoenix 角色世界观写入 prompt | 2026-05-27 |
+| A1 完成：Phoenix system prompt 完整版（鸡尾酒知识待 T12 追加） | 2026-05-27 |
