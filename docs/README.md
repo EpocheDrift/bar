@@ -18,6 +18,7 @@
 |---|---|---|
 | [project/Pivot.md](./project/Pivot.md) | 项目整体 pivot 方向、技术栈决策、动画优先级、待办清单 | ✅ 持续更新 |
 | [project/Worldbuilding.md](./project/Worldbuilding.md) | 世界观设定 v1（Lisa）— 义体化近未来，麻醉缝隙酒吧 | ✅ 完成 |
+| [project/Cocktail-List.md](./project/Cocktail-List.md) | Phoenix 的鸡尾酒菜单（31款，含秘密配方 #31 Sight） | ✅ 完成 |
 
 ---
 

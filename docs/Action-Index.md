@@ -29,7 +29,9 @@
 | G7 — Mixing Game 题目来源决策 | Zayn |
 | G9 — Phoenix 触发游戏通信协议决策 | Zayn |
 | T11 — 部署方案确认 | Zayn |
-| T12 — Phoenix 知识库注入方式决策 | Zayn |
+| G7 — Mixing Game 题目来源决策 | Zayn |
+| G9 — Phoenix 触发游戏通信协议决策 | Zayn |
+| T11 — 部署方案确认 | Zayn |
 
 ---
 
@@ -85,7 +87,7 @@
 | T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | ← T3 |
 | T10 | 更新 CLAUDE.md（新技术栈） | Zayn | ✅ 完成 | — |
 | T11 | 部署方案确认（本地 demo vs 线上部署） | Zayn | 🔲 待做 | 无前置 · 影响 T2 server.py 写法 |
-| T12 | Phoenix 知识库注入方式（全量 / 摘要 / tool call） | Zayn | 🔲 待做 | 无前置 · → 影响 A1 完整版 + T5 |
+| T12 | Phoenix 知识库注入方式 | Zayn | ✅ 完成 | 全量注入，见 project/Cocktail-List.md（31款，含1个秘密配方） |
 
 ---
 
@@ -122,3 +124,4 @@
 | Phoenix system prompt 世界观部分填入完成 | 2026-05-27 |
 | W3 完成：Phoenix 角色世界观写入 prompt | 2026-05-27 |
 | A1 完成：Phoenix system prompt 完整版（鸡尾酒知识待 T12 追加） | 2026-05-27 |
+| T12 完成：全量注入，Cocktail-List.md（31款含秘密配方） | 2026-05-27 |
