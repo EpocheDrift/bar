@@ -77,7 +77,7 @@ phoenix_blink.png     ← 眨眼帧（idle 动画用）
 |---|---|---|
 | `phoenix_talk.png` | Phoenix 说话时的帧——嘴部微开或表情有变化，画布尺寸同上统一 | 🔴 高 |
 | `phoenix_blink.png` | Phoenix 眨眼的帧，idle 状态偶尔切换用，画布尺寸同上统一 | 🟡 中 |
-| 像素字体 | 聊天框用的像素风字体，提供 .ttf 文件或字体名（比如 Google Fonts 上的名字）| 🔴 高 |
+| 像素字体 | 聊天框用的像素风字体，提供 .ttf 文件或字体名（比如 Google Fonts 上的名字）| 🔴 高 | ✅ /Lisa/ARCADECLASSIC copy.TTF
 
 ---
 
