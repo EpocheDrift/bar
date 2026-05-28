@@ -72,7 +72,11 @@
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
 | T1 | 确定内部渲染分辨率 | Zayn | 🔲 待做 | ← D1 · 可先用 1024×576 占位 |
-| T2 | 搭建项目骨架（index.html + main.js + chat.js + style.css + server.py） | Zayn | 🔲 待做 | 1024×576 + crisp:true · HTML overlay 聊天框 · PhoenixAI harness · CORS · → 解锁 T3 |
+| T2 | 搭建项目骨架 | Zayn / Codex | 🔄 进行中 | 拆成 4 个 GitHub Issue（#19-#22），Milestone: T2-Project Skeleton · → 解锁 T3 |
+| T2-1 | Flask backend + PhoenixAI harness | Codex | 🔲 待做 | Issue #19 |
+| T2-2 | HTML layout + CSS | Codex | 🔲 待做 | Issue #20 |
+| T2-3 | Kaplay init + 两个场景 | Codex | 🔲 待做 | Issue #21 |
+| T2-4 | Chat UI + Flask 集成 + Typewriter | Codex | 🔲 待做 | Issue #22 · ← T2-1, T2-2, T2-3 |
 | T3 | Kaplay 接入，两个场景可切换 | Zayn | 🔲 待做 | ← T2 · → 解锁 T4, T8, T9 |
 | T4 | HTML overlay 聊天框基础实现 | Zayn | 🔲 待做 | ← T3 · → 解锁 T6, T7 |
 | T5 | Flask /chat 路由接入 AI API | Zayn | 🔲 待做 | ← A1 ✅, G9 · 可与 T3/T4 并行 |
