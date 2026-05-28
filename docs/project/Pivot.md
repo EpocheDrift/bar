@@ -1,12 +1,6 @@
 # Project Pivot — 像素风 AI 酒吧
 
-> 最后更新：2026-05-28 · 状态：规划完成，所有 practical needs 覆盖，开始写代码
-
----
-
-## 背景
-
-原版本（HangoverGPT / Pour Decisions v1）是一个功能完整但缺乏创意的 CRUD+AI 鸡尾酒应用，是快速假设实现的一版。现决定全面重构，目标是做一个 portfolio 级别的 creative project。
+> 最后更新：2026-05-29 · 状态：骨架完成，视觉调整 + Mixing Game 阶段
 
 ---
 
@@ -15,116 +9,73 @@
 | 项目 | 内容 |
 |---|---|
 | **团队** | Zayn（Developer）+ Lisa（Designer） |
-| **硬性 Deadline** | ~9天（作业交付）|
-| **后续计划** | 交作业后花更多时间打磨成真正有趣的产品 |
+| **Deadline** | 2026-06-02 周一下午 |
 | **作业性质** | Vibe Coding 练习，无 domain/技术限制 |
+| **后续计划** | 交作业后继续打磨为正式 portfolio 作品 |
 
 ---
 
-## 新方向：像素风 AI 酒吧
+## 核心概念
 
-### 核心概念
+像素风 AI 酒吧游戏。用户在义体手术的麻醉间隙进入一间无名酒吧，和 AI 酒保 **Phoenix**（冷淡毒舌，以真实朋友为原型）对话，得到一杯专属鸡尾酒推荐。场景中有可交互的酒瓶作为对话快捷方式。Phoenix 会在合适时机发起 Mixing Game 挑战。
 
-用户打开页面，进入一个**像素风格的酒吧场景**。吧台后面站着一个以朋友真实形象为原型的像素风酒保 **Phoenix**，其背后接入 AI。用户可以和 Phoenix 自由对话，Phoenix 根据心情、口味、偏好推荐鸡尾酒并有自己的性格。场景中有可交互的元素（酒瓶等）辅助对话。
-
-### 创意核心（必须有）
-
-1. **场景感** — 用户感觉"进入"了一个像素风酒吧
-2. **AI 酒保角色** — Phoenix，有真实人物原型的性格，不是普通 chatbot
-
----
-
-## 设计资产（Lisa 已交付）
-
-存放于 `docs/pics/`
-
-| 文件 | 内容 |
-|---|---|
-| `Entrance.png` | 入口/标题屏（暗黑哥特风，带 START / QUIT 按钮） |
-| `bar.png` | 主酒吧场景（水族馆背景 + Phoenix 在吧台后 + 吧台瓶子） |
-| `Figure-Phx.png` | Phoenix 全身立绘（独立 sprite，用于对话叠加） |
-| `Gin.png` | Gin 瓶子 sprite |
-| `Rum.png` | Rum 瓶子 sprite |
-| `Whisky.png` | Whiskey 瓶子 sprite |
-| `Vodka.png` | Vodka 瓶子 sprite |
-| `Tequila.png` | Tequila 瓶子 sprite |
-| `Brandy.png` | Brandy 瓶子 sprite |
-
-目前所有资产均为 **reference**，可根据最终设计调整。
-
----
-
-## 交互模型
-
-**混合模式：对话驱动主线 + 场景交互辅助**
-
-```
-入口屏（Entrance） → 点 START → 酒吧场景（Bar）
-                                      ↓
-                            Phoenix 开口问候
-                                      ↓
-主路径：用户自由打字对话          辅助路径：点击酒瓶 / 菜单
-  → Phoenix 推荐鸡尾酒         → 自动注入对话上下文
-  → 给出配方 / 步骤            （告诉 Phoenix 感兴趣的烈酒）
-  → 有性格地聊天
-```
-
-**交互元素（瓶子、菜单等）是对话的快捷方式，不是独立功能。**
-
----
-
-## 从旧版提炼的 Practical Needs
-
-以下四点通过对话流全部可以满足：
-
-1. **配方发现** — Phoenix 对话中给出配方
-2. **AI 推荐** — Phoenix 根据心情/口味/点击的瓶子推荐
-3. **逐步引导** — Phoenix 在对话中 step-by-step 教调酒
-4. **Web 可访问** — 浏览器直接打开
+完整世界观见 `docs/project/Worldbuilding.md`。
 
 ---
 
 ## 技术栈（已定）
 
-| 层 | 技术 | 原因 |
+| 层 | 技术 |
+|---|---|
+| 游戏渲染 | **Kaplay**（Kaboom.js 社区维护 fork），1024×576 内部分辨率，crisp:true |
+| 后端 | **Flask** + **Gunicorn**（生产），单路由 `/chat` |
+| AI | **Minimax API**（OpenAI-compatible），PhoenixAI harness 包装 |
+| 部署 | **Docker** → 自有云服务器 + 自有域名，nginx 反代 |
+
+---
+
+## 设计资产（当前版本，存于 `docs/assets/`）
+
+| 文件 | 内容 | 状态 |
 |---|---|---|
-| **游戏渲染** | **Kaboom.js** | 内置像素风渲染管线（内部低分辨率 + nearest-neighbor 放大）；场景/sprite 管理开箱即用；比 Phaser 轻，适合我们规模 |
-| **后端** | Flask（极简） | 单路由 `/chat`，转发 AI API 调用 |
-| **AI** | OpenAI / Minimax API | 沿用现有 key |
+| `splash.png` | 入口屏（暗黑哥特风，带 START/QUIT）| reference |
+| `home.png` | 主酒吧场景（水族馆 + Phoenix + 吧台）| reference |
+| `browse.png` | 暗色酒吧场景（用途待确认）| reference |
+| `standing.png` | Phoenix 站立 / idle 立绘 | reference |
+| `shake_1.png` | Phoenix 摇酒动作帧 | reference |
+| `Gin/Rum/Whiskey/Vodka/Tequila/Brandy/Cointreau.png` | 7 种酒瓶 sprite | reference |
 
-### 为什么不用 HTML div + PNG 堆叠
+---
 
-像素风游戏的正确渲染方式是：在统一的低分辨率画布上绘制所有元素，再整体 nearest-neighbor 放大到屏幕。CSS 定位的浮点坐标会导致亚像素渲染，破坏像素风的硬边缘质感。Kaboom.js 的 Canvas 管线天然解决这个问题。
+## 交互模型（v2 — 已定）
+
+Phoenix 主导，无固定路径。用户自由对话，Phoenix 自己决定何时推荐、何时发起 Mixing Game。
+酒瓶点击 = 注入对话 context 的快捷方式，不是独立功能。
+
+完整流程见 `docs/design/Flow-v2.md`。
+
+---
+
+## Practical Needs（全部已覆盖）
+
+1. **配方发现** → Phoenix 对话中给出配方
+2. **AI 推荐** → Phoenix 根据心情/口味/点击的瓶子推荐
+3. **逐步引导** → Phoenix 在对话中教调酒；Mixing Game 是游戏化版本
+4. **Web 可访问** → 浏览器直接打开
 
 ---
 
 ## 动画优先级
 
-### 第一梯队（纯 JS/CSS，不需要新资产）
+### 第一梯队（已完成）
+- ✅ Typewriter 打字效果
+- ✅ 灯光闪烁（dimmer onUpdate）
+- ✅ 酒瓶 hover 上浮反馈
 
-1. **Typewriter 打字效果** — Phoenix 说话时文字逐字出现，视觉小说感的核心，最高优先
-2. **灯光闪烁** — 酒吧灯微弱随机闪烁，氛围感
-3. **酒瓶 hover / 点击反馈** — 悬停上浮 + 点击下压
-4. **场景切换过渡** — Entrance → Bar 的淡入淡出
-5. **Entrance 触手摆动** — 极慢的 rotate 动画，不需改图
-
-### 第二梯队（需要 Lisa 提供额外帧）
-
-6. **Phoenix 眨眼动画** — 1 张额外帧，每 4-6s 切换，角色"活了"
-7. **Phoenix 说话动画** — 1 张嘴微开帧，AI 生成中切换
+### 第二梯队（待 Lisa 交付帧）
+- 🔲 Phoenix 眨眼动画（`phoenix_blink.png`）
+- 🔲 Phoenix 说话动画（`phoenix_talk.png`）
 
 ### 第三梯队（有余力再做）
-
-8. 水族馆鱼动画（CSS 叠加游动小鱼）
-9. 环境粒子（灯光下浮尘）
-
----
-
-## 待讨论 / 下次继续
-
-- [ ] **Phoenix 性格 system prompt** — 等 Zayn 向朋友收集信息后设计
-- [ ] **Kaboom.js 上手** — Zayn 需要了解基本 API（场景、sprite、input）
-- [ ] **对话 UI 在 Kaboom 里怎么做** — 原生 canvas 绘制 vs HTML overlay
-- [ ] **酒瓶点击的具体行为** — 点击后 Phoenix 说什么 / 注入什么 context
-- [ ] **内部渲染分辨率确定** — 根据 Lisa 资产尺寸决定（如 480×270）
-- [ ] **Lisa 额外交付物** — Phoenix 眨眼帧 + 说话帧（第二梯队动画前提）
+- 场景切换淡入淡出
+- 水族馆鱼动画

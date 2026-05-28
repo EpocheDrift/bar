@@ -9,6 +9,7 @@
 | 文件 | 内容 | 状态 |
 |---|---|---|
 | [Action-Index.md](./Action-Index.md) | 所有待做 / 进行中 / 已完成事项的单一入口 | 🔄 持续更新 |
+| [Lisa-Index.md](./Lisa-Index.md) | Lisa 的工作台 — 任务、资产、参考文档入口 | 🔄 持续更新 |
 
 ---
 
@@ -16,10 +17,9 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [project/Pivot.md](./project/Pivot.md) | 项目整体 pivot 方向、技术栈决策、动画优先级、待办清单 | ✅ 持续更新 |
-| [project/Worldbuilding.md](./project/Worldbuilding.md) | 世界观设定 v1（Lisa）— 义体化近未来，麻醉缝隙酒吧 | ✅ 完成 |
-| [project/Cocktail-List.md](./project/Cocktail-List.md) | Phoenix 的鸡尾酒菜单（31款，含秘密配方 #31 Sight） | ✅ 完成 |
-| [project/Cocktail-Steps-Needed.md](./project/Cocktail-Steps-Needed.md) | 创意款配方步骤问卷（发给 Phoenix 填写） | 🔲 待填写 |
+| [project/Pivot.md](./project/Pivot.md) | 项目方向、技术栈、动画优先级 | ✅ 持续更新 |
+| [project/Worldbuilding.md](./project/Worldbuilding.md) | 世界观设定（Lisa）— 义体化近未来，麻醉缝隙酒吧 | ✅ 完成 |
+| [project/Cocktail-List.md](./project/Cocktail-List.md) | 鸡尾酒菜单（31款含步骤，含秘密配方 #31 Sight）| ✅ 完成 |
 
 ---
 
@@ -27,11 +27,11 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [design/Brainstorm.md](./design/Brainstorm.md) | 用户旅程方向 A（开放式）& B（仪式感）的 brainstorm 原料 | 📝 原料储备 |
-| [design/Design-Decisions.md](./design/Design-Decisions.md) | 待决策的技术/设计选择（G7, G9, T11, T12） | 🔲 待决策 |
+| [design/Flow-v2.md](./design/Flow-v2.md) | 游戏流程 v2：Phoenix 主导，无固定路径 | ✅ **当前执行版本** |
+| [design/Design-Decisions.md](./design/Design-Decisions.md) | 已定 / 待定的设计技术决策 | 🔄 持续更新 |
 | [design/Flow-Lisa.md](./design/Flow-Lisa.md) | Lisa 的原始 Flow 设计稿 | 📝 参考 |
-| [design/Flow-v1.md](./design/Flow-v1.md) | 融合方案：结构化旅程（A + B + Lisa） | ~~待评估~~ 已存档 |
-| [design/Flow-v2.md](./design/Flow-v2.md) | 高自由度方案：Phoenix 主导，无固定路径 | ✅ **当前执行版本** |
+| [design/Flow-v1.md](./design/Flow-v1.md) | 融合方案（已存档，未采用） | 📦 存档 |
+| [design/Brainstorm.md](./design/Brainstorm.md) | 旅程方向 A/B brainstorm 原料 | 📦 存档 |
 
 ---
 
@@ -39,9 +39,9 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [character/Phoenix-Sheet.md](./character/Phoenix-Sheet.md) | 发给 Phoenix 的性格问卷模板 | ✅ 已发送 |
-| [character/Phoenix-Answers.md](./character/Phoenix-Answers.md) | Phoenix 填写完成的问卷（system prompt 原料）| ✅ 已收到 |
-| [character/Phoenix-Prompt.md](./character/Phoenix-Prompt.md) | Phoenix AI system prompt（性格 + 世界观均已完成）| ✅ 完成 |
+| [character/Phoenix-Prompt.md](./character/Phoenix-Prompt.md) | Phoenix AI system prompt（完整版）| ✅ 完成 |
+| [character/Phoenix-Answers.md](./character/Phoenix-Answers.md) | Phoenix 填写的性格问卷 | ✅ 完成 |
+| [character/Phoenix-Sheet.md](./character/Phoenix-Sheet.md) | 问卷模板 | 📦 存档 |
 
 ---
 
@@ -49,29 +49,25 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [tech/Kaboom.md](./tech/Kaboom.md) | Kaplay/Kaboom.js 核心概念、像素风渲染配置、常用 API | ✅ 完成 |
+| [tech/Kaboom.md](./tech/Kaboom.md) | Kaplay 核心概念、像素风渲染配置、常用 API | ✅ 完成 |
 
 ---
 
-## 🖼 设计资产
+## 🖼 设计资产（`docs/assets/`）
 
-| 文件 | 内容 |
-|---|---|
-| [assets/Entrance.png](./assets/Entrance.png) | 入口屏（暗黑哥特风，START/QUIT） |
-| [assets/bar.png](./assets/bar.png) | 主酒吧场景（水族馆背景 + Phoenix + 吧台） |
-| [assets/Figure-Phx.png](./assets/Figure-Phx.png) | Phoenix 全身立绘 |
-| [assets/Gin.png](./assets/Gin.png) | Gin 瓶子 sprite |
-| [assets/Rum.png](./assets/Rum.png) | Rum 瓶子 sprite |
-| [assets/Whiskey.png](./assets/Whiskey.png) | Whiskey 瓶子 sprite |
-| [assets/Vodka.png](./assets/Vodka.png) | Vodka 瓶子 sprite |
-| [assets/Tequila.png](./assets/Tequila.png) | Tequila 瓶子 sprite |
-| [assets/Brandy.png](./assets/Brandy.png) | Brandy 瓶子 sprite |
+| 文件 | 内容 | 状态 |
+|---|---|---|
+| `splash.png` | 入口屏（暗黑哥特风，START/QUIT）| reference |
+| `home.png` | 主酒吧场景（水族馆 + Phoenix + 吧台）| reference |
+| `browse.png` | 暗色酒吧场景（用途待确认）| ❓ |
+| `standing.png` | Phoenix 站立 / idle 立绘 | reference |
+| `shake_1.png` | Phoenix 摇酒动作帧 | reference |
+| `Gin/Rum/Whiskey/Vodka/Tequila/Brandy/Cointreau.png` | 7 种酒瓶 sprite | reference |
 
-> 所有资产均为 reference，可根据最终设计调整。  
 > 交付规范见 [assets/Asset-Spec.md](./assets/Asset-Spec.md)
 
 ---
 
-## 📋 下一步待做
+## 📋 下一步
 
-见 [Action-Index.md → 游戏设计部分](./Action-Index.md)
+见 [Action-Index.md](./Action-Index.md)
