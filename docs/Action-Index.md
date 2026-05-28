@@ -21,7 +21,8 @@
 | G3 — 酒吧场景交互地图 | Zayn + Lisa |
 | G7 — Mixing Game 题目来源决策 | Zayn |
 | G9 — Phoenix 触发游戏通信协议决策 | Zayn |
-| T11 — 部署方案确认 | Zayn |
+| **T2 — 项目骨架** | **Zayn** |
+| G7 — 经典款步骤写入 Cocktail-List | Zayn |
 | **T2 — 项目骨架（可用 1024×576 占位先开始）** | **Zayn** |
 | A3 — Phoenix 眨眼帧 | Lisa |
 | A4 — Phoenix 说话帧 | Lisa |
@@ -49,9 +50,9 @@
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | 可与 G2/G3 并行 |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 · → 解锁 T6 |
 | G6 | 配方呈现方式（纯文字 / 弹出卡片 / 其他） | Zayn + Lisa | 🔲 待做 | 可与 G2/G3 并行 |
-| G7 | Mixing Game 题目来源（AI实时生成 vs 预烘焙JSON） | Zayn | 🔲 待做 | 无前置 · → 解锁 G8, T3游戏部分 |
+| G7 | Mixing Game 题目来源 | Zayn | 🔄 进行中 | 经典款步骤 Zayn 直接写；创意款由 Phoenix 补充（见 project/Cocktail-Steps-Needed.md）|
 | G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | 🔲 待做 | ← G7 |
-| G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | 🔲 待做 | 无前置 · → 解锁 T5, T6 |
+| G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | ✅ 完成 | 结构化标记 `[GAME:cocktail_name]`，前端剥离后触发游戏 |
 
 ---
 
@@ -80,7 +81,10 @@
 | T8 | 灯光闪烁动画 | Zayn | 🔲 待做 | ← T3 |
 | T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | ← T3 |
 | T10 | 更新 CLAUDE.md（新技术栈） | Zayn | ✅ 完成 | — |
-| T11 | 部署方案确认（本地 demo vs 线上部署） | Zayn | 🔲 待做 | 无前置 · 影响 server.py 写法 |
+| T11 | 部署方案确认 | Zayn | ✅ 完成 | 线上部署 + repo 提交，前端 Vercel / 后端 Render |
+| T13 | Flask 加 CORS（跨域，Vercel↔Render 必须） | Zayn | 🔲 待做 | ← T2 · 加 flask-cors，一行配置 |
+| T14 | 换用 Gunicorn 作生产服务器 | Zayn | 🔲 待做 | ← T2 · gunicorn -w 4 server:app · 支持并发多用户 |
+| T15 | Phoenix AI Harness（PhoenixAI 类，包住 Minimax API） | Zayn | 🔲 待做 | ← T2 · 负责 prompt 拼装 / [GAME:] 解析 / 错误处理 |
 | T12 | Phoenix 知识库注入方式 | Zayn | ✅ 完成 | 全量注入，见 project/Cocktail-List.md（31款）|
 
 ---
