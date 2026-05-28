@@ -37,6 +37,7 @@
 |---|---|---|
 | [character/Phoenix-Sheet.md](./character/Phoenix-Sheet.md) | 发给 Phoenix 的性格问卷模板 | ✅ 已发送 |
 | [character/Phoenix-Answers.md](./character/Phoenix-Answers.md) | Phoenix 填写完成的问卷（system prompt 原料）| ✅ 已收到 |
+| [character/Phoenix-Prompt.md](./character/Phoenix-Prompt.md) | Phoenix AI system prompt（性格部分完成，世界观待填）| 🔄 进行中 |
 
 ---
 

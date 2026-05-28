@@ -54,7 +54,7 @@
 
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
-| A1 | Phoenix system prompt 设计 | Zayn | ⛔ 阻塞 | ← W3 · → 解锁 A2, T5 |
+| A1 | Phoenix system prompt 设计 | Zayn | 🔄 进行中 | 性格部分 ✅，世界观部分 ← W3 · → 解锁 A2, T5 |
 | A2 | 对话状态管理方案（v2：Phoenix 主导） | Zayn | 🔲 待做 | ← A1 |
 | A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
 | A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 无前置，可立即开始 |
@@ -74,7 +74,7 @@
 | T7 | Typewriter 打字效果 | Zayn | 🔲 待做 | ← T4 |
 | T8 | 灯光闪烁动画 | Zayn | 🔲 待做 | ← T3 |
 | T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | ← T3 |
-| T10 | 更新 CLAUDE.md（新技术栈） | Zayn | 🔲 待做 | 无前置，可立即开始 |
+| T10 | 更新 CLAUDE.md（新技术栈） | Zayn | ✅ 完成 | — |
 
 ---
 
