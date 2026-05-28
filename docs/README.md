@@ -63,7 +63,8 @@
 | [assets/Tequila.png](./assets/Tequila.png) | Tequila 瓶子 sprite |
 | [assets/Brandy.png](./assets/Brandy.png) | Brandy 瓶子 sprite |
 
-> 所有资产均为 reference，可根据最终设计调整。
+> 所有资产均为 reference，可根据最终设计调整。  
+> 交付规范见 [assets/Asset-Spec.md](./assets/Asset-Spec.md)
 
 ---
 
