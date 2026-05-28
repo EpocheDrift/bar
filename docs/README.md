@@ -25,6 +25,7 @@
 | 文件 | 内容 | 状态 |
 |---|---|---|
 | [design/Brainstorm.md](./design/Brainstorm.md) | 用户旅程方向 A（开放式）& B（仪式感）的 brainstorm 原料 | 📝 原料储备 |
+| [design/Design-Decisions.md](./design/Design-Decisions.md) | 待决策的技术/设计选择（G7, G9, T11, T12） | 🔲 待决策 |
 | [design/Flow-Lisa.md](./design/Flow-Lisa.md) | Lisa 的原始 Flow 设计稿 | 📝 参考 |
 | [design/Flow-v1.md](./design/Flow-v1.md) | 融合方案：结构化旅程（A + B + Lisa） | ~~待评估~~ 已存档 |
 | [design/Flow-v2.md](./design/Flow-v2.md) | 高自由度方案：Phoenix 主导，无固定路径 | ✅ **当前执行版本** |
