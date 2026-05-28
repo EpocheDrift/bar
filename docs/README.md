@@ -58,7 +58,7 @@
 | [assets/Figure-Phx.png](./assets/Figure-Phx.png) | Phoenix 全身立绘 |
 | [assets/Gin.png](./assets/Gin.png) | Gin 瓶子 sprite |
 | [assets/Rum.png](./assets/Rum.png) | Rum 瓶子 sprite |
-| [assets/Whisky.png](./assets/Whisky.png) | Whiskey 瓶子 sprite |
+| [assets/Whiskey.png](./assets/Whiskey.png) | Whiskey 瓶子 sprite |
 | [assets/Vodka.png](./assets/Vodka.png) | Vodka 瓶子 sprite |
 | [assets/Tequila.png](./assets/Tequila.png) | Tequila 瓶子 sprite |
 | [assets/Brandy.png](./assets/Brandy.png) | Brandy 瓶子 sprite |
