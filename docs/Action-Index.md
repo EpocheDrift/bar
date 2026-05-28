@@ -85,7 +85,7 @@
 | D1 | 确认所有现有资产为最终版（Entrance 正在修改） | Lisa | ⛔ 阻塞 | ← W1 · → 解锁 T1 |
 | D2 | Phoenix 眨眼帧交付 | Lisa | 🔲 待做 | = A3，无前置 |
 | D3 | Phoenix 说话帧交付 | Lisa | 🔲 待做 | = A4，无前置 |
-| D4 | 像素字体选型 | Lisa | 🔲 待做 | 无前置，可立即开始 |
+| D4 | 像素字体选型 | Lisa | ✅ 完成 | ARCADECLASSIC |
 
 ---
 
