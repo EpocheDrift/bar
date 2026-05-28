@@ -17,8 +17,6 @@
   });
 
   const backgroundScale = 0.5;
-  const startRegion = { x: 397, y: 367, width: 230, height: 54 };
-  const quitRegion = { x: 397, y: 437, width: 230, height: 54 };
   const bottleConfigs = [
     { key: "whiskey", spirit: "whiskey", x: 32, y: 350, width: 42, height: 104, scale: 0.3 },
     { key: "rum", spirit: "rum", x: 126, y: 334, width: 34, height: 94, scale: 0.27 },
@@ -138,53 +136,6 @@
       bottle.pos.y = bottle.baseY;
     });
   }
-
-  function pointerToGame(event) {
-    const bounds = canvas.getBoundingClientRect();
-    return {
-      x: ((event.clientX - bounds.left) / bounds.width) * 1024,
-      y: ((event.clientY - bounds.top) / bounds.height) * 576,
-    };
-  }
-
-  function isInside(point, region) {
-    return (
-      point.x >= region.x &&
-      point.x <= region.x + region.width &&
-      point.y >= region.y &&
-      point.y <= region.y + region.height
-    );
-  }
-
-  function bottleAt(point) {
-    return bottleConfigs.find((bottle) => isInside(point, bottle));
-  }
-
-  canvas.addEventListener("click", (event) => {
-    const point = pointerToGame(event);
-    if (currentScene === "entrance" && isInside(point, startRegion)) {
-      k.go("bar");
-      return;
-    }
-    if (currentScene === "entrance" && isInside(point, quitRegion)) {
-      window.close();
-      return;
-    }
-    if (currentScene === "bar") {
-      const bottle = bottleAt(point);
-      if (bottle) {
-        window.injectBottleContext(bottle.spirit);
-      }
-    }
-  });
-
-  canvas.addEventListener("mousemove", (event) => {
-    const point = pointerToGame(event);
-    const isInteractive =
-      (currentScene === "entrance" && (isInside(point, startRegion) || isInside(point, quitRegion))) ||
-      (currentScene === "bar" && Boolean(bottleAt(point)));
-    document.body.style.cursor = isInteractive ? "pointer" : "default";
-  });
 
   k.scene("entrance", () => {
     currentScene = "entrance";
