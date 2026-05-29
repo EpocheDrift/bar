@@ -27,7 +27,8 @@
 
 | 文件 | 内容 | 状态 |
 |---|---|---|
-| [design/Flow-v2.md](./design/Flow-v2.md) | 游戏流程 v2：Phoenix 主导，无固定路径 | ✅ **当前执行版本** |
+| [design/Flow-v2.md](./design/Flow-v2.md) | 游戏流程 v2：Phoenix 主导，无固定路径（概要）| ✅ **当前执行版本** |
+| [design/Flow-v2-Detailed.md](./design/Flow-v2-Detailed.md) | 游戏流程 v2 详细版：每个状态的视觉/交互/技术行为 | ✅ 完成 |
 | [design/Design-Decisions.md](./design/Design-Decisions.md) | 已定 / 待定的设计技术决策 | 🔄 持续更新 |
 | [design/Flow-Lisa.md](./design/Flow-Lisa.md) | Lisa 的原始 Flow 设计稿 | 📝 参考 |
 | [design/Flow-v1.md](./design/Flow-v1.md) | 融合方案（已存档，未采用） | 📦 存档 |
