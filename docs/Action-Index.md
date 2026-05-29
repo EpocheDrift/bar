@@ -62,8 +62,8 @@
 |---|---|---|---|---|
 | A1 | Phoenix system prompt 设计 | Zayn | ✅ 完成 | 见 character/Phoenix-Prompt.md |
 | A2 | 对话状态管理 | Zayn | ✅ 完成 | chat.js 里 messages 数组，全历史随每次请求发送 |
-| A3 | Phoenix 眨眼帧 | Lisa | 🔲 待做 | 无前置 |
-| A4 | Phoenix 说话帧 | Lisa | 🔲 待做 | 无前置 |
+| A3 | Phoenix 眨眼帧 | Lisa | ✅ 完成 | 无前置 |
+| A4 | Phoenix 说话帧 | Lisa | ✅ 完成 | 无前置 |
 
 ---
 
@@ -96,7 +96,7 @@
 | D1 | 确认所有现有资产为最终版 | Lisa | 🔲 待做 | → 解锁 T1（已占位 1024×576，最终确认后微调）|
 | D2 | Phoenix 眨眼帧交付 | Lisa | ✅ 完成 | = A3，600×900，透明背景 |
 | D3 | Phoenix 说话帧交付 | Lisa | ✅ 完成 | = A4，600×900，透明背景 |
-| D4 | 像素字体选型 | Lisa | ✅ 完成 | ARCADECLASSIC |
+| D4 | 像素字体选型 | Lisa | ✅ 完成 | docs/Lisa/Press_Start_2P |
 
 ---
 
