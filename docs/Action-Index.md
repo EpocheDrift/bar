@@ -49,7 +49,7 @@
 | G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | 🔲 待做 | → 解锁 G5 |
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | — |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 |
-| G6 | 配方呈现方式（纯文字 / 弹出卡片 / 其他） | Zayn + Lisa | 🔲 待做 | — |
+| G6 | 配方呈现方式 | Zayn + Lisa | 🔲 待做 | 建议先用纯文字，后续升级卡片 |
 | G7 | Mixing Game 题目来源 | Zayn | ✅ 完成 | 全部 31 款步骤已整合进 Cocktail-List.md |
 | G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | 🔲 待做 | — |
 | G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | ✅ 完成 | `[GAME:cocktail_name]` 标记，server.py 已实现 |
