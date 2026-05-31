@@ -176,7 +176,7 @@ input {
 #street-dialog-line {
   margin: 0;
   font-family: "VT323", monospace;
-  font-size: clamp(18px, 2.5vw, 28px);
+  font-size: clamp(25px, 3.9vw, 50px);
   line-height: 1.4;
   color: #e8e0d0;
   overflow-wrap: anywhere;
