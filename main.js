@@ -62,8 +62,8 @@
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
     { type: "black" },
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
-    { type: "vignette_image", sprite: "scene_station", vignette: "closing_1" },
-    { type: "image", sprite: "scene_station" },
+    { type: "vignette_image", sprite: "scene_station", vignette: "closing_1", character: "phoenix_street" },
+    { type: "image", sprite: "scene_station", character: "phoenix_street" },
     {
       type: "street_dialog",
       line: "What took you so long? I thought you died on the way here :)",
@@ -101,6 +101,7 @@
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
   k.loadSprite("closing_3", "docs/assets/Splash/Closing_3.png");
+  k.loadSprite("phoenix_street", "docs/assets/standing.png");
   k.loadSprite("phoenix_idle", "docs/assets/Character/phoenix_idle.png");
   k.loadSprite("phoenix_idle_blink", "docs/assets/Character/phoenix_idle_blink.png");
   k.loadSprite("phoenix_idle_talk", "docs/assets/Character/phoenix_idle_talk.png");
@@ -237,6 +238,9 @@
     const screen = introScreens[introIndex];
     if (screen.type === "image") {
       addBackground(screen.sprite, 1);
+      if (screen.character) {
+        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.061), k.z(2), "street_phoenix"]);
+      }
       return;
     }
 
@@ -259,6 +263,9 @@
     if (screen.type === "vignette_image") {
       addBackground(screen.sprite, 1);
       addBackground(screen.vignette, 2);
+      if (screen.character) {
+        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.061), k.z(3), "street_phoenix"]);
+      }
       return;
     }
 
@@ -275,7 +282,7 @@
         k.opacity(0.45),
         k.z(2),
       ]);
-      k.add([k.sprite("phoenix_idle"), k.pos(-40, -60), k.scale(0.42), k.z(3), "phoenix"]);
+      k.add([k.sprite("phoenix_idle"), k.pos(300, 126), k.scale(0.5), k.z(3), "phoenix"]);
       if (typeof window.showStreetDialog === "function") {
         window.showStreetDialog(screen.line);
       }
