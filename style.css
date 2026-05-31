@@ -15,7 +15,7 @@ body {
   margin: 0;
   overflow: hidden;
   background: #0a0a0f;
-  color: #e8e0d0;
+  color: #ffffff;
   font-family: "VT323", monospace;
 }
 
@@ -80,7 +80,7 @@ input {
 
 .chat-message.assistant {
   margin-right: 32px;
-  color: #e8e0d0;
+  color: #ffffff;
   text-align: left;
 }
 
@@ -102,7 +102,7 @@ input {
   border: 2px solid #58515f;
   outline: none;
   background: rgba(8, 8, 12, 0.94);
-  color: #e8e0d0;
+  color: #ffffff;
 }
 
 #chat-input:focus {
@@ -113,7 +113,7 @@ input {
 #game-close {
   border: 2px solid #b79b72;
   background: #17131a;
-  color: #e8e0d0;
+  color: #ffffff;
   cursor: pointer;
 }
 
@@ -154,7 +154,7 @@ input {
 
 #game-title {
   margin: 10px 0 16px;
-  color: #e8e0d0;
+  color: #ffffff;
   font-size: 28px;
   font-weight: 400;
   letter-spacing: 0;
@@ -178,7 +178,7 @@ input {
   font-family: "VT323", monospace;
   font-size: clamp(25px, 3.9vw, 50px);
   line-height: 1.4;
-  color: #e8e0d0;
+  color: #ffffff;
   overflow-wrap: anywhere;
 }
 

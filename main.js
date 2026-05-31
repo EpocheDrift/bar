@@ -255,7 +255,7 @@
         }),
         k.pos(k.width() - 48, k.height() - 56),
         k.anchor("botright"),
-        k.color(232, 224, 208),
+        k.color(255, 255, 255),
         k.z(3),
       ]);
       return;
@@ -291,7 +291,7 @@
       }),
       k.pos(k.width() / 2, k.height() / 2),
       k.anchor("center"),
-      k.color(232, 224, 208),
+      k.color(255, 255, 255),
       k.z(2),
     ]);
   });
