@@ -54,9 +54,9 @@
       size: 20,
       width: 820,
     },
-    { type: "vignette_text", content: "Ten...", size: 28 },
-    { type: "vignette_text", content: "Nine...", size: 28 },
-    { type: "vignette_text", content: "Eight...", size: 28 },
+    { type: "vignette_text", content: "Ten...",   size: 28, vignette: "closing_1" },
+    { type: "vignette_text", content: "Nine...",  size: 28, vignette: "closing_2" },
+    { type: "vignette_text", content: "Eight...", size: 28, vignette: "closing_3" },
     { type: "text", content: "...", size: 28 },
     { type: "text", content: "> ENTER <", size: 28 },
   ];
@@ -78,8 +78,9 @@
   k.loadSprite("home", "docs/assets/BG/scene_bar_overview.png");
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
-  k.loadSprite("vignette_open", "docs/assets/Splash/vignette_open.png");
-  k.loadSprite("vignette_closed", "docs/assets/Splash/vignette_closed.png");
+  k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
+  k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
+  k.loadSprite("closing_3", "docs/assets/Splash/Closing_3.png");
   k.loadSprite("phoenix_idle", "docs/assets/Character/phoenix_idle.png");
   k.loadSprite("phoenix_idle_blink", "docs/assets/Character/phoenix_idle_blink.png");
   k.loadSprite("phoenix_idle_talk", "docs/assets/Character/phoenix_idle_talk.png");
@@ -218,7 +219,7 @@
 
     if (screen.type === "vignette_text") {
       addBackground("story_intro_5", 1);
-      addBackground("vignette_open", 2);
+      addBackground(screen.vignette, 2);
       k.add([
         k.text(screen.content, {
           size: screen.size,
