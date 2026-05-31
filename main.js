@@ -183,27 +183,6 @@
     });
   }
 
-  function pointerToGame(event) {
-    const bounds = canvas.getBoundingClientRect();
-    return {
-      x: ((event.clientX - bounds.left) / bounds.width) * 1024,
-      y: ((event.clientY - bounds.top) / bounds.height) * 576,
-    };
-  }
-
-  function isInside(point, region) {
-    return (
-      point.x >= region.x &&
-      point.x <= region.x + region.width &&
-      point.y >= region.y &&
-      point.y <= region.y + region.height
-    );
-  }
-
-  function bottleAt(point) {
-    return bottleConfigs.find((bottle) => isInside(point, bottle));
-  }
-
   function advanceIntro() {
     if (introIndex >= introScreens.length - 1) {
       k.go("bar");
@@ -213,25 +192,10 @@
     k.go("intro");
   }
 
-  canvas.addEventListener("click", (event) => {
+  canvas.addEventListener("click", () => {
     if (currentScene === "intro") {
       advanceIntro();
-      return;
     }
-
-    if (currentScene === "bar") {
-      const bottle = bottleAt(pointerToGame(event));
-      if (bottle) {
-        window.injectBottleContext(bottle.spirit);
-      }
-    }
-  });
-
-  canvas.addEventListener("mousemove", (event) => {
-    const isInteractive =
-      currentScene === "intro" ||
-      (currentScene === "bar" && Boolean(bottleAt(pointerToGame(event))));
-    document.body.style.cursor = isInteractive ? "pointer" : "default";
   });
 
   k.scene("intro", () => {

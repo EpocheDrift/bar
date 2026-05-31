@@ -43,7 +43,6 @@ input {
 }
 
 #chat-overlay {
-  display: none;
   position: absolute;
   right: 24px;
   bottom: 24px;
