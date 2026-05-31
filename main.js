@@ -59,6 +59,24 @@
     { type: "vignette_text", content: "Eight...", size: 28, vignette: "closing_3" },
     { type: "text", content: "...", size: 28 },
     { type: "text", content: "> ENTER <", size: 28 },
+    { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
+    { type: "black" },
+    { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
+    { type: "vignette_image", sprite: "scene_station", vignette: "closing_1" },
+    { type: "image", sprite: "scene_station" },
+    {
+      type: "street_dialog",
+      line: "What took you so long? I thought you died on the way here :)",
+    },
+    {
+      type: "street_dialog",
+      line:
+        "Half the clinics here aren't exactly... licensed. Pray you don't die on the table. Because if you do – You'll be going straight to hell from here.",
+    },
+    {
+      type: "street_dialog",
+      line: "Are you going to stand there all night? Follow me. I know a place.",
+    },
   ];
   const phoenixSprites = {
     idle: "phoenix_idle",
@@ -77,6 +95,8 @@
   k.loadFont("VT323", "docs/Lisa/VT323-Regular.ttf");
   k.loadSprite("home", "docs/assets/BG/scene_bar_overview.png");
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
+  k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
+  k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
@@ -204,6 +224,9 @@
   k.scene("intro", () => {
     currentScene = "intro";
     setChatVisible(false);
+    if (typeof window.hideStreetDialog === "function") {
+      window.hideStreetDialog();
+    }
     clearBlinkTimers();
     phoenixSprite = null;
     window.phoenixSprite = null;
@@ -233,6 +256,32 @@
       return;
     }
 
+    if (screen.type === "vignette_image") {
+      addBackground(screen.sprite, 1);
+      addBackground(screen.vignette, 2);
+      return;
+    }
+
+    if (screen.type === "black") {
+      return;
+    }
+
+    if (screen.type === "street_dialog") {
+      addBackground("scene_station", 1);
+      k.add([
+        k.rect(k.width(), k.height()),
+        k.pos(0, 0),
+        k.color(0, 0, 0),
+        k.opacity(0.45),
+        k.z(2),
+      ]);
+      k.add([k.sprite("phoenix_idle"), k.pos(-40, -60), k.scale(0.42), k.z(3), "phoenix"]);
+      if (typeof window.showStreetDialog === "function") {
+        window.showStreetDialog(screen.line);
+      }
+      return;
+    }
+
     k.add([
       k.text(screen.content, {
         size: screen.size,
@@ -250,6 +299,9 @@
   k.scene("bar", () => {
     currentScene = "bar";
     setChatVisible(true);
+    if (typeof window.hideStreetDialog === "function") {
+      window.hideStreetDialog();
+    }
     document.body.style.cursor = "default";
     addBackground("home", 0);
     drawPhoenix(phoenixState);

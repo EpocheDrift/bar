@@ -137,6 +137,22 @@
     gameOverlay.style.display = "none";
   });
 
+  window.showStreetDialog = function (line) {
+    const overlay = document.getElementById("street-dialog");
+    const lineEl = document.getElementById("street-dialog-line");
+    if (overlay && lineEl) {
+      lineEl.textContent = line;
+      overlay.style.display = "flex";
+    }
+  };
+
+  window.hideStreetDialog = function () {
+    const overlay = document.getElementById("street-dialog");
+    if (overlay) {
+      overlay.style.display = "none";
+    }
+  };
+
   window.PhoenixChat = {
     messages,
     sendMessage,
