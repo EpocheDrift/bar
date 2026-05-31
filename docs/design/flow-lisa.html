@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Phoenix's Bar — Visual Flow for Lisa</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0b12;
+    color: #e8e0d0;
+    font-family: 'Georgia', serif;
+    font-size: 13px;
+    padding: 48px 40px;
+    min-width: 1000px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #b79b72;
+    font-size: 20px;
+    letter-spacing: 3px;
+    font-weight: normal;
+    margin-bottom: 6px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #5a5060;
+    font-size: 11px;
+    margin-bottom: 48px;
+    letter-spacing: 2px;
+    font-family: monospace;
+  }
+
+  /* ─── SCREEN FRAME ─── */
+  .screen {
+    border: 1px solid #3a3048;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 220px;
+    background: #080610;
+  }
+  .screen-bar {
+    height: 6px;
+    background: #2a2038;
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    gap: 3px;
+  }
+  .screen-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #3a3048;
+  }
+  .screen-body {
+    padding: 10px;
+    min-height: 100px;
+    position: relative;
+  }
+  .screen-label {
+    font-family: monospace;
+    font-size: 9px;
+    color: #4a4055;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  /* ─── SCREEN CONTENTS ─── */
+  .bg-entrance {
+    background: linear-gradient(160deg, #12081a 0%, #1a0e28 60%, #0e0818 100%);
+    border-top: 1px solid #2a1840;
+  }
+  .bg-bar {
+    background: linear-gradient(180deg, #060e1a 0%, #0a1628 40%, #061020 100%);
+    border-top: 1px solid #102040;
+  }
+  .bg-dark-bar {
+    background: linear-gradient(180deg, #040810 0%, #060c18 100%);
+    border-top: 1px solid #0a1828;
+  }
+
+  .splash-elements {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 8px 0;
+    gap: 6px;
+  }
+  .splash-bg-hint {
+    font-size: 9px;
+    color: #3a2848;
+    text-align: center;
+    line-height: 1.4;
+    margin-bottom: 4px;
+  }
+  .btn-splash {
+    width: 100px;
+    padding: 5px 0;
+    border: 1px solid #4a3060;
+    background: rgba(20,12,32,0.8);
+    color: #9a78c0;
+    font-size: 10px;
+    text-align: center;
+    letter-spacing: 2px;
+    font-family: monospace;
+  }
+  .btn-splash.active {
+    border-color: #7a50a0;
+    color: #c090e0;
+  }
+
+  .bar-scene {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .bar-aquarium {
+    height: 30px;
+    background: linear-gradient(180deg, #081428 0%, #0a1e38 100%);
+    border: 1px solid #102038;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 8px;
+    color: #204060;
+  }
+  .bar-phoenix {
+    height: 48px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    position: relative;
+  }
+  .phoenix-fig {
+    font-size: 28px;
+    line-height: 1;
+    filter: brightness(0.7);
+    user-select: none;
+  }
+  .phoenix-state-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 8px;
+    font-family: monospace;
+    padding: 1px 4px;
+    border-radius: 2px;
+  }
+  .badge-idle { background: #1a2840; color: #4080a0; border: 1px solid #204060; }
+  .badge-shake { background: #281a08; color: #a06020; border: 1px solid #604010; }
+  .bar-counter {
+    height: 8px;
+    background: #1a1020;
+    border-top: 1px solid #2a1828;
+  }
+  .bar-bottles {
+    display: flex;
+    gap: 3px;
+    padding: 2px 0;
+    justify-content: center;
+  }
+  .bottle-mini {
+    width: 8px;
+    height: 14px;
+    border-radius: 1px 1px 0 0;
+    border: 1px solid;
+    opacity: 0.7;
+  }
+
+  /* chat overlay in screen */
+  .chat-mini {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    width: 90px;
+    border: 1px solid #2a2535;
+    background: rgba(8,6,12,0.9);
+    border-radius: 2px;
+    padding: 5px;
+  }
+  .chat-msg {
+    font-size: 8px;
+    line-height: 1.4;
+    margin-bottom: 3px;
+    padding: 2px 3px;
+  }
+  .chat-msg.phoenix { color: #c0b0d8; }
+  .chat-msg.user { color: #7090b8; text-align: right; }
+  .chat-input-mini {
+    height: 12px;
+    border: 1px solid #3a3045;
+    background: rgba(6,4,10,0.9);
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+    gap: 2px;
+    margin-top: 2px;
+  }
+  .chat-cursor { width: 1px; height: 7px; background: #6050a0; animation: blink 1s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .chat-send-mini {
+    width: 12px;
+    height: 10px;
+    border: 1px solid #6a5070;
+    background: #1a1428;
+    color: #8060a0;
+    font-size: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: auto;
+  }
+
+  /* game overlay */
+  .game-overlay-mini {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .game-panel-mini {
+    border: 1px solid #6a4010;
+    background: rgba(8,5,2,0.95);
+    padding: 6px;
+    width: 90%;
+  }
+  .game-question-mini {
+    font-size: 7px;
+    color: #a06030;
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .game-option-mini {
+    height: 10px;
+    border: 1px solid #3a2010;
+    background: #120a04;
+    margin-bottom: 2px;
+    font-size: 7px;
+    color: #705030;
+    display: flex;
+    align-items: center;
+    padding: 0 3px;
+  }
+  .game-option-mini.correct { border-color: #206010; color: #408020; background: #081004; }
+  .game-option-mini.wrong { border-color: #601010; color: #804020; background: #100404; }
+  .game-progress-mini {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+  }
+  .game-dot { width: 10px; height: 3px; background: #2a1a08; border-radius: 1px; }
+  .game-dot.done { background: #804020; }
+
+  /* ─── LAYOUT ─── */
+  .flow-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .arrow-v {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    gap: 0;
+  }
+  .arrow-v-line { width: 1px; min-height: 16px; background: #3a3048; }
+  .arrow-v-tip { color: #5a5070; font-size: 10px; }
+  .arrow-v-label {
+    font-size: 9px;
+    color: #5a5070;
+    font-family: monospace;
+    background: #0d0b12;
+    padding: 0 6px;
+    text-align: center;
+    line-height: 1.6;
+  }
+
+  /* state label card beside screen */
+  .state-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .state-info {
+    flex: 1;
+    padding-top: 6px;
+    max-width: 240px;
+  }
+  .state-title {
+    font-family: monospace;
+    font-size: 11px;
+    color: #b79b72;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .state-row {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 5px;
+    align-items: flex-start;
+  }
+  .state-icon {
+    font-size: 10px;
+    width: 14px;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .state-text {
+    font-size: 11px;
+    color: #8a8090;
+    line-height: 1.5;
+  }
+  .state-text strong { color: #c0b0c8; }
+
+  /* branch row */
+  .branch-row {
+    display: flex;
+    gap: 32px;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  .branch-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+  .branch-label {
+    font-size: 9px;
+    font-family: monospace;
+    color: #5a5070;
+    text-align: center;
+    margin-bottom: 4px;
+    line-height: 1.5;
+  }
+
+  /* horizontal connector */
+  .h-connector {
+    height: 1px;
+    background: #3a3048;
+    flex: 1;
+    min-width: 20px;
+  }
+  .h-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .divider {
+    width: 600px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #2a2038, transparent);
+    margin: 32px 0;
+  }
+
+  .section-tag {
+    font-family: monospace;
+    font-size: 9px;
+    color: #3a3048;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+
+<h1>Phoenix's Bar — Visual Flow</h1>
+<div class="subtitle">DESIGNER VIEW · WHAT THE USER SEES AT EACH STATE</div>
+
+<div class="flow-root">
+
+  <!-- ══════════════════════ ENTRANCE ══════════════════════ -->
+  <div class="section-tag">① entrance screen</div>
+
+  <div class="state-card">
+    <div class="screen">
+      <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+      <div class="screen-body bg-entrance" style="min-height:130px">
+        <div class="splash-elements">
+          <div class="splash-bg-hint">dark gothic · abandoned station<br>tentacles · fog · lantern</div>
+          <div class="btn-splash active">S T A R T</div>
+          <div class="btn-splash">Q U I T</div>
+        </div>
+      </div>
+    </div>
+    <div class="state-info">
+      <div class="state-title">ENTRANCE SCREEN</div>
+      <div class="state-row"><div class="state-icon">🖼</div><div class="state-text"><strong>Full screen:</strong> splash.png</div></div>
+      <div class="state-row"><div class="state-icon">🖱</div><div class="state-text"><strong>START</strong> — hover darkens overlay, click enters bar</div></div>
+      <div class="state-row"><div class="state-icon">🖱</div><div class="state-text"><strong>QUIT</strong> — closes window</div></div>
+      <div class="state-row"><div class="state-icon">💬</div><div class="state-text">No chat box visible</div></div>
+      <div class="state-row" style="margin-top:8px"><div class="state-icon">⚠</div><div class="state-text" style="color:#605060">Transition animation → bar scene<br><em>not yet implemented</em></div></div>
+    </div>
+  </div>
+
+  <div class="arrow-v">
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-label">click START</div>
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-tip">▼</div>
+  </div>
+
+  <!-- ══════════════════════ BAR OPENING ══════════════════════ -->
+  <div class="section-tag">② bar scene — opening</div>
+
+  <div class="state-card">
+    <div class="screen">
+      <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+      <div class="screen-body bg-bar" style="min-height:160px; position:relative">
+        <div class="bar-scene">
+          <div class="bar-aquarium">≈ aquarium · fish · kelp ≈</div>
+          <div class="bar-phoenix">
+            <div class="phoenix-fig">🧍</div>
+            <div class="phoenix-state-badge badge-idle">IDLE</div>
+          </div>
+          <div class="bar-counter"></div>
+          <div class="bar-bottles">
+            <div class="bottle-mini" style="background:#1a3050;border-color:#204060"></div>
+            <div class="bottle-mini" style="background:#301808;border-color:#603010"></div>
+            <div class="bottle-mini" style="background:#182838;border-color:#204050"></div>
+            <div class="bottle-mini" style="background:#181828;border-color:#202040"></div>
+            <div class="bottle-mini" style="background:#1a2810;border-color:#304018"></div>
+            <div class="bottle-mini" style="background:#281808;border-color:#503010"></div>
+            <div class="bottle-mini" style="background:#281028;border-color:#502040"></div>
+          </div>
+        </div>
+        <div class="chat-mini">
+          <div class="chat-msg phoenix" style="opacity:0.6">W e l c o m e .<span style="animation:blink 0.8s infinite;display:inline-block;width:4px;height:8px;background:#6050a0;margin-left:2px;vertical-align:middle"></span></div>
+          <div class="chat-input-mini" style="opacity:0.4">
+            <div style="font-size:7px;color:#3a3045">...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="state-info">
+      <div class="state-title">BAR — OPENING</div>
+      <div class="state-row"><div class="state-icon">🧍</div><div class="state-text"><strong>Phoenix:</strong> idle pose, standing behind bar</div></div>
+      <div class="state-row"><div class="state-icon">💬</div><div class="state-text">Chat appears, <strong>"Welcome."</strong> types out character by character</div></div>
+      <div class="state-row"><div class="state-icon">🚫</div><div class="state-text">Input disabled during typewriter</div></div>
+      <div class="state-row"><div class="state-icon">✨</div><div class="state-text">Bar lights flicker subtly (every frame)</div></div>
+    </div>
+  </div>
+
+  <div class="arrow-v">
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-label">typewriter finishes</div>
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-tip">▼</div>
+  </div>
+
+  <!-- ══════════════════════ IDLE ══════════════════════ -->
+  <div class="section-tag">③ bar scene — idle · waiting</div>
+
+  <div class="state-card">
+    <div class="screen">
+      <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+      <div class="screen-body bg-bar" style="min-height:160px; position:relative">
+        <div class="bar-scene">
+          <div class="bar-aquarium">≈ aquarium ≈</div>
+          <div class="bar-phoenix">
+            <div class="phoenix-fig">🧍</div>
+            <div class="phoenix-state-badge badge-idle">IDLE</div>
+          </div>
+          <div class="bar-counter"></div>
+          <div class="bar-bottles">
+            <div class="bottle-mini" style="background:#1a3050;border-color:#204060"></div>
+            <div class="bottle-mini" style="background:#301808;border-color:#603010"></div>
+            <div class="bottle-mini" style="background:#182838;border-color:#204050"></div>
+            <div class="bottle-mini" style="background:#181828;border-color:#202040"></div>
+            <div class="bottle-mini" style="background:#1a2810;border-color:#304018"></div>
+            <div class="bottle-mini" style="background:#281808;border-color:#503010"></div>
+            <div class="bottle-mini" style="background:#281028;border-color:#502040"></div>
+          </div>
+        </div>
+        <div class="chat-mini">
+          <div class="chat-msg phoenix">Welcome.</div>
+          <div class="chat-input-mini">
+            <div class="chat-cursor"></div>
+            <div class="chat-send-mini">›</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="state-info">
+      <div class="state-title">BAR — IDLE</div>
+      <div class="state-row"><div class="state-icon">🧍</div><div class="state-text"><strong>Phoenix:</strong> idle — occasional blink<br><em style="color:#605060">(needs phoenix_blink.png)</em></div></div>
+      <div class="state-row"><div class="state-icon">🍾</div><div class="state-text">Bottles: <strong>hover → lift 6px</strong>, cursor changes</div></div>
+      <div class="state-row"><div class="state-icon">💬</div><div class="state-text">Chat input <strong>enabled</strong>, cursor blinking</div></div>
+    </div>
+  </div>
+
+  <!-- THREE-WAY SPLIT -->
+  <div style="height:24px; display:flex; flex-direction:column; align-items:center">
+    <div style="width:1px; flex:1; background:#3a3048"></div>
+  </div>
+
+  <div class="branch-row">
+
+    <!-- A: User types -->
+    <div class="branch-col">
+      <div class="branch-label">user types<br>+ sends</div>
+      <div class="screen" style="width:180px">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-bar" style="min-height:130px; position:relative; padding:8px">
+          <div class="bar-phoenix" style="height:36px">
+            <div class="phoenix-fig" style="font-size:22px">🍹</div>
+            <div class="phoenix-state-badge badge-shake">SHAKE</div>
+          </div>
+          <div class="bar-counter" style="margin-bottom:4px"></div>
+          <div class="chat-mini" style="position:relative;bottom:auto;right:auto;width:100%">
+            <div class="chat-msg user">i want something sour</div>
+            <div class="chat-msg phoenix" style="opacity:0.4">▌</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">Phoenix → shake<br>input disabled</div>
+    </div>
+
+    <!-- B: Bottle click -->
+    <div class="branch-col">
+      <div class="branch-label">click a<br>bottle</div>
+      <div class="screen" style="width:180px">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-bar" style="min-height:130px; position:relative; padding:8px">
+          <div class="bar-phoenix" style="height:36px">
+            <div class="phoenix-fig" style="font-size:22px">🍹</div>
+            <div class="phoenix-state-badge badge-shake">SHAKE</div>
+          </div>
+          <div class="bar-counter" style="margin-bottom:4px"></div>
+          <div class="chat-mini" style="position:relative;bottom:auto;right:auto;width:100%">
+            <div class="chat-msg user">You look at the gin.</div>
+            <div class="chat-msg phoenix" style="opacity:0.4">▌</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">bottle lifts on hover<br>auto-sends context</div>
+    </div>
+
+    <!-- C: Silence -->
+    <div class="branch-col">
+      <div class="branch-label">long<br>silence</div>
+      <div class="screen" style="width:180px; border-style:dashed">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-bar" style="min-height:130px; position:relative; padding:8px">
+          <div class="bar-phoenix" style="height:36px">
+            <div class="phoenix-fig" style="font-size:22px">🧍</div>
+            <div class="phoenix-state-badge badge-idle">IDLE</div>
+          </div>
+          <div class="bar-counter" style="margin-bottom:4px"></div>
+          <div class="chat-mini" style="position:relative;bottom:auto;right:auto;width:100%">
+            <div class="chat-msg phoenix" style="color:#806878">"I don't have<br>all night."</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#504058;margin-top:6px;text-align:center;font-family:monospace;font-style:italic">not yet implemented</div>
+    </div>
+
+  </div>
+
+  <div class="arrow-v" style="margin-top:12px">
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-label">Phoenix responds</div>
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-tip">▼</div>
+  </div>
+
+  <!-- ══════════════════════ PHOENIX REPLY ══════════════════════ -->
+  <div class="section-tag">④ phoenix replies</div>
+
+  <div class="branch-row">
+
+    <!-- Normal reply -->
+    <div class="branch-col">
+      <div class="branch-label">regular<br>conversation</div>
+      <div class="screen">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-bar" style="min-height:150px; position:relative">
+          <div class="bar-scene">
+            <div class="bar-aquarium">≈ aquarium ≈</div>
+            <div class="bar-phoenix">
+              <div class="phoenix-fig" style="font-size:22px">🧍</div>
+              <div class="phoenix-state-badge badge-idle">IDLE</div>
+            </div>
+            <div class="bar-counter"></div>
+          </div>
+          <div class="chat-mini">
+            <div class="chat-msg user">i want something sour</div>
+            <div class="chat-msg phoenix">Sour how. Lemon<br>sour or actually<br>unpleasant.</div>
+            <div class="chat-input-mini"><div class="chat-cursor"></div><div class="chat-send-mini">›</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">Phoenix → idle<br>typewriter complete<br>input re-enabled</div>
+    </div>
+
+    <!-- Recommendation -->
+    <div class="branch-col">
+      <div class="branch-label">Phoenix gives<br>recommendation</div>
+      <div class="screen">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-bar" style="min-height:150px; position:relative">
+          <div class="bar-scene">
+            <div class="bar-aquarium">≈ aquarium ≈</div>
+            <div class="bar-phoenix">
+              <div class="phoenix-fig" style="font-size:22px">🧍</div>
+              <div class="phoenix-state-badge badge-idle">IDLE</div>
+            </div>
+            <div class="bar-counter"></div>
+          </div>
+          <div class="chat-mini">
+            <div class="chat-msg phoenix">I know what you<br>need. Daiquiri.</div>
+            <div class="chat-msg phoenix" style="border:1px solid #2a4030;background:#060e08;color:#508050;font-size:7px;border-radius:1px;margin-top:2px;padding:2px 3px;">
+              60mL Rum · 30mL lemon<br>15mL syrup
+            </div>
+            <div class="chat-input-mini"><div class="chat-cursor"></div><div class="chat-send-mini">›</div></div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">G6: recipe card style<br><em style="color:#504058">pending decision</em></div>
+    </div>
+
+  </div>
+
+  <div class="arrow-v" style="margin-top:12px">
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-label">Phoenix decides to challenge</div>
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-tip">▼</div>
+  </div>
+
+  <!-- ══════════════════════ MIXING GAME ══════════════════════ -->
+  <div class="section-tag">⑤ mixing game</div>
+
+  <div class="branch-row" style="align-items:flex-start">
+
+    <!-- In progress -->
+    <div class="branch-col">
+      <div class="branch-label">during game<br>(5 rounds)</div>
+      <div class="screen">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-dark-bar" style="min-height:170px; position:relative">
+          <div class="bar-scene" style="opacity:0.3">
+            <div class="bar-aquarium">≈ aquarium ≈</div>
+            <div class="bar-phoenix"><div class="phoenix-fig">🧍</div></div>
+            <div class="bar-counter"></div>
+          </div>
+          <div class="game-overlay-mini">
+            <div class="game-panel-mini">
+              <div class="game-question-mini">DAIQUIRI · Round 2/5<br><br>What do you add after the rum?</div>
+              <div class="game-option-mini">Lime juice</div>
+              <div class="game-option-mini">Orange juice</div>
+              <div class="game-option-mini">Tonic water</div>
+              <div class="game-option-mini">Coconut milk</div>
+              <div class="game-progress-mini">
+                <div class="game-dot done"></div>
+                <div class="game-dot"></div>
+                <div class="game-dot"></div>
+                <div class="game-dot"></div>
+                <div class="game-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">scene darkens (browse.png?)<br>overlay appears on top<br>4 options per round</div>
+    </div>
+
+    <!-- Answer feedback -->
+    <div class="branch-col">
+      <div class="branch-label">answer<br>feedback</div>
+      <div class="screen">
+        <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div><div class="screen-dot"></div></div>
+        <div class="screen-body bg-dark-bar" style="min-height:170px; position:relative">
+          <div class="game-overlay-mini">
+            <div class="game-panel-mini">
+              <div class="game-question-mini">What do you add after the rum?</div>
+              <div class="game-option-mini correct">Lime juice ✓</div>
+              <div class="game-option-mini wrong">Orange juice ✗</div>
+              <div class="game-option-mini">Tonic water</div>
+              <div class="game-option-mini">Coconut milk</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:9px;color:#5a5070;margin-top:6px;text-align:center;font-family:monospace">brief pause<br>highlight correct / wrong<br>→ next round</div>
+    </div>
+
+    <!-- Results split -->
+    <div class="branch-col">
+      <div class="branch-label">5 rounds<br>complete</div>
+      <div style="display:flex; flex-direction:column; gap:12px">
+
+        <div>
+          <div style="font-size:9px;color:#308040;font-family:monospace;text-align:center;margin-bottom:4px">≥ 4/5 correct</div>
+          <div class="screen" style="width:160px">
+            <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div></div>
+            <div class="screen-body bg-bar" style="min-height:90px;position:relative">
+              <div class="game-overlay-mini" style="background:rgba(0,0,0,0.6)">
+                <div class="game-panel-mini" style="border-color:#206030;text-align:center">
+                  <div class="game-question-mini" style="color:#408040">Phoenix nods.<br>Says nothing.<br><br>You feel it anyway.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-size:9px;color:#804030;font-family:monospace;text-align:center;margin-bottom:4px">&lt; 4/5 correct</div>
+          <div class="screen" style="width:160px">
+            <div class="screen-bar"><div class="screen-dot"></div><div class="screen-dot"></div></div>
+            <div class="screen-body bg-bar" style="min-height:90px;position:relative">
+              <div class="game-overlay-mini" style="background:rgba(0,0,0,0.7)">
+                <div class="game-panel-mini" style="border-color:#602010;text-align:center">
+                  <div class="game-question-mini" style="color:#c04020">"Did you even<br>try?"</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="arrow-v" style="margin-top:16px">
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-label">overlay closes · conversation continues</div>
+    <div class="arrow-v-line"></div>
+    <div class="arrow-v-tip">▼</div>
+  </div>
+
+  <div class="section-tag" style="margin-top:4px">back to ③ idle — no forced ending</div>
+
+  <!-- ══════════════════════ NEEDS DESIGN ══════════════════════ -->
+  <div class="divider"></div>
+
+  <div class="section-tag">needs design from Lisa</div>
+
+  <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:16px; max-width:720px">
+
+    <div style="border:1px dashed #3a3048; padding:12px; border-radius:3px">
+      <div style="font-family:monospace;font-size:10px;color:#b79b72;margin-bottom:8px">G4 · CHAT UI</div>
+      <div style="font-size:11px;color:#7a7080;line-height:1.6">
+        Currently: dark box, bottom-right, 360px wide<br><br>
+        Needs: visual treatment — border style, message bubbles, input design
+      </div>
+    </div>
+
+    <div style="border:1px dashed #3a3048; padding:12px; border-radius:3px">
+      <div style="font-family:monospace;font-size:10px;color:#b79b72;margin-bottom:8px">G8 · MIXING GAME UI</div>
+      <div style="font-size:11px;color:#7a7080;line-height:1.6">
+        4 states needed:<br>
+        · Question + options<br>
+        · Answer feedback<br>
+        · Success screen<br>
+        · Failure screen
+      </div>
+    </div>
+
+    <div style="border:1px dashed #3a3048; padding:12px; border-radius:3px">
+      <div style="font-family:monospace;font-size:10px;color:#b79b72;margin-bottom:8px">OPEN QUESTIONS</div>
+      <div style="font-size:11px;color:#7a7080;line-height:1.6">
+        · browse.png → Mixing Game bg?<br>
+        · G6: recipe card or plain text?<br>
+        · Transition anim entrance → bar<br>
+        · Phoenix in Mixing Game: visible?
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>

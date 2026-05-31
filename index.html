@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Phoenix's Bar</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/kaplay/dist/kaplay.js"></script>
+  </head>
+  <body>
+    <canvas id="gameCanvas" aria-label="Phoenix's Bar game scene"></canvas>
+
+    <div id="ui-layer">
+      <section id="chat-overlay" aria-label="Chat with Phoenix">
+        <div id="chat-messages" aria-live="polite"></div>
+        <form id="chat-input-row" autocomplete="off">
+          <input id="chat-input" type="text" placeholder="..." autocomplete="off">
+          <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
+        </form>
+      </section>
+
+      <section id="game-overlay" aria-label="Mixing Game" style="display: none;">
+        <div id="game-panel">
+          <p id="game-kicker">Mixing Game</p>
+          <h2 id="game-title">Phoenix is watching.</h2>
+          <p id="game-copy">Do not embarrass yourself.</p>
+          <button id="game-close" type="button">Close</button>
+        </div>
+      </section>
+    </div>
+
+    <script src="main.js"></script>
+    <script src="chat.js"></script>
+  </body>
+</html>

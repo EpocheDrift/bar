@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Phoenix's Bar — Flow v2</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #0d0b12;
+    color: #e8e0d0;
+    font-family: 'Courier New', monospace;
+    font-size: 13px;
+    padding: 40px;
+    min-width: 1200px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #b79b72;
+    font-size: 18px;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #6b6070;
+    font-size: 11px;
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+  }
+
+  /* ── LEGEND ── */
+  .legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #9b92a0;
+  }
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+  }
+
+  /* ── BOX STYLES ── */
+  .box {
+    border: 1px solid;
+    padding: 10px 14px;
+    border-radius: 3px;
+    text-align: center;
+    min-width: 160px;
+    line-height: 1.4;
+  }
+  .box-title { font-weight: bold; font-size: 12px; margin-bottom: 3px; }
+  .box-sub { font-size: 10px; opacity: 0.7; }
+
+  /* color themes */
+  .c-start   { background: #1a1520; border-color: #4a3f5a; color: #c8b8d8; }
+  .c-entrance{ background: #1a1228; border-color: #5a3a7a; color: #c8a8e8; }
+  .c-bar     { background: #0e1a2a; border-color: #2a5080; color: #90c0e8; }
+  .c-chat    { background: #0e2218; border-color: #2a7048; color: #80d0a0; }
+  .c-phoenix { background: #1a1428; border-color: #6040a0; color: #b090e0; }
+  .c-game    { background: #2a1408; border-color: #a06020; color: #e0a040; }
+  .c-success { background: #0e2010; border-color: #308040; color: #60c060; }
+  .c-fail    { background: #220e0e; border-color: #802020; color: #d06060; }
+  .c-error   { background: #1a0e0e; border-color: #602020; color: #c04040; }
+  .c-pending { background: #1a1a10; border-color: #606030; color: #b0b060; }
+
+  /* ── ARROW ── */
+  .arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #4a4055;
+    font-size: 10px;
+    gap: 1px;
+    padding: 2px 0;
+  }
+  .arrow-line { width: 1px; background: #4a4055; flex: 1; min-height: 12px; }
+  .arrow-label { color: #7a6880; font-size: 9px; background: #0d0b12; padding: 0 4px; }
+  .arrow-head { color: #6a5875; }
+
+  .arrow-h {
+    display: flex;
+    align-items: center;
+    color: #4a4055;
+    font-size: 10px;
+    gap: 2px;
+  }
+  .arrow-h-line { height: 1px; background: #4a4055; flex: 1; min-width: 20px; }
+
+  /* ── LAYOUT ── */
+  .flow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  .row {
+    display: flex;
+    align-items: flex-start;
+    gap: 0;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+  }
+
+  /* branch connector */
+  .branch-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }
+
+  .branch-line-h {
+    height: 1px;
+    background: #4a4055;
+    position: absolute;
+    top: 0;
+  }
+
+  .spacer { width: 60px; }
+  .spacer-sm { width: 30px; }
+
+  /* ── SPECIAL COMPONENTS ── */
+  .note {
+    font-size: 10px;
+    color: #5a5060;
+    font-style: italic;
+    padding: 4px 8px;
+    border-left: 2px solid #3a3045;
+    margin-left: 8px;
+    max-width: 140px;
+    text-align: left;
+  }
+
+  /* mixing game detail */
+  .mg-rounds {
+    border: 1px dashed #604020;
+    border-radius: 3px;
+    padding: 10px;
+    margin: 4px 0;
+    background: #180e04;
+  }
+  .mg-round-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-size: 10px;
+    color: #a06030;
+    margin-bottom: 4px;
+  }
+  .mg-round-row:last-child { margin-bottom: 0; }
+
+  /* UI state sidebar */
+  .ui-state {
+    border: 1px solid #2a2535;
+    border-radius: 3px;
+    padding: 8px 10px;
+    background: #110f18;
+    font-size: 10px;
+    color: #6a6075;
+    max-width: 140px;
+    line-height: 1.6;
+  }
+  .ui-state-title {
+    color: #4a4055;
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+
+  .section-label {
+    color: #3a3045;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin: 20px 0 6px;
+  }
+
+  .pending-badge {
+    display: inline-block;
+    font-size: 9px;
+    color: #807040;
+    border: 1px solid #504030;
+    border-radius: 2px;
+    padding: 1px 4px;
+    margin-left: 4px;
+  }
+</style>
+</head>
+<body>
+
+<h1>PHOENIX'S BAR — FLOW v2</h1>
+<div class="subtitle">DETAILED INTERACTION STATES · 2026-05-29</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#4a3f5a"></div> System</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#5a3a7a"></div> Entrance</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2a5080"></div> Bar Scene</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#2a7048"></div> Conversation</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#6040a0"></div> Phoenix AI</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#a06020"></div> Mixing Game</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ -->
+
+<div class="flow">
+
+  <!-- 0. Page Load -->
+  <div class="box c-start" style="min-width:200px">
+    <div class="box-title">⓪ PAGE LOAD</div>
+    <div class="box-sub">Kaplay init · sprites load · server.py<br>system prompt + cocktail list assembled</div>
+  </div>
+
+  <div class="arrow"><div class="arrow-line"></div><div class="arrow-head">▼</div></div>
+
+  <!-- 1. Entrance -->
+  <div class="box c-entrance" style="min-width:240px">
+    <div class="box-title">① ENTRANCE SCREEN</div>
+    <div class="box-sub">splash.png 全屏 · START / QUIT 覆盖层<br>无聊天框 · 无 API 调用</div>
+  </div>
+
+  <div class="arrow">
+    <div class="arrow-line"></div>
+    <div class="arrow-label">点击 START</div>
+    <div class="arrow-line"></div>
+    <div class="arrow-head">▼</div>
+  </div>
+
+  <!-- 2. Transition -->
+  <div class="box c-bar" style="min-width:240px; border-style: dashed;">
+    <div class="box-title">② SCENE TRANSITION <span class="pending-badge">T9 未实现</span></div>
+    <div class="box-sub">淡出入口屏 → 淡入酒吧场景<br>当前：即时切换</div>
+  </div>
+
+  <div class="arrow"><div class="arrow-line"></div><div class="arrow-head">▼</div></div>
+
+  <!-- 3. Bar Opening -->
+  <div class="box c-bar" style="min-width:260px">
+    <div class="box-title">③ BAR OPENING</div>
+    <div class="box-sub">home.png · Phoenix idle · 7瓶子<br>onBarSceneReady → 空消息 → "Welcome." 打字机</div>
+  </div>
+
+  <div class="arrow">
+    <div class="arrow-line"></div>
+    <div class="arrow-label">打字机完成</div>
+    <div class="arrow-line"></div>
+    <div class="arrow-head">▼</div>
+  </div>
+
+  <!-- 4. Idle — 主分支点 -->
+  <div style="display:flex; align-items:flex-start; gap:0; width:100%; justify-content:center">
+
+    <!-- Left side note -->
+    <div style="display:flex; flex-direction:column; align-items:flex-end; justify-content:flex-start; padding-top:14px; width:200px; gap:8px">
+      <div class="ui-state">
+        <div class="ui-state-title">CANVAS STATE</div>
+        Phoenix: idle<br>
+        Bottles: hoverable<br>
+        Flicker: active
+      </div>
+      <div class="ui-state">
+        <div class="ui-state-title">CHAT STATE</div>
+        History visible<br>
+        Input: enabled<br>
+        Awaiting input
+      </div>
+    </div>
+
+    <div style="width:40px"></div>
+
+    <!-- Center -->
+    <div class="col">
+      <div class="box c-bar" style="min-width:260px; border-color:#3a7090">
+        <div class="box-title">④ BAR IDLE — 等待用户</div>
+        <div class="box-sub">Phoenix idle（未来：偶尔眨眼 A3 pending）<br>输入框 enabled</div>
+      </div>
+
+      <!-- Three-way split -->
+      <div style="height:20px; display:flex; align-items:stretch; gap:0">
+        <div style="width:1px; background:#4a4055; margin:0 auto"></div>
+      </div>
+
+      <div style="display:flex; align-items:flex-start; gap:0">
+
+        <!-- Branch A: User types -->
+        <div class="col" style="align-items:center">
+          <div style="width:1px; height:20px; background:#4a4055"></div>
+          <div style="display:flex; gap:0; align-items:center">
+            <div style="width:100px; height:1px; background:#4a4055"></div>
+            <div style="width:1px; height:20px; background:#4a4055"></div>
+          </div>
+          <div class="arrow-label" style="margin-bottom:4px">用户打字发送</div>
+          <div class="box c-chat" style="min-width:140px">
+            <div class="box-title">⑤ SENDING</div>
+            <div class="box-sub">用户消息出现<br>Phoenix → shake<br>POST /chat</div>
+          </div>
+        </div>
+
+        <!-- Gap -->
+        <div style="width:1px; height:0"></div>
+
+        <!-- Branch B: Bottle -->
+        <div class="col" style="align-items:center">
+          <div style="width:1px; height:20px; background:#4a4055"></div>
+          <div style="display:flex; gap:0; align-items:center">
+            <div style="width:0px; height:1px; background:#4a4055"></div>
+            <div style="width:1px; height:20px; background:#4a4055"></div>
+          </div>
+          <div class="arrow-label" style="margin-bottom:4px">点击酒瓶</div>
+          <div class="box c-chat" style="min-width:140px">
+            <div class="box-title">⑥ BOTTLE CLICK</div>
+            <div class="box-sub">"You look at the gin."<br>injectBottleContext()<br>→ 同 SENDING</div>
+          </div>
+        </div>
+
+        <!-- Gap -->
+        <div style="width:1px; height:0"></div>
+
+        <!-- Branch C: Silence -->
+        <div class="col" style="align-items:center">
+          <div style="width:1px; height:20px; background:#4a4055"></div>
+          <div style="display:flex; gap:0; align-items:center">
+            <div style="width:100px; height:1px; background:#4a4055"></div>
+            <div style="width:1px; height:20px; background:#4a4055"></div>
+          </div>
+          <div class="arrow-label" style="margin-bottom:4px">长时间沉默</div>
+          <div class="box c-pending" style="min-width:140px; border-style:dashed">
+            <div class="box-title">⑦ SILENCE <span class="pending-badge">未实现</span></div>
+            <div class="box-sub">"I don't have<br>all night."<br>Phoenix 自动发话</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Merge back -->
+      <div style="display:flex; align-items:flex-start; gap:0; margin-top:0">
+        <div style="width:1px; height:30px; background:#4a4055; margin:0 155px 0 155px"></div>
+        <div style="width:241px; height:1px; background:#4a4055; margin-top:0; position:relative">
+        </div>
+        <div style="width:1px; height:30px; background:#4a4055"></div>
+      </div>
+      <div style="width:1px; height:0; background:#4a4055"></div>
+
+    </div>
+
+    <div style="width:40px"></div>
+    <div style="width:200px"></div>
+  </div>
+
+  <!-- SENDING → API call -->
+  <div class="arrow">
+    <div class="arrow-line" style="min-height:8px"></div>
+    <div class="arrow-label">Minimax API 响应</div>
+    <div class="arrow-line" style="min-height:8px"></div>
+    <div class="arrow-head">▼</div>
+  </div>
+
+  <!-- 8. Phoenix Response split -->
+  <div style="display:flex; align-items:flex-start; gap:40px; justify-content:center">
+
+    <!-- Case A: Normal reply -->
+    <div class="col">
+      <div class="box c-phoenix" style="min-width:200px">
+        <div class="box-title">⑧-A NORMAL REPLY</div>
+        <div class="box-sub">game: null<br>打字机效果输出<br>Phoenix → idle 完成后</div>
+      </div>
+      <div class="arrow"><div class="arrow-line"></div><div class="arrow-head">▼</div></div>
+      <div style="font-size:10px; color:#5a5060; text-align:center">回到 ④ BAR IDLE</div>
+      <div style="font-size:18px; color:#3a3045; margin-top:4px">↩</div>
+    </div>
+
+    <!-- Case B: Game trigger -->
+    <div class="col">
+      <div class="box c-phoenix" style="min-width:200px; border-color:#c07030">
+        <div class="box-title">⑧-B GAME TRIGGER</div>
+        <div class="box-sub">game: "Daiquiri"<br>[GAME:xxx] 已被 server 剥离<br>打字机完成后触发</div>
+      </div>
+      <div class="arrow">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">startMixingGame("Daiquiri")</div>
+        <div class="arrow-line"></div>
+        <div class="arrow-head">▼</div>
+      </div>
+
+      <!-- Mixing Game -->
+      <div class="box c-game" style="min-width:240px">
+        <div class="box-title">⑩ MIXING GAME START</div>
+        <div class="box-sub">game-overlay 显示<br>Canvas → browse.png（待确认）<br>加载该酒的步骤数据</div>
+      </div>
+
+      <div class="arrow"><div class="arrow-line"></div><div class="arrow-head">▼</div></div>
+
+      <div class="mg-rounds">
+        <div class="mg-round-row">Round 1/5 — 题目 + 4个选项</div>
+        <div class="mg-round-row">Round 2/5 — 答对/错即时高亮</div>
+        <div class="mg-round-row">Round 3/5</div>
+        <div class="mg-round-row">Round 4/5</div>
+        <div class="mg-round-row">Round 5/5</div>
+      </div>
+
+      <div class="arrow"><div class="arrow-line"></div><div class="arrow-head">▼</div></div>
+
+      <!-- Result split -->
+      <div style="display:flex; gap:16px; align-items:flex-start">
+        <div class="col">
+          <div class="box c-success" style="min-width:110px">
+            <div class="box-title">⑫ SUCCESS</div>
+            <div class="box-sub">≥ 4/5<br>Phoenix 沉默点头</div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="box c-fail" style="min-width:110px">
+            <div class="box-title">⑫ FAILURE</div>
+            <div class="box-sub">&lt; 4/5<br>"Did you even try?"</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="arrow">
+        <div class="arrow-line"></div>
+        <div class="arrow-label">overlay 关闭</div>
+        <div class="arrow-line"></div>
+        <div class="arrow-head">▼</div>
+      </div>
+
+      <div class="box c-bar" style="min-width:200px">
+        <div class="box-title">⑬ RETURN TO BAR</div>
+        <div class="box-sub">game-overlay 隐藏<br>对话历史保持<br>可以继续聊</div>
+      </div>
+
+      <div style="font-size:10px; color:#5a5060; text-align:center; margin-top:8px">回到 ④ BAR IDLE</div>
+      <div style="font-size:18px; color:#3a3045; margin-top:4px">↩</div>
+    </div>
+
+    <!-- Case C: Error -->
+    <div class="col">
+      <div class="box c-error" style="min-width:160px">
+        <div class="box-title">⑨ ERROR</div>
+        <div class="box-sub">fetch 失败 / 超时<br>显示 "..."<br>输入框 re-enabled</div>
+      </div>
+      <div style="font-size:10px; color:#5a5060; text-align:center; margin-top:8px">回到 ④ BAR IDLE</div>
+      <div style="font-size:18px; color:#3a3045; margin-top:4px">↩</div>
+    </div>
+
+  </div>
+
+  <!-- Pending items -->
+  <div style="margin-top:60px; width:100%; max-width:800px">
+    <div class="section-label" style="text-align:center">PENDING / UNDECIDED</div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:8px">
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">T9 — SCENE TRANSITION</div>
+        Entrance → Bar 目前即时切换，无过渡动画
+      </div>
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">A3/A4 — PHOENIX ANIMATION</div>
+        眨眼帧 · 说话帧待 Lisa 交付
+      </div>
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">G6 — RECIPE CARD</div>
+        配方是纯文字还是弹出卡片？未决策
+      </div>
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">browse.png USAGE</div>
+        Mixing Game 触发时是否切换到暗色场景？待 Lisa 确认
+      </div>
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">G8 — MIXING GAME UI</div>
+        4个状态的视觉稿待 Lisa 设计
+      </div>
+      <div class="ui-state" style="max-width:none">
+        <div class="ui-state-title">⑦ SILENCE TIMER</div>
+        沉默检测逻辑未实现
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
