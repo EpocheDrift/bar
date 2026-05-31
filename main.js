@@ -97,6 +97,7 @@
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
+  k.loadSprite("gs_dialog_bg", "docs/assets/BG/gs_dialog_bg.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
@@ -274,15 +275,7 @@
     }
 
     if (screen.type === "street_dialog") {
-      addBackground("scene_station", 1);
-      k.add([
-        k.rect(k.width(), k.height()),
-        k.pos(0, 0),
-        k.color(0, 0, 0),
-        k.opacity(0.45),
-        k.z(2),
-      ]);
-      k.add([k.sprite("phoenix_idle"), k.pos(300, 126), k.scale(0.5), k.z(3), "phoenix"]);
+      addBackground("gs_dialog_bg", 1);
       if (typeof window.showStreetDialog === "function") {
         window.showStreetDialog(screen.line);
       }

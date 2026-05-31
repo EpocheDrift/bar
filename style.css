@@ -167,34 +167,18 @@ input {
 
 #street-dialog {
   position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: flex-end;
+  left: 32.7%;
+  top: 74.2%;
+  width: 62.5%;
   pointer-events: none;
 }
 
-#street-dialog-panel {
-  width: 100%;
-  max-width: 1767px;
-  aspect-ratio: 1772 / 411;
-  margin: 0 auto;
-  padding: 79px 48px 32px;
-  background: url("docs/assets/UI/dialog_box.png") no-repeat top left / 100% 100%;
-  color: #e8e0d0;
-  font-family: "VT323", monospace;
-}
-
-#street-dialog-name {
-  display: none;
-}
-
 #street-dialog-line {
-  max-width: 1120px;
   margin: 0;
-  font-size: clamp(20px, 2.5vw, 26px);
-  line-height: 1.5;
+  font-family: "VT323", monospace;
+  font-size: clamp(18px, 2.5vw, 28px);
+  line-height: 1.4;
+  color: #e8e0d0;
   overflow-wrap: anywhere;
 }
 
@@ -211,9 +195,5 @@ input {
 
   .chat-message {
     font-size: 16px;
-  }
-
-  #street-dialog-panel {
-    padding: 36px 24px 20px;
   }
 }
