@@ -178,9 +178,9 @@ input {
 #street-dialog-panel {
   width: 100%;
   max-width: 1767px;
-  min-height: min(411px, 23.2vw);
+  aspect-ratio: 1772 / 411;
   margin: 0 auto;
-  padding: 52px 48px 32px;
+  padding: 79px 48px 32px;
   background: url("docs/assets/UI/dialog_box.png") no-repeat top left / 100% 100%;
   color: #e8e0d0;
   font-family: "VT323", monospace;
@@ -214,7 +214,6 @@ input {
   }
 
   #street-dialog-panel {
-    min-height: 132px;
     padding: 36px 24px 20px;
   }
 }

@@ -101,7 +101,7 @@
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
   k.loadSprite("closing_3", "docs/assets/Splash/Closing_3.png");
-  k.loadSprite("phoenix_street", "docs/assets/standing.png");
+  k.loadSprite("phoenix_street", "docs/assets/Character/phoenix_street.png");
   k.loadSprite("phoenix_idle", "docs/assets/Character/phoenix_idle.png");
   k.loadSprite("phoenix_idle_blink", "docs/assets/Character/phoenix_idle_blink.png");
   k.loadSprite("phoenix_idle_talk", "docs/assets/Character/phoenix_idle_talk.png");
@@ -239,7 +239,7 @@
     if (screen.type === "image") {
       addBackground(screen.sprite, 1);
       if (screen.character) {
-        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.061), k.z(2), "street_phoenix"]);
+        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.5), k.z(2), "street_phoenix"]);
       }
       return;
     }
@@ -264,7 +264,7 @@
       addBackground(screen.sprite, 1);
       addBackground(screen.vignette, 2);
       if (screen.character) {
-        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.061), k.z(3), "street_phoenix"]);
+        k.add([k.sprite(screen.character), k.pos(375, 269), k.scale(0.5), k.z(3), "street_phoenix"]);
       }
       return;
     }
