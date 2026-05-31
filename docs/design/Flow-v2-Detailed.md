@@ -1,8 +1,7 @@
 # Game Flow — v2 详细版
 
 > 基于 Flow-v2.md 展开，含每个状态的视觉、交互、技术行为  
-> 供 Zayn 对照 Lisa 的 Figma 稿 review 用  
-> 最后更新：2026-05-29
+> 最后更新：2026-05-30（对照 Figma 稿更新，见 design/Figma-Sync.md）
 
 ---
 
@@ -30,45 +29,56 @@
 ⚙ 技术行为
   - server.py 启动时已读入 system prompt + cocktail list
   - main.js 执行，loadSprite() 加载所有图片
-  - 加载完成后自动进入 Entrance 场景
+  - 加载完成后自动进入 Intro 场景
 
-→ 跳转：sprite 加载完成 → [阶段 1 入口屏]
+→ 跳转：sprite 加载完成 → [阶段 1 Intro 叙事]
 ```
 
 ---
 
-## 阶段 1 — 入口屏（Entrance Scene）
+## 阶段 1 — Intro 叙事序列（P1 待实现）
 
 ```
-→ 触发：页面加载完成 / k.go("entrance")
+→ 触发：页面加载完成
 
 [ 视觉 ]
-  Canvas：
-  - splash.png 全屏（暗黑哥特风 · 荒废车站 · 触手 · 枯树）
-  - START 按钮（半透明深色方块 + 文字，居中偏下）
-  - QUIT 按钮（同样样式，START 下方）
-  Chat overlay：不显示
+  - 纯黑背景全屏
+  - 像素字体白色文字，每屏一段内容，居中显示
+  - 无其他 UI 元素，无 chat overlay
+
+  屏序（点击推进）：
+  1. "YEAR: 4144"
+  2. 世界观文字（义体化 / 神经植入 / 全面普及）
+  3. "Every procedure requires full anesthesia."
+  4. "And every time you go under — your mind slips through the cracks
+     into a place that shouldn't exist."
+  5. "Breathe normally." / "This is a standard augmentation."
+     "You won't feel a thing." / "Count backwards from ten."
+  6. "..."
+  7. "Ten…" → "Nine…" → ... → "One…"（每屏一个数字）
+  8. "> ENTER <"（点击后进入酒吧）
 
 < 用户操作 >
-  - 点击 START → [阶段 2 过渡]
-  - 点击 QUIT  → 关闭窗口（window.close）
-  - 悬停按钮   → cursor:pointer，方块 opacity 变深
+  - 点击画面任意位置 → 推进到下一屏
+  - 到 "> ENTER <" 点击 → [阶段 2 过渡]
 
 ⚙ 技术行为
-  - Kaplay scene("entrance")
-  - 按钮用透明 rect + area() 检测点击
+  - 纯文字渲染，Kaplay text() 或 HTML overlay 均可
   - 无 API 调用
+  - 交互方式（点击/键盘）待实现时确认
+
+→ 跳转：点击 "> ENTER <" → [阶段 2 过渡]
 ```
 
 ---
 
-## 阶段 2 — 场景过渡（Entrance → Bar）
+## 阶段 2 — 场景过渡（Intro → Bar）
 
 ```
-→ 触发：点击 START
+→ 触发：点击 "> ENTER <"
 
 [ 视觉 ]
-  - 淡出入口屏，淡入酒吧场景（T9 过渡动画，待实现）
+  - 淡出 Intro，淡入酒吧场景（T9 过渡动画，待实现）
   - 当前：即时切换（无过渡）
 
 ⚙ 技术行为
@@ -266,11 +276,12 @@
 
 [ 视觉 ]
   Canvas：
-  - （待定）切换到 browse.png（暗色酒吧）？
-  - Phoenix sprite 状态待定
-  Game overlay：
+  - 酒吧背景保留（home.png），不切换
+  - Phoenix 立绘缩小保留在左侧
+  Game overlay（P4 待实现）：
   - 从 display:none → display:flex
-  - 显示 Mixing Game UI 状态 1
+  - 右上角显示 5 颗菱形进度图标
+  - 显示第 1 道题目
 
 ⚙ 技术行为
   - window.startMixingGame("Daiquiri") 被调用
@@ -284,26 +295,27 @@
 ## 阶段 11 — Mixing Game 进行中（5 轮）
 
 ```
-每轮结构：
+每轮结构（Figma 已有设计稿）：
 
-[ 视觉：状态 1 - 答题 ]
+[ 视觉：答题状态 ]
   Game overlay 显示：
-  - 鸡尾酒名称（Phoenix 指定的那款）
-  - 当前步骤问题："What do you add first?"
-  - 4 个选项按钮（1 个正确，3 个干扰项）
-  - 进度条：Round X / 5
+  - 右上角：5 颗菱形图标（当前题号高亮）
+  - 题目文字（居中，大字）
+  - Phoenix 备注（小字，挖苦语气，题目下方）
+  - 3 个选项按钮（竖排，1 正确 2 干扰）
+  - "> Next"（右下，点击选中选项后激活）
 
 < 用户操作 >
   - 点击任意一个选项
+  - 点击 "> Next" 进入下一题
 
-[ 视觉：状态 2 - 即时反馈 ]
-  - 正确答案高亮（绿色？）
-  - 错误答案高亮（红色？）
-  - 短暂停留后自动进入下一轮
+[ 视觉：选项反馈 ]
+  - 正确 / 错误高亮（颜色方案待 Lisa 确认）
+  - 目前暂定：点击后即时反馈，再点 Next 继续
 
 ⚙ 技术行为（待实现）
   - 记录答对数量 score++
-  - 5 轮完成后判断 score >= 4 → 结果状态
+  - 5 轮完成后进入结果页
 ```
 
 ---
@@ -311,25 +323,21 @@
 ## 阶段 12 — Mixing Game 结束
 
 ```
---- 成功（score ≥ 4/5）---
+（Figma 已有设计稿）
 
 [ 视觉 ]
   Game overlay：
-  - Phoenix 沉默点头的画面
-  - 文字：成功提示（待设计）
+  - 分数显示（如 "5/5"）
+  - Phoenix 点评文字（因分数不同而不同）
+    ≥ 4/5 示例："Five out of five. Don't expect a prize. You answered
+                 five questions correctly in a bar that doesn't exist
+                 while you're under anesthesia. Cool."
+    < 4/5：更刻薄的版本（待设计）
+  - ">Back<" 按钮（回到聊天）
+  - ">Re-Start<" 按钮（重新开始这局游戏）
 
-→ 跳转：用户关闭 / 自动关闭 → [阶段 13 返回酒吧]
-
---- 失败（score < 4/5）---
-
-[ 视觉 ]
-  Game overlay：
-  - Phoenix 说刻薄的话
-  - 例："This is painful to watch."
-        "Did you even try?"
-        "Come back when you've learned something."
-
-→ 跳转：用户关闭 → [阶段 13 返回酒吧]
+→ 跳转：点击 ">Back<" → [阶段 13 返回酒吧]
+         点击 ">Re-Start<" → [阶段 10 重新触发]
 ```
 
 ---
@@ -358,15 +366,17 @@
 
 ---
 
-## 未实现 / 待定项（供 Lisa Figma review 对照）
+## 未实现 / 待定项
 
 | 项目 | 状态 | 说明 |
 |---|---|---|
-| T9 场景过渡动画 | 🔲 未实现 | Entrance → Bar 目前是即时切换 |
-| Phoenix 眨眼动画 | 🔲 待 A3 资产 | 需要 phoenix_blink.png |
-| Phoenix 说话动画 | 🔲 待 A4 资产 | 需要 phoenix_talk.png |
-| 沉默检测 timer | 🔲 未实现 | 阶段 7 |
-| G6 配方呈现 | 🔲 未决策 | 纯文字 vs 卡片 |
-| browse.png 切换时机 | ❓ 待确认 | Mixing Game 触发时是否切换 |
-| Mixing Game 题目逻辑 | 🔲 未实现 | 从 Cocktail-List 生成多选题 |
-| G8 Mixing Game UI | 🔲 待 Lisa 设计 | 4 个状态的视觉稿 |
+| P1 Intro 叙事序列 | 🔲 待实现 | 替代原 entrance 场景，见 Figma-Sync.md |
+| P2 Phoenix 6 帧动画 | 🔲 待实现 | 资产已有，main.js 接入 + 状态逻辑 |
+| P3 Chat UI 样式对齐 | 🔲 待实现 | Phoenix 名字标签，对话框位置 |
+| P4 Mixing Game 正式 UI | 🔲 待实现 | 3 选项、进度图标、结果页，Figma 已有稿 |
+| P5 迎接场景 | ⛔ 阻塞 | 等待 Lisa 交付像素背景 |
+| T9 场景过渡动画 | 🔲 未实现 | Intro → Bar 目前即时切换 |
+| 沉默检测 timer | 🔲 未实现 | 阶段 7，低优先级 |
+| G5 瓶子点击精确行为 | 🔲 待 G3 | 当前实现已可用，细化待 G3 |
+| Mixing Game 题目生成逻辑 | 🔲 未实现 | 从 Cocktail-List 动态出题，P4 阶段决定 |
+| 选项反馈颜色 | ❓ 待确认 | 等 Lisa 确认正确/错误高亮颜色 |

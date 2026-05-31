@@ -1,7 +1,7 @@
 # Action Index
 
 > 所有行动事项的单一入口。每次工作前看这里，完成后更新状态。  
-> 最后更新：2026-05-29
+> 最后更新：2026-05-30
 
 ---
 
@@ -17,13 +17,12 @@
 
 | 事项 | 负责 |
 |---|---|
-| G2 — 入口屏交互细节 | Zayn + Lisa |
+| **T16 — Intro 叙事序列实现（P1）** | Zayn |
+| **T17 — Phoenix 6 帧动画接入（P2）** | Zayn |
+| **T18 — Chat UI 样式对齐（P3）** | Zayn |
+| **T19 — Mixing Game 正式 UI（P4）** | Zayn |
 | G3 — 酒吧场景交互地图 | Zayn + Lisa |
-| G4 — 对话 UI 设计 | Lisa |
 | G6 — 配方呈现方式 | Zayn + Lisa |
-| G8 — Mixing Game UI 设计 | Lisa |
-| A3 — Phoenix 眨眼帧 | Lisa |
-| A4 — Phoenix 说话帧 | Lisa |
 | D1 — 确认资产最终版 | Lisa |
 | T9 — 场景切换过渡动画 | Zayn |
 | T13 — Dockerfile + docker-compose.yml | Zayn |
@@ -45,13 +44,13 @@
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
 | G1 | 确定用户旅程方向 | Zayn + Lisa | ✅ 完成 | 采用 v2，见 design/Flow-v2.md |
-| G2 | 场景设计：入口屏交互细节 | Zayn + Lisa | 🔲 待做 | — |
+| G2 | 场景设计：入口屏（现为 Intro 叙事序列） | Zayn + Lisa | 🔄 进行中 | Figma 已有稿，→ T16 |
 | G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | 🔲 待做 | → 解锁 G5 |
-| G4 | 对话 UI 设计：位置 & 样式 | Lisa | 🔲 待做 | — |
+| G4 | 对话 UI 设计：位置 & 样式 | Lisa | ✅ 完成 | Figma 已有设计稿，见 Figma-Sync.md → T18 |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 |
 | G6 | 配方呈现方式 | Zayn + Lisa | 🔲 待做 | 建议先用纯文字，后续升级卡片 |
 | G7 | Mixing Game 题目来源 | Zayn | ✅ 完成 | 全部 31 款步骤已整合进 Cocktail-List.md |
-| G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | 🔲 待做 | — |
+| G8 | Mixing Game UI 设计（题目布局/进度条/结果画面） | Lisa | ✅ 完成 | Figma 已有设计稿，见 Figma-Sync.md → T19 |
 | G9 | Phoenix 触发 Mixing Game 的通信协议 | Zayn | ✅ 完成 | `[GAME:cocktail_name]` 标记，server.py 已实现 |
 
 ---
@@ -86,6 +85,10 @@
 | T13 | Dockerfile + docker-compose.yml | Zayn | 🔲 待做 | nginx + gunicorn + Flask |
 | T14 | Gunicorn 生产服务器 | Zayn | 🔲 待做 | 写进 Dockerfile CMD，requirements.txt 已有 |
 | T15 | Phoenix AI Harness | Codex | ✅ 完成 | server.py PhoenixAI 类 |
+| T16 | Intro 叙事序列实现（P1） | Zayn | 🔲 待做 | 替代 entrance 场景，点击推进，见 Figma-Sync.md |
+| T17 | Phoenix 6 帧动画接入（P2） | Zayn | 🔲 待做 | 资产已有，main.js 加载 + 状态逻辑 |
+| T18 | Chat UI 样式对齐（P3） | Zayn | 🔲 待做 | Phoenix 名字标签，对话框位置，← T16 |
+| T19 | Mixing Game 正式 UI（P4） | Zayn | 🔲 待做 | 3 选项、进度图标、结果页，← T17/T18 |
 
 ---
 
