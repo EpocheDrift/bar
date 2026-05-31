@@ -153,6 +153,26 @@
     }
   };
 
+  window.showBarDialog = function (line) {
+    const overlay = document.getElementById("bar-dialog");
+    const nameEl = document.getElementById("bar-dialog-name");
+    const lineEl = document.getElementById("bar-dialog-line");
+    if (overlay && lineEl) {
+      if (nameEl) {
+        nameEl.textContent = "Phoenix";
+      }
+      lineEl.textContent = line;
+      overlay.style.display = "block";
+    }
+  };
+
+  window.hideBarDialog = function () {
+    const overlay = document.getElementById("bar-dialog");
+    if (overlay) {
+      overlay.style.display = "none";
+    }
+  };
+
   window.PhoenixChat = {
     messages,
     sendMessage,

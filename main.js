@@ -77,6 +77,17 @@
       type: "street_dialog",
       line: "Are you going to stand there all night? Follow me. I know a place.",
     },
+    { type: "bar_scene" },
+    { type: "bar_dialog", line: "Delighted to have you.\nNot really, but here we are." },
+    {
+      type: "bar_dialog",
+      line:
+        "This is my bar. Your consciousness is stuck here until they finish whatever they're doing to your body. Could be twenty minutes. Could be 20 years.",
+    },
+    {
+      type: "bar_dialog",
+      line: "Browse around. Or talk to me. Fair warning though — I’m not known for being pleasant.",
+    },
   ];
   const phoenixSprites = {
     idle: "phoenix_idle",
@@ -98,6 +109,7 @@
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
   k.loadSprite("gs_dialog_bg", "docs/assets/BG/gs_dialog_bg.png");
+  k.loadSprite("bar_dialog_bg", "docs/assets/BG/bar_dialog_bg.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
@@ -229,6 +241,9 @@
     if (typeof window.hideStreetDialog === "function") {
       window.hideStreetDialog();
     }
+    if (typeof window.hideBarDialog === "function") {
+      window.hideBarDialog();
+    }
     clearBlinkTimers();
     phoenixSprite = null;
     window.phoenixSprite = null;
@@ -282,6 +297,21 @@
       return;
     }
 
+    if (screen.type === "bar_scene") {
+      addBackground("home", 1);
+      k.add([k.sprite("phoenix_idle"), k.pos(phoenixPosition.x, phoenixPosition.y), k.scale(phoenixScale), k.z(2)]);
+      addBackground("bar_foreground", 3);
+      return;
+    }
+
+    if (screen.type === "bar_dialog") {
+      addBackground("bar_dialog_bg", 1);
+      if (typeof window.showBarDialog === "function") {
+        window.showBarDialog(screen.line);
+      }
+      return;
+    }
+
     k.add([
       k.text(screen.content, {
         size: screen.size,
@@ -301,6 +331,9 @@
     setChatVisible(true);
     if (typeof window.hideStreetDialog === "function") {
       window.hideStreetDialog();
+    }
+    if (typeof window.hideBarDialog === "function") {
+      window.hideBarDialog();
     }
     document.body.style.cursor = "default";
     addBackground("home", 0);
