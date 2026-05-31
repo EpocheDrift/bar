@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "ArcadeClassic";
-  src: url("docs/Lisa/ARCADECLASSIC copy.TTF") format("truetype");
+  font-family: "PressStart2P";
+  src: url("docs/Lisa/Press_Start_2P/PressStart2P-Regular.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -16,7 +16,7 @@ body {
   overflow: hidden;
   background: #0a0a0f;
   color: #e8e0d0;
-  font-family: "ArcadeClassic", "Press Start 2P", monospace;
+  font-family: "PressStart2P", monospace;
 }
 
 button,

@@ -80,6 +80,9 @@
       const data = await response.json();
       const reply = data.reply || "...";
       const assistantEl = appendMessage("assistant", "");
+      if (typeof window.setPhoenixState === "function") {
+        window.setPhoenixState("shake_talk");
+      }
       await typewriter(assistantEl, reply);
       messages.push({ role: "assistant", content: reply });
 

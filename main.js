@@ -1,5 +1,6 @@
 (function () {
   const canvas = document.getElementById("gameCanvas");
+  const chatOverlay = document.getElementById("chat-overlay");
   const initKaplay = window.kaplay || window.kaboom;
 
   if (!canvas || !initKaplay) {
@@ -17,6 +18,8 @@
   });
 
   const backgroundScale = 0.5;
+  const phoenixPosition = { x: 300, y: 126 };
+  const phoenixScale = 0.5;
   const bottleConfigs = [
     { key: "whiskey", spirit: "whiskey", x: 32, y: 350, width: 42, height: 104, scale: 0.3 },
     { key: "rum", spirit: "rum", x: 126, y: 334, width: 34, height: 94, scale: 0.27 },
@@ -26,59 +29,105 @@
     { key: "brandy", spirit: "brandy", x: 724, y: 350, width: 50, height: 90, scale: 0.26 },
     { key: "cointreau", spirit: "cointreau", x: 846, y: 348, width: 42, height: 104, scale: 0.3 },
   ];
+  const introScreens = [
+    { type: "text", content: "YEAR: 4144", size: 28 },
+    {
+      type: "text",
+      content:
+        "Cybernetic augmentation is legal, affordable, and completely normal. Titanium spine. Chrome arms. Neural implants. Pick your upgrade.",
+      size: 28,
+      width: 820,
+    },
+    { type: "text", content: "Every procedure requires full anesthesia.", size: 28, width: 820 },
+    {
+      type: "text",
+      content:
+        "And every time you go under — your mind slips through the cracks into a place that shouldn't exist.",
+      size: 28,
+      width: 820,
+    },
+    { type: "image", sprite: "story_intro_5" },
+    {
+      type: "text",
+      content:
+        "\"Breathe normally.\"\n\"This is a standard augmentation.\"\n\"You won't feel a thing.\"\n\"Count backwards from ten.\"",
+      size: 20,
+      width: 820,
+    },
+    { type: "text", content: "Ten...", size: 28 },
+    { type: "text", content: "Nine...", size: 28 },
+    { type: "text", content: "Eight...", size: 28 },
+    { type: "text", content: "...", size: 28 },
+    { type: "text", content: "> ENTER <", size: 28 },
+  ];
+  const phoenixSprites = {
+    idle: "phoenix_idle",
+    idle_blink: "phoenix_idle_blink",
+    shake: "phoenix_shake",
+    shake_talk: "phoenix_shake_talk",
+  };
 
-  let currentScene = "entrance";
+  let currentScene = "intro";
+  let introIndex = 0;
   let phoenixSprite = null;
   let phoenixState = "idle";
+  let blinkTimeout = null;
+  let blinkResetTimeout = null;
 
-  k.loadSprite("splash", "docs/assets/splash.png");
-  k.loadSprite("home", "docs/assets/home.png");
-  k.loadSprite("browse", "docs/assets/browse.png");
-  k.loadSprite("phoenix_idle", "docs/assets/standing.png");
-  k.loadSprite("phoenix_shake", "docs/assets/shake_1.png");
-  k.loadSprite("gin", "docs/assets/Gin.png");
-  k.loadSprite("rum", "docs/assets/Rum.png");
-  k.loadSprite("whiskey", "docs/assets/Whiskey.png");
-  k.loadSprite("vodka", "docs/assets/Vodka.png");
-  k.loadSprite("tequila", "docs/assets/Tequila.png");
-  k.loadSprite("brandy", "docs/assets/Brandy.png");
-  k.loadSprite("cointreau", "docs/assets/Cointreau.png");
+  k.loadFont("PressStart2P", "docs/Lisa/Press_Start_2P/PressStart2P-Regular.ttf");
+  k.loadSprite("home", "docs/assets/BG/scene_bar_overview.png");
+  k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
+  k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
+  k.loadSprite("phoenix_idle", "docs/assets/Character/phoenix_idle.png");
+  k.loadSprite("phoenix_idle_blink", "docs/assets/Character/phoenix_idle_blink.png");
+  k.loadSprite("phoenix_idle_talk", "docs/assets/Character/phoenix_idle_talk.png");
+  k.loadSprite("phoenix_shake", "docs/assets/Character/phoenix_shake.png");
+  k.loadSprite("phoenix_shake_blink", "docs/assets/Character/phoenix_shake_blink.png");
+  k.loadSprite("phoenix_shake_talk", "docs/assets/Character/phoenix_shake_talk.png");
+  k.loadSprite("gin", "docs/assets/Alcohol/gin.png");
+  k.loadSprite("rum", "docs/assets/Alcohol/rum.png");
+  k.loadSprite("whiskey", "docs/assets/Alcohol/whiskey.png");
+  k.loadSprite("vodka", "docs/assets/Alcohol/vodka.png");
+  k.loadSprite("tequila", "docs/assets/Alcohol/tequila.png");
+  k.loadSprite("brandy", "docs/assets/Alcohol/brandy.png");
+  k.loadSprite("cointreau", "docs/assets/Alcohol/cointreau.png");
 
   window.injectBottleContext = window.injectBottleContext || function () {};
 
-  function addBackground(name) {
-    k.add([k.sprite(name), k.pos(0, 0), k.scale(backgroundScale), k.z(0)]);
+  function setChatVisible(isVisible) {
+    if (chatOverlay) {
+      chatOverlay.style.display = isVisible ? "block" : "none";
+    }
   }
 
-  function makeButton(label, y, onClick) {
-    const x = k.width() / 2;
-    const panel = k.add([
-      k.rect(230, 54),
-      k.pos(x, y),
-      k.anchor("center"),
-      k.area(),
-      k.color(10, 10, 15),
-      k.opacity(0.72),
-      k.z(4),
-    ]);
+  function addBackground(name, layer) {
+    k.add([k.sprite(name), k.pos(0, 0), k.scale(backgroundScale), k.z(layer || 0)]);
+  }
 
-    k.add([
-      k.text(label, { size: 28 }),
-      k.pos(x, y + 2),
-      k.anchor("center"),
-      k.color(232, 224, 208),
-      k.z(5),
-    ]);
+  function clearBlinkTimers() {
+    window.clearTimeout(blinkTimeout);
+    window.clearTimeout(blinkResetTimeout);
+    blinkTimeout = null;
+    blinkResetTimeout = null;
+  }
 
-    panel.onClick(onClick);
-    panel.onHover(() => {
-      document.body.style.cursor = "pointer";
-      panel.opacity = 0.95;
-    });
-    panel.onHoverEnd(() => {
-      document.body.style.cursor = "default";
-      panel.opacity = 0.72;
-    });
+  function scheduleBlink() {
+    clearBlinkTimers();
+    if (currentScene !== "bar" || phoenixState !== "idle") {
+      return;
+    }
+
+    blinkTimeout = window.setTimeout(() => {
+      if (currentScene !== "bar" || phoenixState !== "idle") {
+        return;
+      }
+      window.setPhoenixState("idle_blink");
+      blinkResetTimeout = window.setTimeout(() => {
+        if (currentScene === "bar" && phoenixState === "idle_blink") {
+          window.setPhoenixState("idle");
+        }
+      }, 120);
+    }, 4000 + Math.random() * 2000);
   }
 
   function drawPhoenix(state) {
@@ -87,31 +136,28 @@
       phoenixSprite = null;
     }
 
-    if (state === "shake") {
-      phoenixSprite = k.add([
-        k.sprite("phoenix_shake"),
-        k.pos(265, 145),
-        k.scale(0.42),
-        k.z(6),
-        "phoenix",
-      ]);
-    } else {
-      phoenixSprite = k.add([
-        k.sprite("phoenix_idle"),
-        k.pos(292, 58),
-        k.scale(0.13),
-        k.z(6),
-        "phoenix",
-      ]);
-    }
-
+    const spriteKey = phoenixSprites[state] || phoenixSprites.idle;
+    phoenixSprite = k.add([
+      k.sprite(spriteKey),
+      k.pos(phoenixPosition.x, phoenixPosition.y),
+      k.scale(phoenixScale),
+      k.z(6),
+      "phoenix",
+    ]);
     window.phoenixSprite = phoenixSprite;
   }
 
   window.setPhoenixState = function (state) {
-    phoenixState = state === "shake" ? "shake" : "idle";
+    const nextState = phoenixSprites[state] ? state : "idle";
+    phoenixState = nextState;
     if (phoenixSprite) {
       drawPhoenix(phoenixState);
+    }
+
+    if (phoenixState === "idle") {
+      scheduleBlink();
+    } else if (phoenixState !== "idle_blink") {
+      clearBlinkTimers();
     }
   };
 
@@ -137,21 +183,58 @@
     });
   }
 
-  k.scene("entrance", () => {
-    currentScene = "entrance";
+  function advanceIntro() {
+    if (introIndex >= introScreens.length - 1) {
+      k.go("bar");
+      return;
+    }
+    introIndex += 1;
+    k.go("intro");
+  }
+
+  canvas.addEventListener("click", () => {
+    if (currentScene === "intro") {
+      advanceIntro();
+    }
+  });
+
+  k.scene("intro", () => {
+    currentScene = "intro";
+    setChatVisible(false);
+    clearBlinkTimers();
     phoenixSprite = null;
     window.phoenixSprite = null;
-    addBackground("splash");
-    makeButton("START", 394, () => k.go("bar"));
-    makeButton("QUIT", 464, () => {
-      window.close();
-    });
+    document.body.style.cursor = "pointer";
+
+    k.add([k.rect(k.width(), k.height()), k.pos(0, 0), k.color(0, 0, 0), k.z(0)]);
+
+    const screen = introScreens[introIndex];
+    if (screen.type === "image") {
+      addBackground(screen.sprite, 1);
+      return;
+    }
+
+    k.add([
+      k.text(screen.content, {
+        size: screen.size,
+        width: screen.width || 900,
+        align: "center",
+        font: "PressStart2P",
+      }),
+      k.pos(k.width() / 2, k.height() / 2),
+      k.anchor("center"),
+      k.color(232, 224, 208),
+      k.z(2),
+    ]);
   });
 
   k.scene("bar", () => {
     currentScene = "bar";
-    addBackground("home");
+    setChatVisible(true);
+    document.body.style.cursor = "default";
+    addBackground("home", 0);
     drawPhoenix(phoenixState);
+    addBackground("bar_foreground", 7);
 
     bottleConfigs.forEach(addBottle);
 
@@ -167,6 +250,7 @@
       dimmer.opacity = 0.02 + Math.random() * 0.025;
     });
 
+    scheduleBlink();
     k.wait(0, () => {
       if (typeof window.onBarSceneReady === "function") {
         window.onBarSceneReady();
@@ -174,5 +258,5 @@
     });
   });
 
-  k.go("entrance");
+  k.go("intro");
 })();
