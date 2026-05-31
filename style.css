@@ -1,6 +1,6 @@
 @font-face {
-  font-family: "PressStart2P";
-  src: url("docs/Lisa/Press_Start_2P/PressStart2P-Regular.ttf") format("truetype");
+  font-family: "VT323";
+  src: url("docs/Lisa/VT323-Regular.ttf") format("truetype");
   font-display: swap;
 }
 
@@ -16,7 +16,7 @@ body {
   overflow: hidden;
   background: #0a0a0f;
   color: #e8e0d0;
-  font-family: "PressStart2P", monospace;
+  font-family: "VT323", monospace;
 }
 
 button,

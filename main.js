@@ -74,7 +74,7 @@
   let blinkTimeout = null;
   let blinkResetTimeout = null;
 
-  k.loadFont("PressStart2P", "docs/Lisa/Press_Start_2P/PressStart2P-Regular.ttf");
+  k.loadFont("VT323", "docs/Lisa/VT323-Regular.ttf");
   k.loadSprite("home", "docs/assets/BG/scene_bar_overview.png");
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
@@ -219,7 +219,7 @@
         size: screen.size,
         width: screen.width || 900,
         align: "center",
-        font: "PressStart2P",
+        font: "VT323",
       }),
       k.pos(k.width() / 2, k.height() / 2),
       k.anchor("center"),
