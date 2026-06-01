@@ -5,10 +5,6 @@
   const formEl = document.getElementById("chat-panel");
   const inputEl = document.getElementById("chat-input");
   const sendEl = document.getElementById("chat-send");
-  const gameOverlay = document.getElementById("game-overlay");
-  const gameTitle = document.getElementById("game-title");
-  const gameCopy = document.getElementById("game-copy");
-  const gameClose = document.getElementById("game-close");
 
   const messages = [];
   let isSending = false;
@@ -115,8 +111,11 @@
       messages.push({ role: "assistant", content: reply });
       await typewriter(reply);
       pendingSuggestions = data.suggestions || [];
+      if (typeof window.updateGameSuggestion === "function") {
+        window.updateGameSuggestion(reply);
+      }
 
-      if (data.game) {
+      if (data.game && typeof window.startMixingGame === "function") {
         window.startMixingGame(data.game);
       }
     } catch (error) {
@@ -129,16 +128,6 @@
       }
     }
   }
-
-  window.startMixingGame =
-    window.startMixingGame ||
-    function (cocktail) {
-      const cocktailName = String(cocktail || "this drink").trim();
-      gameTitle.textContent = cocktailName;
-      gameCopy.textContent = "Phoenix has decided you should prove you can make it.";
-      gameOverlay.style.display = "flex";
-      console.log("Mixing Game triggered:", cocktailName);
-    };
 
   window.onBarSceneReady = function () {
     if (didOpen) {
@@ -153,10 +142,6 @@
     const text = inputEl.value;
     inputEl.value = "";
     sendMessage(text);
-  });
-
-  gameClose.addEventListener("click", () => {
-    gameOverlay.style.display = "none";
   });
 
   window.showStreetDialog = function (line) {

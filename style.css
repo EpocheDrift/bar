@@ -198,6 +198,31 @@ input {
   word-break: break-word;
 }
 
+#mg-suggest-pill {
+  position: absolute;
+  right: 116px;
+  top: 810px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid rgba(218, 218, 218, 0.35);
+  border-radius: 24px;
+  background: rgba(183, 155, 114, 0.25);
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#mg-suggest-pill:hover {
+  background: rgba(183, 155, 114, 0.45);
+  color: #ffffff;
+}
+
 #quick-bubble-container {
   position: absolute;
   right: 116px;
@@ -305,45 +330,291 @@ input {
 
 /* ── Mixing game overlay ── */
 
-#game-overlay {
+#mixing-game-layer {
   position: absolute;
   inset: 0;
+  z-index: 15;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+#mg-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+.mg-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+#mg-intro-dialog {
+  position: absolute;
+  left: 265px;
+  top: 728px;
+  width: 1767px;
+  height: 406px;
+  pointer-events: none;
+}
+
+#mg-intro-line {
+  position: absolute;
+  left: 654px;
+  top: 895px;
+  width: 1200px;
+  margin: 0;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 64px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+  transform: translateY(-50%);
+}
+
+.mg-arrow-button {
+  position: absolute;
+  left: 1970px;
+  top: 1082px;
+  width: 35px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
   align-items: center;
   justify-content: center;
-  padding: 48px;
-  background: rgba(0, 0, 0, 0.62);
-  pointer-events: auto;
-  z-index: 20;
 }
 
-#game-panel {
-  width: min(1040px, calc(100% - 96px));
-  padding: 48px;
-  border: 4px solid #b79b72;
-  background: rgba(8, 8, 12, 0.94);
-  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.62);
+.mg-arrow-button:hover {
+  color: #d8f3ff;
 }
 
-#game-kicker,
-#game-copy {
+#mg-hearts {
+  position: absolute;
+  left: 1427px;
+  top: 67px;
+  z-index: 3;
+  display: flex;
+  gap: 24px;
+  width: 390px;
+  height: 44px;
+  pointer-events: none;
+}
+
+.mg-heart {
+  width: 59px;
+  height: 44px;
+  image-rendering: pixelated;
+}
+
+#mg-question-bg {
+  position: absolute;
+  left: 521px;
+  top: 173px;
+  width: 1006px;
+  height: 806px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#mg-progress {
+  position: absolute;
+  left: 658px;
+  top: 236px;
+  width: 818px;
   margin: 0;
-  color: #9fb3c8;
-  font-size: 36px;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  line-height: 1;
+  text-align: right;
 }
 
-#game-title {
-  margin: 20px 0 32px;
+#mg-question {
+  position: absolute;
+  left: 571px;
+  top: 292px;
+  width: 905px;
+  margin: 0;
+  z-index: 2;
   color: #ffffff;
-  font-size: 56px;
+  font-family: "VT323", monospace;
+  font-size: 50px;
   font-weight: 400;
+  line-height: 1.05;
   letter-spacing: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
-#game-close {
-  margin-top: 40px;
-  padding: 20px 28px;
-  border: 4px solid #b79b72;
-  background: #17131a;
+#mg-subtitle {
+  position: absolute;
+  left: 658px;
+  top: 414px;
+  width: 818px;
+  margin: 0;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "VT323", monospace;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+#mg-options {
+  position: absolute;
+  left: 658px;
+  top: 512px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 818px;
+  pointer-events: auto;
+}
+
+.mg-option {
+  width: 818px;
+  min-height: 76px;
+  height: auto;
+  padding: 10px 32px;
+  border: 0;
+  background-color: transparent;
+  background-image: url("docs/assets/UI/mixing_game_option.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 38px;
+  line-height: 1.2;
+  letter-spacing: 0;
+  text-align: center;
   cursor: pointer;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
+}
+
+.mg-option:hover:not(:disabled),
+.mg-option:focus-visible:not(:disabled) {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  color: #09090d;
+  outline: none;
+}
+
+.mg-option:disabled {
+  cursor: default;
+}
+
+.mg-option.is-correct {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  background-color: rgba(39, 171, 95, 0.82);
+  color: #07140c;
+  box-shadow: inset 0 0 0 4px #49f58a;
+}
+
+.mg-option.is-wrong {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  background-color: rgba(177, 44, 56, 0.88);
+  color: #210508;
+  box-shadow: inset 0 0 0 4px #ff5468;
+}
+
+#mg-result-home {
+  position: absolute;
+  inset: 0;
+  width: 2048px;
+  height: 1152px;
+  z-index: 0;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+#mg-result-panel {
+  position: absolute;
+  left: 743px;
+  top: 176px;
+  width: 1000px;
+  height: 800px;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.65);
+  pointer-events: none;
+}
+
+#mg-result-title {
+  display: none;
+}
+
+#mg-result-hearts {
+  position: absolute;
+  left: 1603px;
+  top: 67px;
+  z-index: 3;
+  display: flex;
+  gap: 24px;
+  pointer-events: none;
+}
+
+#mg-result-score {
+  position: absolute;
+  left: 1184px;
+  top: 264px;
+  margin: 0;
+  z-index: 2;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 64px;
+  line-height: 1;
+  transform: translateY(-50%);
+}
+
+#mg-result-comment {
+  position: absolute;
+  left: 834px;
+  top: 576px;
+  width: 817px;
+  margin: 0;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "VT323", monospace;
+  font-size: 48px;
+  line-height: 1.15;
+  transform: translateY(-50%);
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+#mg-result-buttons {
+  position: absolute;
+  left: 980px;
+  top: 900px;
+  z-index: 3;
+  display: flex;
+  gap: 65px;
+  transform: translateY(-50%);
+}
+
+.mg-result-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 64px;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.mg-result-button:hover {
+  color: #d8f3ff;
 }

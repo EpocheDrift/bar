@@ -222,6 +222,9 @@
         if (typeof window.setQuickBubbles === "function") {
           window.setQuickBubbles(bottleSuggestions[spirit] || []);
         }
+        if (typeof window.updateGameSuggestion === "function") {
+          window.updateGameSuggestion(spirit);
+        }
       });
     });
   }
