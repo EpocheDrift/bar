@@ -63,13 +63,35 @@
           <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
         </form>
 
-        <!-- Layer 20: mixing game overlay -->
-        <section id="game-overlay" aria-label="Mixing Game" style="display: none;">
-          <div id="game-panel">
-            <p id="game-kicker">Mixing Game</p>
-            <h2 id="game-title">Phoenix is watching.</h2>
-            <p id="game-copy">Do not embarrass yourself.</p>
-            <button id="game-close" type="button">Close</button>
+        <!-- Layer 15: mixing game overlay -->
+        <section id="mixing-game-layer" aria-label="Mixing Game" style="display: none;">
+          <div id="mg-scrim" aria-hidden="true"></div>
+
+          <div id="mg-intro" class="mg-screen" style="display: none;">
+            <img id="mg-intro-dialog" src="docs/assets/UI/dialog_box.png" alt="">
+            <p id="mg-intro-line" aria-live="polite"></p>
+            <button id="mg-intro-next" class="mg-arrow-button" type="button" aria-label="Start mixing quiz">&gt;</button>
+          </div>
+
+          <div id="mg-quiz" class="mg-screen" style="display: none;">
+            <div id="mg-hearts" aria-label="Remaining hearts"></div>
+            <img id="mg-question-bg" src="docs/assets/UI/mixing_game_question_background.png" alt="">
+            <p id="mg-progress"></p>
+            <h2 id="mg-question"></h2>
+            <p id="mg-subtitle" aria-live="polite"></p>
+            <div id="mg-options"></div>
+          </div>
+
+          <div id="mg-result" class="mg-screen" style="display: none;">
+            <img id="mg-result-home" src="docs/assets/home.png" alt="">
+            <div id="mg-result-panel">
+              <img id="mg-result-frame" src="docs/assets/UI/ai_mixing_result.png" alt="">
+              <p id="mg-result-title"></p>
+              <p id="mg-result-score" aria-live="polite"></p>
+              <p id="mg-result-comment"></p>
+            </div>
+            <button id="mg-back" class="mg-result-button" type="button" aria-label="Back to bar"></button>
+            <button id="mg-restart" class="mg-result-button" type="button" aria-label="Restart mixing quiz"></button>
           </div>
         </section>
 
@@ -77,6 +99,7 @@
     </div>
 
     <script src="main.js"></script>
+    <script src="mixing-game.js"></script>
     <script src="chat.js"></script>
   </body>
 </html>

@@ -305,45 +305,299 @@ input {
 
 /* ── Mixing game overlay ── */
 
-#game-overlay {
+#mixing-game-layer {
   position: absolute;
   inset: 0;
-  align-items: center;
-  justify-content: center;
-  padding: 48px;
-  background: rgba(0, 0, 0, 0.62);
+  z-index: 15;
+  overflow: hidden;
   pointer-events: auto;
-  z-index: 20;
 }
 
-#game-panel {
-  width: min(1040px, calc(100% - 96px));
-  padding: 48px;
-  border: 4px solid #b79b72;
-  background: rgba(8, 8, 12, 0.94);
-  box-shadow: 0 0 0 8px rgba(0, 0, 0, 0.62);
+#mg-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(0, 0, 0, 0.45);
+  pointer-events: none;
 }
 
-#game-kicker,
-#game-copy {
+.mg-screen {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: auto;
+}
+
+#mg-intro-dialog {
+  position: absolute;
+  left: 265px;
+  top: 728px;
+  width: 1767px;
+  height: 406px;
+  pointer-events: none;
+}
+
+#mg-intro-line {
+  position: absolute;
+  left: 654px;
+  top: 895px;
+  width: 1200px;
   margin: 0;
-  color: #9fb3c8;
-  font-size: 36px;
-}
-
-#game-title {
-  margin: 20px 0 32px;
   color: #ffffff;
-  font-size: 56px;
-  font-weight: 400;
+  font-family: "VT323", monospace;
+  font-size: 54px;
+  line-height: 1.15;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 
-#game-close {
-  margin-top: 40px;
-  padding: 20px 28px;
-  border: 4px solid #b79b72;
-  background: #17131a;
+.mg-arrow-button {
+  position: absolute;
+  left: 1970px;
+  top: 1082px;
+  width: 40px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
   color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 42px;
+  line-height: 0.75;
   cursor: pointer;
+  text-align: center;
+}
+
+.mg-arrow-button:hover {
+  color: #d8f3ff;
+}
+
+#mg-hearts {
+  position: absolute;
+  left: 1603px;
+  top: 67px;
+  z-index: 3;
+  display: flex;
+  gap: 24px;
+  width: 390px;
+  height: 44px;
+  pointer-events: none;
+}
+
+.mg-heart {
+  width: 59px;
+  height: 44px;
+  image-rendering: pixelated;
+}
+
+#mg-question-bg {
+  position: absolute;
+  left: 697px;
+  top: 173px;
+  width: 1006px;
+  height: 806px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+#mg-progress {
+  position: absolute;
+  left: 834px;
+  top: 236px;
+  width: 818px;
+  margin: 0;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.72);
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  line-height: 1;
+  text-align: right;
+}
+
+#mg-question {
+  position: absolute;
+  left: 747px;
+  top: 292px;
+  width: 905px;
+  margin: 0;
+  z-index: 2;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.05;
+  letter-spacing: 0;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+#mg-subtitle {
+  position: absolute;
+  left: 834px;
+  top: 414px;
+  width: 818px;
+  margin: 0;
+  z-index: 2;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "VT323", monospace;
+  font-size: 34px;
+  line-height: 1.05;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+#mg-options {
+  position: absolute;
+  left: 834px;
+  top: 512px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  width: 818px;
+  pointer-events: auto;
+}
+
+.mg-option {
+  width: 818px;
+  height: 76px;
+  padding: 4px 32px 7px;
+  border: 0;
+  background-color: transparent;
+  background-image: url("docs/assets/UI/mixing_game_option.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 32px;
+  line-height: 1;
+  letter-spacing: 0;
+  text-align: left;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.mg-option:hover:not(:disabled),
+.mg-option:focus-visible:not(:disabled) {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  color: #09090d;
+  outline: none;
+}
+
+.mg-option:disabled {
+  cursor: default;
+}
+
+.mg-option.is-correct {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  background-color: rgba(39, 171, 95, 0.82);
+  color: #07140c;
+  box-shadow: inset 0 0 0 4px #49f58a;
+}
+
+.mg-option.is-wrong {
+  background-image: url("docs/assets/UI/mixing_game_option_hover.png");
+  background-color: rgba(177, 44, 56, 0.88);
+  color: #210508;
+  box-shadow: inset 0 0 0 4px #ff5468;
+}
+
+#mg-result-home {
+  position: absolute;
+  inset: 0;
+  width: 2048px;
+  height: 1152px;
+  z-index: 0;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+#mg-result-panel {
+  position: absolute;
+  left: 721px;
+  top: 173px;
+  width: 606px;
+  height: 806px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#mg-result-frame {
+  position: absolute;
+  inset: 0;
+  width: 606px;
+  height: 806px;
+  pointer-events: none;
+}
+
+#mg-result-title {
+  position: absolute;
+  left: 58px;
+  top: 96px;
+  width: 490px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: "VT323", monospace;
+  font-size: 40px;
+  line-height: 1.05;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+#mg-result-score {
+  position: absolute;
+  left: 0;
+  top: 238px;
+  width: 606px;
+  margin: 0;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 118px;
+  line-height: 1;
+  text-align: center;
+}
+
+#mg-result-comment {
+  position: absolute;
+  left: 69px;
+  top: 430px;
+  width: 468px;
+  margin: 0;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: "VT323", monospace;
+  font-size: 40px;
+  line-height: 1.1;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.mg-result-button {
+  position: absolute;
+  z-index: 3;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  cursor: pointer;
+}
+
+.mg-result-button:hover {
+  filter: brightness(1.35);
+}
+
+#mg-back {
+  left: 980px;
+  top: 900px;
+  width: 144px;
+  height: 36px;
+  background-image: url("docs/assets/UI/back_button.png");
+}
+
+#mg-restart {
+  left: 1150px;
+  top: 900px;
+  width: 246px;
+  height: 36px;
+  background-image: url("docs/assets/UI/restart_button.png");
 }
