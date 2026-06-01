@@ -1,6 +1,7 @@
 (function () {
   const canvas = document.getElementById("gameCanvas");
-  const chatOverlay = document.getElementById("chat-overlay");
+  const chatPanel = document.getElementById("chat-panel");
+  const speechBubble = document.getElementById("speech-bubble");
   const initKaplay = window.kaplay || window.kaboom;
 
   if (!canvas || !initKaplay) {
@@ -18,16 +19,15 @@
   });
 
   const backgroundScale = 0.5;
-  const phoenixPosition = { x: 300, y: 126 };
+  const phoenixPosition = { x: 208, y: 198 };
   const phoenixScale = 0.5;
   const bottleConfigs = [
-    { key: "whiskey", spirit: "whiskey", x: 32, y: 350, width: 42, height: 104, scale: 0.3 },
-    { key: "rum", spirit: "rum", x: 126, y: 334, width: 34, height: 94, scale: 0.27 },
-    { key: "gin", spirit: "gin", x: 392, y: 330, width: 34, height: 96, scale: 0.28 },
-    { key: "vodka", spirit: "vodka", x: 506, y: 328, width: 34, height: 96, scale: 0.28 },
-    { key: "tequila", spirit: "tequila", x: 626, y: 338, width: 35, height: 92, scale: 0.27 },
-    { key: "brandy", spirit: "brandy", x: 724, y: 350, width: 50, height: 90, scale: 0.26 },
-    { key: "cointreau", spirit: "cointreau", x: 846, y: 348, width: 42, height: 104, scale: 0.3 },
+    { key: "tequila", spirit: "tequila", x: 390, y: 318, width: 128, height: 342, scale: 0.28 },
+    { key: "gin", spirit: "gin", x: 453, y: 318, width: 122, height: 342, scale: 0.28 },
+    { key: "rum", spirit: "rum", x: 515, y: 318, width: 124, height: 342, scale: 0.28 },
+    { key: "vodka", spirit: "vodka", x: 577, y: 318, width: 122, height: 342, scale: 0.28 },
+    { key: "whiskey", spirit: "whiskey", x: 638, y: 318, width: 135, height: 342, scale: 0.28 },
+    { key: "cointreau", spirit: "cointreau", x: 700, y: 318, width: 162, height: 342, scale: 0.28 },
   ];
   const introScreens = [
     { type: "text", content: "YEAR: 4144", size: 28 },
@@ -104,6 +104,7 @@
   let phoenixState = "idle";
   let blinkTimeout = null;
   let blinkResetTimeout = null;
+  let pendingBottleSignal = null;
 
   k.loadFont("VT323", "docs/Lisa/VT323-Regular.ttf");
   k.loadSprite("home", "docs/assets/BG/scene_bar_overview.png");
@@ -134,11 +135,23 @@
   k.loadSprite("brandy", "docs/assets/Alcohol/brandy.png");
   k.loadSprite("cointreau", "docs/assets/Alcohol/cointreau.png");
 
-  window.injectBottleContext = window.injectBottleContext || function () {};
+  window.emitBottleSignal = function (spirit) {
+    const normalizedSpirit = String(spirit || "").trim().toLowerCase();
+    pendingBottleSignal = normalizedSpirit ? { spirit: normalizedSpirit } : null;
+  };
+
+  window.consumeBottleSignal = function () {
+    const signal = pendingBottleSignal;
+    pendingBottleSignal = null;
+    return signal;
+  };
 
   function setChatVisible(isVisible) {
-    if (chatOverlay) {
-      chatOverlay.style.display = isVisible ? "block" : "none";
+    if (chatPanel) {
+      chatPanel.style.display = isVisible ? "flex" : "none";
+    }
+    if (!isVisible && speechBubble) {
+      speechBubble.style.display = "none";
     }
   }
 
@@ -214,7 +227,7 @@
       { baseY: config.y, spirit: config.spirit },
     ]);
 
-    bottle.onClick(() => window.injectBottleContext(config.spirit));
+    bottle.onClick(() => window.emitBottleSignal(config.spirit));
     bottle.onHover(() => {
       document.body.style.cursor = "pointer";
       bottle.pos.y = bottle.baseY - 6;
@@ -222,6 +235,26 @@
     bottle.onHoverEnd(() => {
       document.body.style.cursor = "default";
       bottle.pos.y = bottle.baseY;
+    });
+  }
+
+  function getCanvasPoint(event) {
+    const rect = canvas.getBoundingClientRect();
+    return {
+      x: ((event.clientX - rect.left) / rect.width) * k.width(),
+      y: ((event.clientY - rect.top) / rect.height) * k.height(),
+    };
+  }
+
+  function getBottleAtPoint(point) {
+    return bottleConfigs.find((config) => {
+      const scale = config.scale || 0.25;
+      const hitPadding = 8;
+      const left = config.x - hitPadding;
+      const top = config.y - hitPadding;
+      const right = config.x + config.width * scale + hitPadding;
+      const bottom = config.y + config.height * scale + hitPadding;
+      return point.x >= left && point.x <= right && point.y >= top && point.y <= bottom;
     });
   }
 
@@ -234,9 +267,17 @@
     k.go("intro");
   }
 
-  canvas.addEventListener("click", () => {
+  canvas.addEventListener("click", (event) => {
     if (currentScene === "intro") {
       advanceIntro();
+      return;
+    }
+
+    if (currentScene === "bar") {
+      const bottle = getBottleAtPoint(getCanvasPoint(event));
+      if (bottle) {
+        window.emitBottleSignal(bottle.spirit);
+      }
     }
   });
 

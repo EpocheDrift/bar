@@ -11,13 +11,14 @@
     <canvas id="gameCanvas" aria-label="Phoenix's Bar game scene"></canvas>
 
     <div id="ui-layer">
-      <section id="chat-overlay" aria-label="Chat with Phoenix" style="display: none;">
-        <div id="chat-messages" aria-live="polite"></div>
-        <form id="chat-input-row" autocomplete="off">
-          <input id="chat-input" type="text" placeholder="..." autocomplete="off">
-          <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
-        </form>
-      </section>
+      <div id="speech-bubble" aria-live="polite" role="status" style="display: none;"></div>
+
+      <div id="quick-bubble-placeholder" aria-hidden="true"></div>
+
+      <form id="chat-panel" aria-label="Chat with Phoenix" autocomplete="off" style="display: none;">
+        <input id="chat-input" type="text" placeholder="Say Something to Phoenix" autocomplete="off">
+        <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
+      </form>
 
       <section id="game-overlay" aria-label="Mixing Game" style="display: none;">
         <div id="game-panel">
