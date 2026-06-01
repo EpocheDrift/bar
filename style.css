@@ -399,7 +399,7 @@ input {
 
 #mg-hearts {
   position: absolute;
-  left: 1603px;
+  left: 1427px;
   top: 67px;
   z-index: 3;
   display: flex;
@@ -417,7 +417,7 @@ input {
 
 #mg-question-bg {
   position: absolute;
-  left: 697px;
+  left: 521px;
   top: 173px;
   width: 1006px;
   height: 806px;
@@ -427,7 +427,7 @@ input {
 
 #mg-progress {
   position: absolute;
-  left: 834px;
+  left: 658px;
   top: 236px;
   width: 818px;
   margin: 0;
@@ -441,7 +441,7 @@ input {
 
 #mg-question {
   position: absolute;
-  left: 747px;
+  left: 571px;
   top: 292px;
   width: 905px;
   margin: 0;
@@ -458,7 +458,7 @@ input {
 
 #mg-subtitle {
   position: absolute;
-  left: 834px;
+  left: 658px;
   top: 414px;
   width: 818px;
   margin: 0;
@@ -473,7 +473,7 @@ input {
 
 #mg-options {
   position: absolute;
-  left: 834px;
+  left: 658px;
   top: 512px;
   z-index: 2;
   display: flex;
@@ -485,8 +485,9 @@ input {
 
 .mg-option {
   width: 818px;
-  height: 76px;
-  padding: 4px 32px 7px;
+  min-height: 76px;
+  height: auto;
+  padding: 10px 32px;
   border: 0;
   background-color: transparent;
   background-image: url("docs/assets/UI/mixing_game_option.png");
@@ -494,12 +495,14 @@ input {
   background-size: 100% 100%;
   color: #ffffff;
   font-family: "VT323", monospace;
-  font-size: 48px;
-  line-height: 1;
+  font-size: 38px;
+  line-height: 1.2;
   letter-spacing: 0;
   text-align: center;
   cursor: pointer;
-  overflow: hidden;
+  overflow: visible;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .mg-option:hover:not(:disabled),
