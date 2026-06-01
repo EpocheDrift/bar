@@ -63,7 +63,7 @@
     { type: "black" },
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
     { type: "vignette_image", sprite: "scene_station", vignette: "closing_1", character: "phoenix_street" },
-    { type: "image", sprite: "gs5_bg" },
+    { type: "image", sprite: "scene_station", character: "phoenix_street" },
     {
       type: "street_dialog",
       line: "What took you so long? I thought you died on the way here :)",
@@ -110,7 +110,6 @@
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
-  k.loadSprite("gs5_bg",             "docs/assets/BG/gs5_bg.png");
   k.loadSprite("gs_dialog_bg",       "docs/assets/BG/gs_dialog_bg.png");
   k.loadSprite("gs_dialog_speak_bg", "docs/assets/BG/gs_dialog_speak_bg.png");
   k.loadSprite("bar_intro_1_bg",     "docs/assets/BG/bar_intro_1_bg.png");
