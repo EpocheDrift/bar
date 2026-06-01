@@ -22,12 +22,17 @@
   const backgroundScale = 0.5;
 
   const phoenixSpritePaths = {
-    idle:        "docs/assets/Character/phoenix_idle.png",
-    idle_blink:  "docs/assets/Character/phoenix_idle_blink.png",
-    idle_talk:   "docs/assets/Character/phoenix_idle_talk.png",
-    shake:       "docs/assets/Character/phoenix_shake.png",
-    shake_blink: "docs/assets/Character/phoenix_shake_blink.png",
-    shake_talk:  "docs/assets/Character/phoenix_shake_talk.png",
+    idle:       "docs/assets/Character/phoenix_idle.png",
+    idle_blink: "docs/assets/Character/phoenix_idle_blink.png",
+  };
+
+  const bottleSuggestions = {
+    tequila: ["Make me a Margarita", "What mixes with tequila?"],
+    gin: ["Make me a G&T", "Gin cocktail ideas?"],
+    rum: ["Make me a Mojito", "What's good with rum?"],
+    vodka: ["Moscow Mule?", "Vodka cocktails?"],
+    whiskey: ["Old Fashioned please", "Best whiskey drink?"],
+    cointreau: ["What can I make with this?", "Cointreau cocktail?"],
   };
 
   const introScreens = [
@@ -207,7 +212,17 @@
 
   function setupBarBottles() {
     document.querySelectorAll(".bar-bottle").forEach((img) => {
-      img.addEventListener("click", () => window.emitBottleSignal(img.dataset.spirit));
+      if (img.dataset.bottleBound === "true") {
+        return;
+      }
+      img.dataset.bottleBound = "true";
+      img.addEventListener("click", () => {
+        const spirit = String(img.dataset.spirit || "").toLowerCase();
+        window.emitBottleSignal(spirit);
+        if (typeof window.setQuickBubbles === "function") {
+          window.setQuickBubbles(bottleSuggestions[spirit] || []);
+        }
+      });
     });
   }
 

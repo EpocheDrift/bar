@@ -140,6 +140,7 @@ input {
   pointer-events: none;
 }
 
+
 #bar-fg {
   position: absolute;
   inset: 0;
@@ -172,7 +173,8 @@ input {
   left: 661px;
   top: 397px;
   width: 945px;
-  height: 124px;
+  min-height: 124px;
+  height: auto;
   z-index: 10;
   pointer-events: none;
 }
@@ -185,33 +187,52 @@ input {
 }
 
 #speech-text {
-  position: absolute;
-  left: 8.5%;
-  top: 16%;
-  right: 2.1%;
-  bottom: 16%;
+  display: block;
+  position: relative;
+  padding: 20px 20px 20px 80px;
   color: #ffffff;
   font-family: "VT323", monospace;
   font-size: 38px;
   line-height: 1.4;
-  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
-#quick-bubble {
+#quick-bubble-container {
   position: absolute;
-  left: 1469px;
+  right: 116px;
   top: 863px;
-  width: 463px;
-  height: 48px;
   z-index: 10;
-  background: rgba(218, 218, 218, 0.45);
-  border-radius: 48px;
   display: flex;
+  flex-direction: row-reverse;
   align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+.quick-pill {
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
   padding: 0 24px;
+  border: 0;
+  border-radius: 24px;
+  background: rgba(218, 218, 218, 0.45);
   font-family: "VT323", monospace;
   font-size: 30px;
-  color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.quick-pill:hover {
+  opacity: 0.8;
+}
+
+.quick-pill.disabled {
+  opacity: 0.4;
+  cursor: default;
   pointer-events: none;
 }
 

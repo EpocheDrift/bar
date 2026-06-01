@@ -20,6 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent
 PROMPT_PATH = BASE_DIR / "docs" / "character" / "Phoenix-Prompt.md"
 COCKTAIL_LIST_PATH = BASE_DIR / "docs" / "project" / "Cocktail-List.md"
 GAME_MARKER_RE = re.compile(r"\[GAME:([^\]]+)\]")
+SUGGEST_RE = re.compile(r"(?:^|\n)SUGGEST:\s*(.+?)\s*$", re.MULTILINE)
+QUOTED_SUGGESTION_RE = re.compile(r'"([^"]+)"')
 
 
 def read_text(path: Path) -> str:
@@ -53,30 +55,41 @@ class PhoenixAI:
             "[GAME:Exact Cocktail Name] to the end of your response. Use a cocktail "
             "name from the cocktail list. Do not explain the marker."
         )
-        self.system_message = f"{prompt_text}\n\n---\n\n{game_protocol}"
+        suggest_protocol = (
+            "SUGGESTION OUTPUT PROTOCOL (REQUIRED — every single response, no exceptions)\n"
+            "The very last line of every response must be a SUGGEST line. "
+            "Even if your response is a question. Even if it is one word. Always.\n"
+            "Format (exact, no variations):\n"
+            'SUGGEST: "suggestion1" | "suggestion2" | "suggestion3"\n'
+            "1 to 3 suggestions, each 5 words or fewer, natural English, "
+            "fits Phoenix's cold personality. "
+            "This line is a machine-readable control signal — "
+            "it is stripped server-side and never shown to the user."
+        )
+        self.system_message = f"{prompt_text}\n\n---\n\n{game_protocol}\n\n---\n\n{suggest_protocol}"
         self.model = os.getenv("MINIMAX_MODEL", "MiniMax-Text-01")
         api_key = os.getenv("MINIMAX_API_KEY") or os.getenv("OPENAI_API_KEY")
         base_url = os.getenv("MINIMAX_BASE_URL", "https://api.minimax.chat/v1")
         self.client = OpenAI(api_key=api_key, base_url=base_url) if api_key and OpenAI else None
 
-    def chat(self, messages: list[dict[str, Any]]) -> tuple[str, str | None]:
+    def chat(self, messages: list[dict[str, Any]]) -> tuple[str, str | None, list[str]]:
         clean_messages = self._clean_messages(messages)
         if self._is_opening(clean_messages):
-            return "Welcome.", None
+            return "Welcome.", None, ["What do you want?", "Surprise me", "Something drinkable?"]
         if self.client is None:
-            return self._fallback(), None
+            return self._fallback(), None, []
 
         try:
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "system", "content": self.system_message}, *clean_messages],
                 temperature=0.85,
-                max_tokens=260,
+                max_tokens=350,
             )
             reply = response.choices[0].message.content or ""
-            return self._strip_game_marker(reply)
+            return self._parse_reply(reply)
         except Exception:
-            return self._fallback(), None
+            return self._fallback(), None, []
 
     def _clean_messages(self, messages: list[dict[str, Any]]) -> list[dict[str, str]]:
         clean: list[dict[str, str]] = []
@@ -93,11 +106,21 @@ class PhoenixAI:
         last = messages[-1]
         return last["role"] == "user" and last["content"].strip() in {"", "__init__"}
 
-    def _strip_game_marker(self, reply: str) -> tuple[str, str | None]:
+    def _parse_reply(self, reply: str) -> tuple[str, str | None, list[str]]:
         match = GAME_MARKER_RE.search(reply)
         game = match.group(1).strip() if match else None
         display_text = GAME_MARKER_RE.sub("", reply).strip()
-        return display_text or "...", game
+
+        suggestions: list[str] = []
+        suggest_match = SUGGEST_RE.search(display_text)
+        if suggest_match:
+            raw_suggestions = suggest_match.group(1)
+            quoted = QUOTED_SUGGESTION_RE.findall(raw_suggestions)
+            parts = quoted if quoted else raw_suggestions.split("|")
+            suggestions = [part.strip().strip('"') for part in parts if part.strip()][:3]
+            display_text = (display_text[: suggest_match.start()] + display_text[suggest_match.end() :]).strip()
+
+        return display_text or "...", game, suggestions
 
     def _fallback(self) -> str:
         return random.choice(self.fallback_lines)
@@ -126,8 +149,8 @@ def chat():
     messages = payload.get("messages", [])
     if not isinstance(messages, list):
         messages = []
-    reply, game = phoenix.chat(messages)
-    return jsonify({"reply": reply, "game": game})
+    reply, game, suggestions = phoenix.chat(messages)
+    return jsonify({"reply": reply, "game": game, "suggestions": suggestions})
 
 
 if __name__ == "__main__":
