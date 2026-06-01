@@ -99,6 +99,7 @@
     setBusy(true);
     setSpeechBubble("...");
 
+    let pendingSuggestions = [];
     try {
       const response = await fetch("/chat", {
         method: "POST",
@@ -113,16 +114,16 @@
       const reply = data.reply || "...";
       messages.push({ role: "assistant", content: reply });
       await typewriter(reply);
-      window.setQuickBubbles(data.suggestions || []);
+      pendingSuggestions = data.suggestions || [];
 
       if (data.game) {
         window.startMixingGame(data.game);
       }
     } catch (error) {
       setSpeechBubble("...");
-      window.setQuickBubbles([]);
     } finally {
       setBusy(false);
+      window.setQuickBubbles(pendingSuggestions);
       if (config.focusInput) {
         inputEl.focus();
       }
