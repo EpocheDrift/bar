@@ -365,32 +365,31 @@ input {
 #mg-intro-line {
   position: absolute;
   left: 654px;
-  top: 864px;
+  top: 895px;
   width: 1200px;
   margin: 0;
   color: #ffffff;
   font-family: "VT323", monospace;
-  font-size: 54px;
+  font-size: 64px;
   line-height: 1.15;
   letter-spacing: 0;
   overflow-wrap: anywhere;
+  transform: translateY(-50%);
 }
 
 .mg-arrow-button {
   position: absolute;
   left: 1970px;
   top: 1082px;
-  width: 40px;
-  height: 32px;
+  width: 35px;
+  height: 24px;
   padding: 0;
   border: 0;
   background: transparent;
-  color: #ffffff;
-  font-family: "VT323", monospace;
-  font-size: 42px;
-  line-height: 0.75;
   cursor: pointer;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mg-arrow-button:hover {
@@ -542,90 +541,80 @@ input {
 
 #mg-result-panel {
   position: absolute;
-  left: 721px;
-  top: 173px;
-  width: 606px;
-  height: 806px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-#mg-result-frame {
-  position: absolute;
-  inset: 0;
-  width: 606px;
-  height: 806px;
+  left: 743px;
+  top: 176px;
+  width: 1000px;
+  height: 800px;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.65);
   pointer-events: none;
 }
 
 #mg-result-title {
+  display: none;
+}
+
+#mg-result-hearts {
   position: absolute;
-  left: 58px;
-  top: 96px;
-  width: 490px;
-  margin: 0;
-  color: rgba(255, 255, 255, 0.82);
-  font-family: "VT323", monospace;
-  font-size: 40px;
-  line-height: 1.05;
-  text-align: center;
-  overflow-wrap: anywhere;
+  left: 1603px;
+  top: 67px;
+  z-index: 3;
+  display: flex;
+  gap: 24px;
+  pointer-events: none;
 }
 
 #mg-result-score {
   position: absolute;
-  left: 0;
-  top: 238px;
-  width: 606px;
+  left: 1184px;
+  top: 264px;
   margin: 0;
+  z-index: 2;
   color: #ffffff;
   font-family: "VT323", monospace;
-  font-size: 118px;
+  font-size: 64px;
   line-height: 1;
-  text-align: center;
+  transform: translateY(-50%);
 }
 
 #mg-result-comment {
   position: absolute;
-  left: 69px;
-  top: 430px;
-  width: 468px;
+  left: 834px;
+  top: 576px;
+  width: 817px;
   margin: 0;
+  z-index: 2;
   color: rgba(255, 255, 255, 0.9);
   font-family: "VT323", monospace;
-  font-size: 40px;
-  line-height: 1.1;
-  text-align: center;
+  font-size: 48px;
+  line-height: 1.15;
+  transform: translateY(-50%);
+  white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
 
-.mg-result-button {
+#mg-result-buttons {
   position: absolute;
+  left: 980px;
+  top: 900px;
   z-index: 3;
+  display: flex;
+  gap: 65px;
+  transform: translateY(-50%);
+}
+
+.mg-result-button {
   padding: 0;
   border: 0;
-  background-color: transparent;
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
+  background: transparent;
+  color: #ffffff;
+  font-family: "VT323", monospace;
+  font-size: 64px;
+  line-height: 1;
+  white-space: nowrap;
   cursor: pointer;
 }
 
 .mg-result-button:hover {
-  filter: brightness(1.35);
-}
-
-#mg-back {
-  left: 980px;
-  top: 900px;
-  width: 144px;
-  height: 36px;
-  background-image: url("docs/assets/UI/back_button.png");
-}
-
-#mg-restart {
-  left: 1150px;
-  top: 900px;
-  width: 246px;
-  height: 36px;
-  background-image: url("docs/assets/UI/restart_button.png");
+  color: #d8f3ff;
 }

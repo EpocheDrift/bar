@@ -15,6 +15,7 @@
   const resultTitleEl = document.getElementById("mg-result-title");
   const resultScoreEl = document.getElementById("mg-result-score");
   const resultCommentEl = document.getElementById("mg-result-comment");
+  const resultHeartsEl = document.getElementById("mg-result-hearts");
   const backButton = document.getElementById("mg-back");
   const restartButton = document.getElementById("mg-restart");
 
@@ -590,11 +591,25 @@
     setScreen("quiz");
   }
 
+  function renderResultHearts() {
+    if (!resultHeartsEl) return;
+    resultHeartsEl.textContent = "";
+    resultHeartsEl.setAttribute("aria-label", `${state.score} out of ${QUESTION_COUNT} hearts`);
+    for (let i = 0; i < QUESTION_COUNT; i += 1) {
+      const img = document.createElement("img");
+      img.className = "mg-heart";
+      img.src = i < state.score ? HEART_FULL : HEART_EMPTY;
+      img.alt = i < state.score ? "Full heart" : "Empty heart";
+      resultHeartsEl.appendChild(img);
+    }
+  }
+
   function showResult() {
     clearNextTimer();
-    resultTitleEl.textContent = state.cocktailName;
-    resultScoreEl.textContent = `${state.score} / ${QUESTION_COUNT}`;
+    if (resultTitleEl) resultTitleEl.textContent = state.cocktailName;
+    resultScoreEl.textContent = `${state.score}/${QUESTION_COUNT}`;
     resultCommentEl.textContent = RESULT_COMMENTS[state.score] || RESULT_COMMENTS[0];
+    renderResultHearts();
     setScreen("result");
   }
 
@@ -666,11 +681,11 @@
 
   const SPIRIT_COCKTAILS = {
     tequila:   ["Margarita", "Witch", "Daydreaming"],
-    gin:       ["Gin Tonic", "Tom Collins", "Perfume Gin", "Orange Blossom"],
-    rum:       ["Mojito", "Daiquiri", "Cuba Libre", "Pina Colada"],
-    vodka:     ["Bloody Mary", "Cosmopolitan", "Yukiguni"],
-    whiskey:   ["Whiskey Sour", "Dog Hair", "Apple Highball"],
-    cointreau: ["Orange Tonic", "Night of Rendezvous"],
+    gin:       ["Gin Tonic", "Tom Collins", "Perfume Gin", "Orange Blossom", "Iced Lychee", "Night Grape", "Negroni Sour"],
+    rum:       ["Mojito", "Daiquiri", "Cuba Libre", "Pina Colada", "Jasmine Sea Breeze", "Night Grape", "Coconut Amora", "Painkiller"],
+    vodka:     ["Bloody Mary", "Cosmopolitan", "Yukiguni", "Passion Fruit Martini", "Kamikaze"],
+    whiskey:   ["Whiskey Sour", "Dog Hair", "Apple Highball", "Osmanthus / Logan Whiskey", "Orange Fragrance"],
+    cointreau: ["Orange Tonic", "Night of Rendezvous", "Long Island Ice Tea"],
   };
 
   function setGameSuggestion(cocktailName) {
@@ -684,7 +699,8 @@
   }
 
   function suggestionFromReply(replyText) {
-    const lower = replyText.toLowerCase();
+    const lower = replyText.toLowerCase().replace(/whisky/g, "whiskey");
+    if (lower.includes("osmanthus")) return "Osmanthus / Logan Whiskey";
     for (const c of COCKTAILS) {
       if (lower.includes(c.name.toLowerCase())) return c.name;
     }
@@ -703,16 +719,24 @@
     });
   }
 
+  let currentSpirit = null;
+
   window.updateGameSuggestion = function (hint) {
     if (typeof hint === "string") {
-      const fromReply = suggestionFromReply(hint);
-      if (fromReply) { setGameSuggestion(fromReply); return; }
       const spirit = hint.trim().toLowerCase();
       if (SPIRIT_COCKTAILS[spirit]) {
+        currentSpirit = spirit;
         const list = SPIRIT_COCKTAILS[spirit];
         setGameSuggestion(list[Math.floor(Math.random() * list.length)]);
         return;
       }
+      const fromReply = suggestionFromReply(hint);
+      if (fromReply) { setGameSuggestion(fromReply); return; }
+    }
+    if (currentSpirit && SPIRIT_COCKTAILS[currentSpirit]) {
+      const list = SPIRIT_COCKTAILS[currentSpirit];
+      setGameSuggestion(list[Math.floor(Math.random() * list.length)]);
+      return;
     }
     setGameSuggestion(randomCocktail());
   };
