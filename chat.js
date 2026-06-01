@@ -1,5 +1,6 @@
 (function () {
   const speechBubbleEl = document.getElementById("speech-bubble");
+  const speechTextEl   = document.getElementById("speech-text");
   const formEl = document.getElementById("chat-panel");
   const inputEl = document.getElementById("chat-input");
   const sendEl = document.getElementById("chat-send");
@@ -13,10 +14,8 @@
   let didOpen = false;
 
   function setSpeechBubble(text) {
-    if (!speechBubbleEl) {
-      return;
-    }
-    speechBubbleEl.textContent = text;
+    if (!speechBubbleEl || !speechTextEl) return;
+    speechTextEl.textContent = text;
     speechBubbleEl.style.display = "block";
   }
 
@@ -27,14 +26,11 @@
   }
 
   async function typewriter(text, speedMs = 28) {
-    if (!speechBubbleEl) {
-      return;
-    }
-
-    speechBubbleEl.textContent = "";
+    if (!speechBubbleEl || !speechTextEl) return;
+    speechTextEl.textContent = "";
     speechBubbleEl.style.display = "block";
     for (const char of text) {
-      speechBubbleEl.textContent += char;
+      speechTextEl.textContent += char;
       await new Promise((resolve) => window.setTimeout(resolve, speedMs));
     }
   }

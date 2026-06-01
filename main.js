@@ -20,7 +20,7 @@
 
   const backgroundScale = 0.5;
   const phoenixPosition = { x: 208, y: 198 };
-  const phoenixScale = 0.5;
+  const phoenixScale = 0.22;
   const bottleConfigs = [
     { key: "whiskey",   spirit: "whiskey",   x: 390, y: 318, width: 135, height: 342, scale: 0.28 },
     { key: "rum",       spirit: "rum",       x: 453, y: 318, width: 124, height: 342, scale: 0.28 },

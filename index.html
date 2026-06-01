@@ -11,9 +11,15 @@
     <canvas id="gameCanvas" aria-label="Phoenix's Bar game scene"></canvas>
 
     <div id="ui-layer">
-      <div id="speech-bubble" aria-live="polite" role="status" style="display: none;"></div>
+      <div id="speech-bubble" aria-live="polite" role="status" style="display: none;">
+        <svg class="bubble-shape" viewBox="0 0 945 124" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M43.2003 20C43.2003 8.9543 52.1546 0 63.2003 0H925C936.046 0 945 8.9543 945 20V104C945 115.046 936.046 124 925 124H63.2003C52.1546 124 43.2003 115.046 43.2003 104V93H0L34.8605 67.9845C40.0957 64.2278 43.2003 58.1789 43.2003 51.7352V20Z"
+                fill="#DADADA" fill-opacity="0.45" opacity="0.7"/>
+        </svg>
+        <span id="speech-text"></span>
+      </div>
 
-      <div id="quick-bubble-placeholder" aria-hidden="true"></div>
+      <div id="quick-bubble" aria-hidden="true">Place Holder</div>
 
       <form id="chat-panel" aria-label="Chat with Phoenix" autocomplete="off" style="display: none;">
         <input id="chat-input" type="text" placeholder="Say Something to Phoenix" autocomplete="off">
