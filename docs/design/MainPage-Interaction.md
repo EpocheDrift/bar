@@ -1,6 +1,6 @@
 # Main Page — Interaction Design
 
-> 最后更新：2026-05-31  
+> 最后更新：2026-06-01  
 > 范围：bar scene 主场景的 UI 布局 + 3 个 AI 通信接口 + 酒瓶信号设计
 
 ---
@@ -135,10 +135,12 @@ function sendToAI(userText) {
 
 ## 五、当前实现状态
 
+> **架构说明**：bar scene 已从 Kaplay sprite 渲染迁移为纯 HTML 层（`#bar-layer > #bar-scale-root`），使用 2048×1152 坐标系 + `transform:scale` 统一缩放。Kaplay 仅保留用于 intro/GS/bar-intro 序列。
+
 | 模块 | 状态 | 说明 |
 |---|---|---|
-| Speech Bubble 布局 | 🔲 待实现 | proto2 已有 React 原型，需移植到 Kaplay bar scene |
-| 底部 Chat Panel | 🔲 待实现 | 替换现有右下角 chat overlay |
-| 酒瓶信号接口 | 🔲 待实现（接口已定义）| 留好 emitBottleSignal / consumeBottleSignal |
-| Quick Bubble | 🔲 待定内容 | 位置 / 样式已知，prompt 内容 TBD |
-| AI 通信 | ✅ 已有 | `POST /chat` Flask 路由，chat.js 已实现 |
+| Speech Bubble 布局 | ✅ 已实现 | 2048px 坐标（left:661 top:397 w:945 h:124），SVG tail 形状匹配 proto2，typewriter 效果 |
+| 底部 Chat Panel | ✅ 已实现 | 2048px 坐标（left:141 top:930 w:1792 h:179），glassmorphism 样式匹配 proto2 |
+| 酒瓶信号接口 | ✅ 已实现 | 6 瓶排列对齐 proto2（tequila/gin/rum/vodka/whiskey/cointreau），emitBottleSignal / consumeBottleSignal 完整接入 |
+| Quick Bubble | ⚠️ 样式已实现 | 位置/样式匹配 proto2，prompt 内容 TBD |
+| AI 通信 | ✅ 已有 | `POST /chat` Flask 路由，chat.js 完整对话历史已实现 |

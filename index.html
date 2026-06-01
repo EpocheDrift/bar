@@ -10,38 +10,69 @@
   <body>
     <canvas id="gameCanvas" aria-label="Phoenix's Bar game scene"></canvas>
 
+    <!-- Intro overlays (GS dialog, bar-intro dialog) — shown over Kaplay canvas -->
     <div id="ui-layer">
-      <div id="speech-bubble" aria-live="polite" role="status" style="display: none;">
-        <svg class="bubble-shape" viewBox="0 0 945 124" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M43.2003 20C43.2003 8.9543 52.1546 0 63.2003 0H925C936.046 0 945 8.9543 945 20V104C945 115.046 936.046 124 925 124H63.2003C52.1546 124 43.2003 115.046 43.2003 104V93H0L34.8605 67.9845C40.0957 64.2278 43.2003 58.1789 43.2003 51.7352V20Z"
-                fill="#DADADA" fill-opacity="0.45" opacity="0.7"/>
-        </svg>
-        <span id="speech-text"></span>
-      </div>
-
-      <div id="quick-bubble" aria-hidden="true" style="display: none;">Place Holder</div>
-
-      <form id="chat-panel" aria-label="Chat with Phoenix" autocomplete="off" style="display: none;">
-        <input id="chat-input" type="text" placeholder="Say Something to Phoenix" autocomplete="off">
-        <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
-      </form>
-
-      <section id="game-overlay" aria-label="Mixing Game" style="display: none;">
-        <div id="game-panel">
-          <p id="game-kicker">Mixing Game</p>
-          <h2 id="game-title">Phoenix is watching.</h2>
-          <p id="game-copy">Do not embarrass yourself.</p>
-          <button id="game-close" type="button">Close</button>
-        </div>
-      </section>
-
       <div id="street-dialog" aria-label="Street dialog" style="display: none;">
         <p id="street-dialog-line"></p>
       </div>
-
       <div id="bar-dialog" style="display: none;">
         <p id="bar-dialog-name"></p>
         <p id="bar-dialog-line"></p>
+      </div>
+    </div>
+
+    <!-- Bar scene HTML layer — replaces Kaplay rendering for the main bar scene -->
+    <div id="bar-layer" style="display: none;">
+      <div id="bar-scale-root">
+
+        <!-- Layer 0: background scene -->
+        <img id="bar-bg" src="docs/assets/BG/scene_bar_overview.png" alt="">
+
+        <!-- Layer 3: atmospheric dimmer (animated by JS) -->
+        <div id="bar-dimmer"></div>
+
+        <!-- Layer 6: Phoenix character -->
+        <img id="phoenix-img" src="docs/assets/Character/phoenix_idle.png" alt="Phoenix">
+
+        <!-- Layer 7: bar counter foreground (covers lower Phoenix body) -->
+        <img id="bar-fg" src="docs/assets/BG/scene_bar.png" alt="">
+
+        <!-- Layer 8: bottles (above bar counter) -->
+        <img class="bar-bottle" data-spirit="tequila"   src="docs/assets/Alcohol/tequila.png"   alt="Tequila"   style="left:780px;">
+        <img class="bar-bottle" data-spirit="gin"       src="docs/assets/Alcohol/gin.png"       alt="Gin"       style="left:906px;">
+        <img class="bar-bottle" data-spirit="rum"       src="docs/assets/Alcohol/rum.png"       alt="Rum"       style="left:1029px;">
+        <img class="bar-bottle" data-spirit="vodka"     src="docs/assets/Alcohol/vodka.png"     alt="Vodka"     style="left:1154px;">
+        <img class="bar-bottle" data-spirit="whiskey"   src="docs/assets/Alcohol/whiskey.png"   alt="Whiskey"   style="left:1276px;">
+        <img class="bar-bottle" data-spirit="cointreau" src="docs/assets/Alcohol/cointreau.png" alt="Cointreau" style="left:1400px;">
+
+        <!-- Layer 10: speech bubble (shown when Phoenix speaks) -->
+        <div id="speech-bubble" aria-live="polite" role="status" style="display: none;">
+          <svg class="bubble-shape" viewBox="0 0 945 124" preserveAspectRatio="none" aria-hidden="true">
+            <path d="M43.2003 20C43.2003 8.9543 52.1546 0 63.2003 0H925C936.046 0 945 8.9543 945 20V104C945 115.046 936.046 124 925 124H63.2003C52.1546 124 43.2003 115.046 43.2003 104V93H0L34.8605 67.9845C40.0957 64.2278 43.2003 58.1789 43.2003 51.7352V20Z"
+                  fill="#DADADA" fill-opacity="0.45" opacity="0.7"/>
+          </svg>
+          <span id="speech-text"></span>
+        </div>
+
+        <!-- Layer 10: quick bubble (prompt suggestion) -->
+        <div id="quick-bubble" aria-hidden="true">Place Holder</div>
+
+        <!-- Layer 10: chat panel -->
+        <form id="chat-panel" aria-label="Chat with Phoenix" autocomplete="off">
+          <input id="chat-input" type="text" placeholder="Say Something to Phoenix" autocomplete="off">
+          <button id="chat-send" type="submit" aria-label="Send message">&gt;</button>
+        </form>
+
+        <!-- Layer 20: mixing game overlay -->
+        <section id="game-overlay" aria-label="Mixing Game" style="display: none;">
+          <div id="game-panel">
+            <p id="game-kicker">Mixing Game</p>
+            <h2 id="game-title">Phoenix is watching.</h2>
+            <p id="game-copy">Do not embarrass yourself.</p>
+            <button id="game-close" type="button">Close</button>
+          </div>
+        </section>
+
       </div>
     </div>
 
