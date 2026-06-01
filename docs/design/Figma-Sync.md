@@ -1,7 +1,7 @@
 # Figma 设计稿同步文档
 
 > Figma 文件：phx-game（JpB4wF0hrEKVRprQVH66xg · Page 1）  
-> 审阅时间：2026-05-30  
+> 审阅时间：2026-05-30 · 最后更新：2026-05-31  
 > 目的：记录设计稿当前状态，作为分阶段实现的参考基准
 
 ⚠️ **使用说明**：本文档是审阅时刻的快照。部分细节仍在调整中，实现时以最新 Figma 稿为准；本文档提供方向和意图，不作逐像素规格。
@@ -33,15 +33,41 @@
 
 ---
 
-### 序列 2 — 迎接场景（资产待交付）
+### 序列 2 — GS 序列（街道迎接）✅ 已实现
 
-Figma 设计了赛博朋克街道场景（废弃车站 + 路灯 + Phoenix 站在街头），有椭圆形 vignette 边缘效果。
+赛博朋克废弃车站场景，Phoenix 站在街头，有椭圆形 vignette 边缘效果。使用 **Figma 合成导出**方式，Phoenix 位置烘焙进图片，无坐标调整问题。
 
-⚠️ **资产状态**：Figma 中使用的是参考图，尚非最终像素资产。此场景实现**依赖 Lisa 交付像素版背景图**，暂定为 Phase 5，不阻塞其他阶段。
+| 代码 index | Figma Frame | node-id | 资产 | 说明 |
+|---|---|---|---|---|
+| 11 | GS-1 | 81:39 | scene_station_blur + closing_3 | 模糊站台 + 最闭合 vignette，无 Phoenix |
+| 12 | GS-2 | 81:57 | （纯黑） | 黑屏过渡 |
+| 13 | GS-3 | 81:66 | scene_station_blur + closing_3 | 模糊站台再现，无 Phoenix |
+| 14 | GS-4 | 81:75 | **gs4_bg.png**（合成） | station + closing_1 vignette + Phoenix |
+| 15 | GS-5 | 36:49 | **gs5_bg.png**（合成） | station 全景 + Phoenix 全露 |
+| 16 | GS-6 | 72:67 | **gs_dialog_bg.png**（合成） | 对话框 idle，Phoenix 闭嘴 |
+| 17 | GS-7 | 72:149 | **gs_dialog_speak_bg.png**（合成） | 对话框 speaking，Phoenix 开嘴 |
+| 18 | GS-8 | 72:180 | **gs_dialog_bg.png**（合成） | 对话框 idle，Phoenix 闭嘴 |
+
+**合成导出说明**：GS-4/5/6/7/8 均以 Figma frame 整体导出为 2048×1152 PNG，background + vignette + Phoenix 全部烘焙，`backgroundScale: 0.5` 渲染到 1024×576 game canvas。文字由 HTML overlay 覆盖，CSS 坐标用百分比对应 Figma 位置。
 
 ---
 
-### 序列 3 — 主酒吧场景
+### 序列 3 — Bar-Intro 序列 ✅ 已实现
+
+玩家进入酒吧后的四帧引导，同样采用 Figma 合成导出。
+
+| 代码 index | Figma Frame | node-id | 资产 | 说明 |
+|---|---|---|---|---|
+| 19 | bar-intro-1 | 71:12 | **bar_intro_1_bg.png**（合成） | 酒吧全景，无对话框 |
+| 20 | bar-intro-2 | 81:160 | **bar_dialog_bg.png**（合成） | 对话框 idle，Phoenix 闭嘴 |
+| 21 | bar-intro-3 | 82:2 | **bar_dialog_speak_bg.png**（合成） | 对话框 speaking，Phoenix 开嘴 |
+| 22 | bar-intro-4 | 82:20 | **bar_dialog_bg.png**（合成） | 对话框 idle，Phoenix 闭嘴 |
+
+index 22 结束后 → `k.go("bar")`，进入正常酒吧交互状态。
+
+---
+
+### 序列 4 — 主酒吧场景
 
 | 元素 | Figma 设计 | 当前代码状态 |
 |---|---|---|
@@ -53,7 +79,7 @@ Figma 设计了赛博朋克街道场景（废弃车站 + 路灯 + Phoenix 站在
 
 ---
 
-### 序列 4 — Mixing Game Overlay
+### 序列 5 — Mixing Game Overlay
 
 覆盖在酒吧场景上；Phoenix 立绘缩小保留在左侧。
 
@@ -91,11 +117,11 @@ Figma 设计了赛博朋克街道场景（废弃车站 + 路灯 + Phoenix 站在
 
 | Phase | 内容 | 资产依赖 | 状态 |
 |---|---|---|---|
-| P1 | Intro 叙事序列（全黑文字，click 推进，到 ENTER 进酒吧） | 无 | 🔲 可开始 |
+| P1 | Intro 叙事序列 + GS 序列 + Bar-Intro 序列（全部 23 帧，click 推进） | Figma 合成导出 | ✅ 完成 |
 | P2 | Phoenix 6 帧动画接入（眨眼 / 说话状态逻辑） | 已有 | 🔲 可开始 |
 | P3 | Chat UI 样式对齐（Phoenix 名字标签、对话框位置）| 无 | 🔲 可开始 |
 | P4 | Mixing Game 正式 UI（3 选项、进度图标、结果页）| 无 | 🔲 可开始 |
-| P5 | 迎接场景（赛博朋克街道入口）| ⏳ 等 Lisa 交付像素背景 | ⛔ 阻塞 |
+| P5 | 资产升级（用最终像素版替换 Figma 合成图）| ⏳ 等 Lisa 交付像素背景 | ⛔ 阻塞 |
 
 ---
 
