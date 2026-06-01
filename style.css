@@ -340,7 +340,7 @@ input {
 #mg-intro-line {
   position: absolute;
   left: 654px;
-  top: 895px;
+  top: 864px;
   width: 1200px;
   margin: 0;
   color: #ffffff;
@@ -469,10 +469,10 @@ input {
   background-size: 100% 100%;
   color: #ffffff;
   font-family: "VT323", monospace;
-  font-size: 32px;
+  font-size: 48px;
   line-height: 1;
   letter-spacing: 0;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
   overflow: hidden;
 }
