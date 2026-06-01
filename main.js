@@ -22,12 +22,13 @@
   const phoenixPosition = { x: 208, y: 198 };
   const phoenixScale = 0.5;
   const bottleConfigs = [
-    { key: "tequila", spirit: "tequila", x: 390, y: 318, width: 128, height: 342, scale: 0.28 },
-    { key: "gin", spirit: "gin", x: 453, y: 318, width: 122, height: 342, scale: 0.28 },
-    { key: "rum", spirit: "rum", x: 515, y: 318, width: 124, height: 342, scale: 0.28 },
-    { key: "vodka", spirit: "vodka", x: 577, y: 318, width: 122, height: 342, scale: 0.28 },
-    { key: "whiskey", spirit: "whiskey", x: 638, y: 318, width: 135, height: 342, scale: 0.28 },
-    { key: "cointreau", spirit: "cointreau", x: 700, y: 318, width: 162, height: 342, scale: 0.28 },
+    { key: "whiskey",   spirit: "whiskey",   x: 390, y: 318, width: 135, height: 342, scale: 0.28 },
+    { key: "rum",       spirit: "rum",       x: 453, y: 318, width: 124, height: 342, scale: 0.28 },
+    { key: "gin",       spirit: "gin",       x: 515, y: 318, width: 122, height: 342, scale: 0.28 },
+    { key: "vodka",     spirit: "vodka",     x: 577, y: 318, width: 122, height: 342, scale: 0.28 },
+    { key: "tequila",   spirit: "tequila",   x: 638, y: 318, width: 128, height: 342, scale: 0.28 },
+    { key: "brandy",    spirit: "brandy",    x: 700, y: 318, width: 128, height: 342, scale: 0.28 },
+    { key: "cointreau", spirit: "cointreau", x: 762, y: 318, width: 162, height: 342, scale: 0.26 },
   ];
   const introScreens = [
     { type: "text", content: "YEAR: 4144", size: 28 },
@@ -62,8 +63,8 @@
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
     { type: "black" },
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
-    { type: "vignette_image", sprite: "scene_station", vignette: "closing_1", character: "phoenix_street" },
-    { type: "image", sprite: "scene_station", character: "phoenix_street" },
+    { type: "image", sprite: "gs4_bg" },
+    { type: "image", sprite: "gs5_bg" },
     {
       type: "street_dialog",
       line: "What took you so long? I thought you died on the way here :)",
@@ -111,6 +112,8 @@
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
+  k.loadSprite("gs4_bg",             "docs/assets/BG/gs4_bg.png");
+  k.loadSprite("gs5_bg",             "docs/assets/BG/gs5_bg.png");
   k.loadSprite("gs_dialog_bg",       "docs/assets/BG/gs_dialog_bg.png");
   k.loadSprite("gs_dialog_speak_bg", "docs/assets/BG/gs_dialog_speak_bg.png");
   k.loadSprite("bar_intro_1_bg",     "docs/assets/BG/bar_intro_1_bg.png");

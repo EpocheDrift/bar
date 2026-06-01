@@ -8,6 +8,7 @@
   const gameCopy = document.getElementById("game-copy");
   const gameClose = document.getElementById("game-close");
 
+  const messages = [];
   let isSending = false;
   let didOpen = false;
 
@@ -38,10 +39,6 @@
     }
   }
 
-  function buildOutboundMessages(content) {
-    return content ? [{ role: "user", content }] : [];
-  }
-
   async function sendMessage(userText, options) {
     const config = Object.assign({ allowEmpty: false, focusInput: true }, options);
     const trimmedText = String(userText || "").trim();
@@ -51,6 +48,10 @@
 
     const signal = window.consumeBottleSignal?.();
     const content = signal ? `[User is looking at the ${signal.spirit}]\n${trimmedText}` : trimmedText;
+
+    if (content) {
+      messages.push({ role: "user", content });
+    }
 
     setBusy(true);
     setSpeechBubble("...");
@@ -62,7 +63,7 @@
       const response = await fetch("/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: buildOutboundMessages(content) }),
+        body: JSON.stringify({ messages }),
       });
       if (!response.ok) {
         throw new Error("Chat request failed.");
@@ -70,6 +71,7 @@
 
       const data = await response.json();
       const reply = data.reply || "...";
+      messages.push({ role: "assistant", content: reply });
       if (typeof window.setPhoenixState === "function") {
         window.setPhoenixState("shake_talk");
       }

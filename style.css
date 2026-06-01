@@ -48,14 +48,16 @@ input {
   top: 34.5%;
   width: 46.1%;
   min-height: 10.8%;
-  padding: clamp(8px, 1.2vw, 18px) clamp(12px, 2vw, 28px);
-  border: 2px solid rgba(88, 81, 95, 0.9);
-  background: rgba(8, 8, 12, 0.86);
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.45);
+  padding: clamp(8px, 1.2vw, 18px) clamp(16px, 2.5vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(218, 218, 218, 0.32);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 16px;
   color: #ffffff;
   font-family: "VT323", monospace;
   font-size: clamp(18px, 2.15vw, 30px);
-  line-height: 1.35;
+  line-height: 1.4;
   overflow-wrap: anywhere;
   white-space: pre-line;
   pointer-events: none;
@@ -80,9 +82,11 @@ input {
   align-items: center;
   gap: clamp(8px, 1.5vw, 20px);
   padding: 0 clamp(14px, 2vw, 30px);
-  border: 2px solid rgba(88, 81, 95, 0.88);
-  background: rgba(8, 8, 12, 0.88);
-  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(218, 218, 218, 0.18);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  border-radius: 20px;
   pointer-events: auto;
 }
 
