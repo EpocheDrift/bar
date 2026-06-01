@@ -85,8 +85,8 @@
 | T14 | Gunicorn 生产服务器 | Zayn | 🔲 待做 | 写进 Dockerfile CMD，requirements.txt 已有 |
 | T15 | Phoenix AI Harness | Codex | ✅ 完成 | server.py PhoenixAI 类 |
 | T16 | Intro 叙事序列实现（P1） | Zayn | ✅ 完成 | Story-Intro 11 帧 + GS 8 帧 + Bar-Intro 4 帧，合成导出方式 |
-| T17 | Phoenix 6 帧动画接入（P2） | Zayn | 🔲 待做 | 资产已有，main.js 加载 + 状态逻辑 |
-| T18 | Chat UI 样式对齐（P3） | Zayn | 🔲 待做 | Phoenix 名字标签，对话框位置，← T16 |
+| T17 | Phoenix 6 帧动画接入（P2） | Zayn | ✅ 完成 | img.src swap，phoenixSpritePaths，眨眼计时器；idle_talk/shake_blink 定义未触发 |
+| T18 | Chat UI 样式对齐（P3） | Zayn | ✅ 完成 | bar scene 迁移为 HTML 层（2048px 坐标），speech bubble + chat panel 匹配 proto2 |
 | T19 | Mixing Game 正式 UI（P4） | Zayn | 🔲 待做 | 3 选项、进度图标、结果页，← T17/T18 |
 
 ---

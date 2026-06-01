@@ -67,15 +67,19 @@ index 22 结束后 → `k.go("bar")`，进入正常酒吧交互状态。
 
 ---
 
-### 序列 4 — 主酒吧场景
+### 序列 4 — 主酒吧场景 ✅ 已实现
+
+> **架构**：bar scene 已从 Kaplay sprite 渲染迁移为纯 HTML 层（`#bar-layer > #bar-scale-root`），使用 Figma 2048×1152 坐标系 + `transform:scale` 统一缩放。Kaplay 仅保留用于 intro/GS/bar-intro。
 
 | 元素 | Figma 设计 | 当前代码状态 |
 |---|---|---|
 | 背景 | home.png 全屏 | ✅ 已实现 |
-| Phoenix 立绘 | 左侧偏中，idle / shake 姿态 | ✅ 基本实现（仅 2 帧） |
-| 7 瓶酒 | 吧台上排列，hover 上浮 | ✅ 已实现 |
-| 对话框 | 左下角，半透明暗色，顶部 "Phoenix" 名字标签 | ⚠️ 缺名字标签，样式待对齐 |
-| 灯光闪烁 | 轻微 opacity 随机变化 | ✅ 已实现 |
+| Phoenix 立绘 | 左侧偏中，idle / shake 姿态 | ✅ 4 帧激活（idle/idle_blink/shake/shake_talk），object-cover 248×718，proto2 坐标对齐 |
+| 6 瓶酒 | 吧台上排列，hover 上浮 | ✅ 已实现，顺序/位置匹配 proto2（tequila/gin/rum/vodka/whiskey/cointreau） |
+| Speech Bubble | 左上区域，半透明，SVG tail | ✅ 已实现，proto2 坐标，typewriter 效果 |
+| Chat Panel | 底部输入框 + 发送按钮 | ✅ 已实现，glassmorphism 样式匹配 proto2 |
+| Quick Bubble | 右侧 pill 提示词 | ⚠️ 样式已实现，prompt 内容 TBD |
+| 灯光闪烁 | 轻微 opacity 随机变化 | ✅ 已实现（requestAnimationFrame） |
 
 ---
 
@@ -102,14 +106,14 @@ index 22 结束后 → `k.go("bar")`，进入正常酒吧交互状态。
 
 | 状态 | 文件路径 | 当前代码 |
 |---|---|---|
-| idle | docs/assets/standing.png | ✅ 使用中 |
-| idle_blink | docs/assets/phoenix_idle_blink.png | ❌ 未接入 |
-| idle_talk | docs/assets/phoenix_idle_talk.png | ❌ 未接入 |
-| shake | docs/assets/shake_1.png | ✅ 使用中 |
-| shake_blink | docs/assets/phoenix_shake_blink.png | ❌ 未接入 |
-| shake_talk | docs/assets/phoenix_shake_talk.png | ❌ 未接入 |
+| idle | docs/assets/Character/phoenix_idle.png | ✅ 默认待机 |
+| idle_blink | docs/assets/Character/phoenix_idle_blink.png | ✅ 眨眼计时器（4–6s 随机触发，120ms） |
+| idle_talk | docs/assets/Character/phoenix_idle_talk.png | 🔲 定义未触发（当前流程不用） |
+| shake | docs/assets/Character/phoenix_shake.png | ✅ AI 思考时 |
+| shake_blink | docs/assets/Character/phoenix_shake_blink.png | 🔲 定义未触发 |
+| shake_talk | docs/assets/Character/phoenix_shake_talk.png | ✅ Phoenix 回复时 |
 
-**注**：资产文件均已存在，只需在 main.js 中加载并补充状态切换逻辑。
+**注**：bar scene 架构变更后，状态切换改为 `img.src` swap（`phoenixSpritePaths` 映射），不再使用 Kaplay `loadSprite`。
 
 ---
 
@@ -118,8 +122,8 @@ index 22 结束后 → `k.go("bar")`，进入正常酒吧交互状态。
 | Phase | 内容 | 资产依赖 | 状态 |
 |---|---|---|---|
 | P1 | Intro 叙事序列 + GS 序列 + Bar-Intro 序列（全部 23 帧，click 推进） | Figma 合成导出 | ✅ 完成 |
-| P2 | Phoenix 6 帧动画接入（眨眼 / 说话状态逻辑） | 已有 | 🔲 可开始 |
-| P3 | Chat UI 样式对齐（Phoenix 名字标签、对话框位置）| 无 | 🔲 可开始 |
+| P2 | Phoenix 6 帧动画接入（眨眼 / 说话状态逻辑） | 已有 | ✅ 完成（4/6 帧激活；idle_talk/shake_blink 定义未触发） |
+| P3 | Chat UI 样式对齐（bar scene HTML 层，speech bubble + chat panel proto2 坐标）| 无 | ✅ 完成 |
 | P4 | Mixing Game 正式 UI（3 选项、进度图标、结果页）| 无 | 🔲 可开始 |
 | P5 | 资产升级（用最终像素版替换 Figma 合成图）| ⏳ 等 Lisa 交付像素背景 | ⛔ 阻塞 |
 
