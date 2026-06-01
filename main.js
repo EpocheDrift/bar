@@ -2,6 +2,7 @@
   const canvas = document.getElementById("gameCanvas");
   const chatPanel = document.getElementById("chat-panel");
   const speechBubble = document.getElementById("speech-bubble");
+  const quickBubble = document.getElementById("quick-bubble");
   const initKaplay = window.kaplay || window.kaboom;
 
   if (!canvas || !initKaplay) {
@@ -20,7 +21,7 @@
 
   const backgroundScale = 0.5;
   const phoenixPosition = { x: 208, y: 198 };
-  const phoenixScale = 0.22;
+  const phoenixScale = 0.40;
   const bottleConfigs = [
     { key: "whiskey",   spirit: "whiskey",   x: 390, y: 318, width: 135, height: 342, scale: 0.28 },
     { key: "rum",       spirit: "rum",       x: 453, y: 318, width: 124, height: 342, scale: 0.28 },
@@ -152,6 +153,9 @@
   function setChatVisible(isVisible) {
     if (chatPanel) {
       chatPanel.style.display = isVisible ? "flex" : "none";
+    }
+    if (quickBubble) {
+      quickBubble.style.display = isVisible ? "flex" : "none";
     }
     if (!isVisible && speechBubble) {
       speechBubble.style.display = "none";
