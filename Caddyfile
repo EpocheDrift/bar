@@ -1,0 +1,9 @@
+bar.chaostudio.org {
+    root * /srv/bar
+
+    # Proxy only the AI chat endpoint to Flask
+    reverse_proxy /chat localhost:5000
+
+    # Serve all other files (HTML, JS, CSS, assets) directly
+    file_server
+}
