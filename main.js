@@ -63,7 +63,7 @@
     { type: "black" },
     { type: "vignette_image", sprite: "scene_station_blur", vignette: "closing_3" },
     { type: "vignette_image", sprite: "scene_station", vignette: "closing_1", character: "phoenix_street" },
-    { type: "image", sprite: "scene_station", character: "phoenix_street" },
+    { type: "image", sprite: "gs5_bg" },
     {
       type: "street_dialog",
       line: "What took you so long? I thought you died on the way here :)",
@@ -78,7 +78,7 @@
       type: "street_dialog",
       line: "Are you going to stand there all night? Follow me. I know a place.",
     },
-    { type: "bar_scene" },
+    { type: "image", sprite: "bar_intro_1_bg" },
     { type: "bar_dialog", line: "Delighted to have you.\nNot really, but here we are." },
     {
       type: "bar_dialog",
@@ -110,10 +110,12 @@
   k.loadSprite("bar_foreground", "docs/assets/BG/scene_bar.png");
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
-  k.loadSprite("gs_dialog_bg", "docs/assets/BG/gs_dialog_bg.png");
+  k.loadSprite("gs5_bg",             "docs/assets/BG/gs5_bg.png");
+  k.loadSprite("gs_dialog_bg",       "docs/assets/BG/gs_dialog_bg.png");
   k.loadSprite("gs_dialog_speak_bg", "docs/assets/BG/gs_dialog_speak_bg.png");
-  k.loadSprite("bar_dialog_bg", "docs/assets/BG/bar_dialog_bg.png");
-  k.loadSprite("bar_dialog_speak_bg", "docs/assets/BG/bar_dialog_speak_bg.png");
+  k.loadSprite("bar_intro_1_bg",     "docs/assets/BG/bar_intro_1_bg.png");
+  k.loadSprite("bar_dialog_bg",      "docs/assets/BG/bar_dialog_bg.png");
+  k.loadSprite("bar_dialog_speak_bg","docs/assets/BG/bar_dialog_speak_bg.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
@@ -298,13 +300,6 @@
       if (typeof window.showStreetDialog === "function") {
         window.showStreetDialog(screen.line);
       }
-      return;
-    }
-
-    if (screen.type === "bar_scene") {
-      addBackground("home", 1);
-      k.add([k.sprite("phoenix_idle"), k.pos(phoenixPosition.x, phoenixPosition.y), k.scale(phoenixScale), k.z(2)]);
-      addBackground("bar_foreground", 3);
       return;
     }
 
