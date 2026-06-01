@@ -111,6 +111,9 @@
       messages.push({ role: "assistant", content: reply });
       await typewriter(reply);
       pendingSuggestions = data.suggestions || [];
+      if (typeof window.updateGameSuggestion === "function") {
+        window.updateGameSuggestion(reply);
+      }
 
       if (data.game && typeof window.startMixingGame === "function") {
         window.startMixingGame(data.game);

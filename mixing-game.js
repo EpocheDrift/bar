@@ -660,6 +660,63 @@
   backButton.addEventListener("click", hideGame);
   restartButton.addEventListener("click", () => startMixingGame(state.cocktailName));
 
+  // ── Persistent game suggestion pill ──
+
+  const suggestPill = document.getElementById("mg-suggest-pill");
+
+  const SPIRIT_COCKTAILS = {
+    tequila:   ["Margarita", "Witch", "Daydreaming"],
+    gin:       ["Gin Tonic", "Tom Collins", "Perfume Gin", "Orange Blossom"],
+    rum:       ["Mojito", "Daiquiri", "Cuba Libre", "Pina Colada"],
+    vodka:     ["Bloody Mary", "Cosmopolitan", "Yukiguni"],
+    whiskey:   ["Whiskey Sour", "Dog Hair", "Apple Highball"],
+    cointreau: ["Orange Tonic", "Night of Rendezvous"],
+  };
+
+  function setGameSuggestion(cocktailName) {
+    if (!suggestPill) return;
+    suggestPill.textContent = `Mix me a ${cocktailName}?`;
+    suggestPill.dataset.cocktail = cocktailName;
+  }
+
+  function randomCocktail() {
+    return COCKTAILS[Math.floor(Math.random() * COCKTAILS.length)].name;
+  }
+
+  function suggestionFromReply(replyText) {
+    const lower = replyText.toLowerCase();
+    for (const c of COCKTAILS) {
+      if (lower.includes(c.name.toLowerCase())) return c.name;
+    }
+    return null;
+  }
+
+  if (suggestPill) {
+    setGameSuggestion(randomCocktail());
+
+    suggestPill.addEventListener("click", () => {
+      const input = document.getElementById("chat-input");
+      if (!input) return;
+      const name = suggestPill.dataset.cocktail || randomCocktail();
+      input.value = `Let's play the mixing game — make me a ${name}!`;
+      input.focus();
+    });
+  }
+
+  window.updateGameSuggestion = function (hint) {
+    if (typeof hint === "string") {
+      const fromReply = suggestionFromReply(hint);
+      if (fromReply) { setGameSuggestion(fromReply); return; }
+      const spirit = hint.trim().toLowerCase();
+      if (SPIRIT_COCKTAILS[spirit]) {
+        const list = SPIRIT_COCKTAILS[spirit];
+        setGameSuggestion(list[Math.floor(Math.random() * list.length)]);
+        return;
+      }
+    }
+    setGameSuggestion(randomCocktail());
+  };
+
   window.generateQuestions = generateQuestions;
   window.startMixingGame = startMixingGame;
   window.MixingGame = {

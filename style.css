@@ -198,6 +198,31 @@ input {
   word-break: break-word;
 }
 
+#mg-suggest-pill {
+  position: absolute;
+  right: 116px;
+  top: 810px;
+  z-index: 10;
+  display: inline-flex;
+  align-items: center;
+  height: 48px;
+  padding: 0 24px;
+  border: 1px solid rgba(218, 218, 218, 0.35);
+  border-radius: 24px;
+  background: rgba(183, 155, 114, 0.25);
+  font-family: "VT323", monospace;
+  font-size: 30px;
+  color: rgba(255, 255, 255, 0.8);
+  white-space: nowrap;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+#mg-suggest-pill:hover {
+  background: rgba(183, 155, 114, 0.45);
+  color: #ffffff;
+}
+
 #quick-bubble-container {
   position: absolute;
   right: 116px;
