@@ -19,7 +19,7 @@ except ImportError:  # pragma: no cover - local setup should install requirement
 BASE_DIR = Path(__file__).resolve().parent
 PROMPT_PATH = BASE_DIR / "docs" / "character" / "Phoenix-Prompt.md"
 COCKTAIL_LIST_PATH = BASE_DIR / "docs" / "project" / "Cocktail-List.md"
-GAME_MARKER_RE = re.compile(r"\[GAME:([^\]]+)\]")
+GAME_MARKER_RE = re.compile(r"\[(?:GAME|Mixing\s*Game)\s*:\s*([^\]]+)\]", re.IGNORECASE)
 SUGGEST_RE = re.compile(r"(?:^|\n)SUGGEST:\s*(.+?)\s*$", re.MULTILINE)
 QUOTED_SUGGESTION_RE = re.compile(r'"([^"]+)"')
 
@@ -51,9 +51,13 @@ class PhoenixAI:
 
         game_protocol = (
             "GAME TRIGGER PROTOCOL\n"
-            "When you decide to challenge the customer with the Mixing Game, append "
-            "[GAME:Exact Cocktail Name] to the end of your response. Use a cocktail "
-            "name from the cocktail list. Do not explain the marker."
+            "When you decide to challenge the customer with the Mixing Game, "
+            "append a trigger marker to the very end of your response.\n"
+            "The marker must be exactly this format — no variations, no spaces around the colon:\n"
+            "[GAME:Cocktail Name]\n"
+            "Example: [GAME:Gin Tonic] or [GAME:Whiskey Sour]\n"
+            "Use the exact cocktail name from the cocktail list. "
+            "Do not write 'Mixing Game:' or any other format. Only [GAME:Name]."
         )
         suggest_protocol = (
             "SUGGESTION OUTPUT PROTOCOL (REQUIRED — every single response, no exceptions)\n"
