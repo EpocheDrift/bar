@@ -72,6 +72,7 @@
       type: "street_dialog",
       line:
         "Half the clinics here aren't exactly... licensed. Pray you don't die on the table. Because if you do – You'll be going straight to hell from here.",
+      bg: "gs_dialog_speak_bg",
     },
     {
       type: "street_dialog",
@@ -83,6 +84,7 @@
       type: "bar_dialog",
       line:
         "This is my bar. Your consciousness is stuck here until they finish whatever they're doing to your body. Could be twenty minutes. Could be 20 years.",
+      bg: "bar_dialog_speak_bg",
     },
     {
       type: "bar_dialog",
@@ -109,7 +111,9 @@
   k.loadSprite("scene_station_blur", "docs/assets/BG/scene_station_blur.png");
   k.loadSprite("scene_station", "docs/assets/BG/scene_station.png");
   k.loadSprite("gs_dialog_bg", "docs/assets/BG/gs_dialog_bg.png");
+  k.loadSprite("gs_dialog_speak_bg", "docs/assets/BG/gs_dialog_speak_bg.png");
   k.loadSprite("bar_dialog_bg", "docs/assets/BG/bar_dialog_bg.png");
+  k.loadSprite("bar_dialog_speak_bg", "docs/assets/BG/bar_dialog_speak_bg.png");
   k.loadSprite("story_intro_5", "docs/assets/story_intro_5.png");
   k.loadSprite("closing_1", "docs/assets/Splash/Closing_1.png");
   k.loadSprite("closing_2", "docs/assets/Splash/Closing_2.png");
@@ -290,7 +294,7 @@
     }
 
     if (screen.type === "street_dialog") {
-      addBackground("gs_dialog_bg", 1);
+      addBackground(screen.bg || "gs_dialog_bg", 1);
       if (typeof window.showStreetDialog === "function") {
         window.showStreetDialog(screen.line);
       }
@@ -305,7 +309,7 @@
     }
 
     if (screen.type === "bar_dialog") {
-      addBackground("bar_dialog_bg", 1);
+      addBackground(screen.bg || "bar_dialog_bg", 1);
       if (typeof window.showBarDialog === "function") {
         window.showBarDialog(screen.line);
       }
