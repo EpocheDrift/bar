@@ -162,7 +162,8 @@ class PhoenixAI:
 
 
 app = Flask(__name__, static_folder=None)
-CORS(app, resources={r"/*": {"origins": "*"}}, send_wildcard=True)
+_allowed_origin = os.getenv("ALLOWED_ORIGIN", "*")
+CORS(app, resources={r"/chat": {"origins": _allowed_origin}})
 phoenix = PhoenixAI()
 
 
