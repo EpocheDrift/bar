@@ -1,6 +1,7 @@
 (function () {
-  const messagesEl = document.getElementById("chat-messages");
-  const formEl = document.getElementById("chat-input-row");
+  const speechBubbleEl = document.getElementById("speech-bubble");
+  const speechTextEl   = document.getElementById("speech-text");
+  const formEl = document.getElementById("chat-panel");
   const inputEl = document.getElementById("chat-input");
   const sendEl = document.getElementById("chat-send");
   const gameOverlay = document.getElementById("game-overlay");
@@ -12,25 +13,10 @@
   let isSending = false;
   let didOpen = false;
 
-  function scrollChat() {
-    messagesEl.scrollTop = messagesEl.scrollHeight;
-  }
-
-  function displayUserText(text) {
-    const bottleMatch = text.match(/^\[I notice you looking at the ([^\]]+)\.\]$/);
-    if (bottleMatch) {
-      return "You look at the " + bottleMatch[1] + ".";
-    }
-    return text;
-  }
-
-  function appendMessage(role, text) {
-    const messageEl = document.createElement("p");
-    messageEl.className = "chat-message " + role;
-    messageEl.textContent = role === "user" ? displayUserText(text) : text;
-    messagesEl.appendChild(messageEl);
-    scrollChat();
-    return messageEl;
+  function setSpeechBubble(text) {
+    if (!speechBubbleEl || !speechTextEl) return;
+    speechTextEl.textContent = text;
+    speechBubbleEl.style.display = "block";
   }
 
   function setBusy(nextBusy) {
@@ -39,30 +25,32 @@
     sendEl.disabled = nextBusy;
   }
 
-  async function typewriter(element, text, speedMs = 28) {
-    element.textContent = "";
+  async function typewriter(text, speedMs = 28) {
+    if (!speechBubbleEl || !speechTextEl) return;
+    speechTextEl.textContent = "";
+    speechBubbleEl.style.display = "block";
     for (const char of text) {
-      element.textContent += char;
-      scrollChat();
+      speechTextEl.textContent += char;
       await new Promise((resolve) => window.setTimeout(resolve, speedMs));
     }
   }
 
   async function sendMessage(userText, options) {
-    const config = Object.assign({ renderUser: true, storeUser: true }, options);
-    const content = (userText || "").trim();
-    if (isSending || (!content && config.renderUser)) {
+    const config = Object.assign({ allowEmpty: false, focusInput: true }, options);
+    const trimmedText = String(userText || "").trim();
+    if (isSending || (!trimmedText && !config.allowEmpty)) {
       return;
     }
 
-    if (config.renderUser) {
-      appendMessage("user", content);
-    }
-    if (config.storeUser && content) {
+    const signal = window.consumeBottleSignal?.();
+    const content = signal ? `[User is looking at the ${signal.spirit}]\n${trimmedText}` : trimmedText;
+
+    if (content) {
       messages.push({ role: "user", content });
     }
 
     setBusy(true);
+    setSpeechBubble("...");
     if (typeof window.setPhoenixState === "function") {
       window.setPhoenixState("shake");
     }
@@ -79,34 +67,27 @@
 
       const data = await response.json();
       const reply = data.reply || "...";
-      const assistantEl = appendMessage("assistant", "");
+      messages.push({ role: "assistant", content: reply });
       if (typeof window.setPhoenixState === "function") {
         window.setPhoenixState("shake_talk");
       }
-      await typewriter(assistantEl, reply);
-      messages.push({ role: "assistant", content: reply });
+      await typewriter(reply);
 
       if (data.game) {
         window.startMixingGame(data.game);
       }
     } catch (error) {
-      appendMessage("assistant", "...");
+      setSpeechBubble("...");
     } finally {
       if (typeof window.setPhoenixState === "function") {
         window.setPhoenixState("idle");
       }
       setBusy(false);
-      inputEl.focus();
+      if (config.focusInput) {
+        inputEl.focus();
+      }
     }
   }
-
-  window.injectBottleContext = function (spiritName) {
-    const spirit = String(spiritName || "").trim().toLowerCase();
-    if (!spirit) {
-      return;
-    }
-    sendMessage("[I notice you looking at the " + spirit + ".]");
-  };
 
   window.startMixingGame =
     window.startMixingGame ||
@@ -123,7 +104,7 @@
       return;
     }
     didOpen = true;
-    sendMessage("", { renderUser: false, storeUser: false });
+    sendMessage("", { allowEmpty: true, focusInput: false });
   };
 
   formEl.addEventListener("submit", (event) => {
@@ -174,7 +155,6 @@
   };
 
   window.PhoenixChat = {
-    messages,
     sendMessage,
     typewriter,
   };

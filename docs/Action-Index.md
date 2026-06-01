@@ -1,7 +1,7 @@
 # Action Index
 
 > 所有行动事项的单一入口。每次工作前看这里，完成后更新状态。  
-> 最后更新：2026-05-30
+> 最后更新：2026-05-31
 
 ---
 
@@ -17,7 +17,6 @@
 
 | 事项 | 负责 |
 |---|---|
-| **T16 — Intro 叙事序列实现（P1）** | Zayn |
 | **T17 — Phoenix 6 帧动画接入（P2）** | Zayn |
 | **T18 — Chat UI 样式对齐（P3）** | Zayn |
 | **T19 — Mixing Game 正式 UI（P4）** | Zayn |
@@ -44,7 +43,7 @@
 | # | 事项 | 负责 | 状态 | 备注 |
 |---|---|---|---|---|
 | G1 | 确定用户旅程方向 | Zayn + Lisa | ✅ 完成 | 采用 v2，见 design/Flow-v2.md |
-| G2 | 场景设计：入口屏（现为 Intro 叙事序列） | Zayn + Lisa | 🔄 进行中 | Figma 已有稿，→ T16 |
+| G2 | 场景设计：入口屏（Story-Intro + GS + Bar-Intro） | Zayn + Lisa | ✅ 完成 | 23 帧全部实现，→ T16 ✅ |
 | G3 | 场景设计：酒吧场景交互地图 | Zayn + Lisa | 🔲 待做 | → 解锁 G5 |
 | G4 | 对话 UI 设计：位置 & 样式 | Lisa | ✅ 完成 | Figma 已有设计稿，见 Figma-Sync.md → T18 |
 | G5 | 酒瓶点击的精确行为 | Zayn | 🔲 待做 | ← G3 |
@@ -85,7 +84,7 @@
 | T13 | Dockerfile + docker-compose.yml | Zayn | 🔲 待做 | nginx + gunicorn + Flask |
 | T14 | Gunicorn 生产服务器 | Zayn | 🔲 待做 | 写进 Dockerfile CMD，requirements.txt 已有 |
 | T15 | Phoenix AI Harness | Codex | ✅ 完成 | server.py PhoenixAI 类 |
-| T16 | Intro 叙事序列实现（P1） | Zayn | 🔲 待做 | 替代 entrance 场景，点击推进，见 Figma-Sync.md |
+| T16 | Intro 叙事序列实现（P1） | Zayn | ✅ 完成 | Story-Intro 11 帧 + GS 8 帧 + Bar-Intro 4 帧，合成导出方式 |
 | T17 | Phoenix 6 帧动画接入（P2） | Zayn | 🔲 待做 | 资产已有，main.js 加载 + 状态逻辑 |
 | T18 | Chat UI 样式对齐（P3） | Zayn | 🔲 待做 | Phoenix 名字标签，对话框位置，← T16 |
 | T19 | Mixing Game 正式 UI（P4） | Zayn | 🔲 待做 | 3 选项、进度图标、结果页，← T17/T18 |
@@ -125,3 +124,5 @@
 | T11 部署方案确定 | 2026-05-28 |
 | T12 知识库注入方式确定 | 2026-05-28 |
 | T2 项目骨架完成（PR #23 merged）| 2026-05-28 |
+| T16 全部 Intro 序列实现（Story-Intro + GS + Bar-Intro，23 帧）| 2026-05-31 |
+| G2 入口屏场景设计完成 | 2026-05-31 |
