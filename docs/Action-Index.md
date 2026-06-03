@@ -1,7 +1,7 @@
 # Action Index
 
 > 所有行动事项的单一入口。每次工作前看这里，完成后更新状态。  
-> 最后更新：2026-05-31
+> 最后更新：2026-06-03
 
 ---
 
@@ -17,14 +17,10 @@
 
 | 事项 | 负责 |
 |---|---|
-| **T17 — Phoenix 6 帧动画接入（P2）** | Zayn |
-| **T18 — Chat UI 样式对齐（P3）** | Zayn |
-| **T19 — Mixing Game 正式 UI（P4）** | Zayn |
 | G3 — 酒吧场景交互地图 | Zayn + Lisa |
 | G6 — 配方呈现方式 | Zayn + Lisa |
 | D1 — 确认资产最终版 | Lisa |
 | T9 — 场景切换过渡动画 | Zayn |
-| T13 — Dockerfile + docker-compose.yml | Zayn |
 
 ---
 
@@ -79,15 +75,15 @@
 | T8 | 灯光闪烁动画 | Codex | ✅ 完成 | main.js dimmer opacity onUpdate |
 | T9 | 场景切换过渡动画 | Zayn | 🔲 待做 | 目前是即时切换，需要加淡入淡出 |
 | T10 | 更新 CLAUDE.md（新技术栈） | Zayn | ✅ 完成 | — |
-| T11 | 部署方案确认 | Zayn | ✅ 完成 | Docker → 自有云服务器 + 域名，nginx + gunicorn |
+| T11 | 部署方案确认 | Zayn | ✅ 完成 | Docker → 自有云服务器 + 域名，Caddy + gunicorn |
 | T12 | Phoenix 知识库注入方式 | Zayn | ✅ 完成 | 全量注入，server.py 启动时读取 Cocktail-List.md |
-| T13 | Dockerfile + docker-compose.yml | Zayn | 🔲 待做 | nginx + gunicorn + Flask |
-| T14 | Gunicorn 生产服务器 | Zayn | 🔲 待做 | 写进 Dockerfile CMD，requirements.txt 已有 |
+| T13 | Dockerfile + docker-compose.yml | Zayn | ✅ 完成 | Caddy 反代 /chat，Flask 绑 127.0.0.1:5000，非 root 用户 |
+| T14 | Gunicorn 生产服务器 | Zayn | ✅ 完成 | Dockerfile CMD gunicorn 2 workers，timeout 60s |
 | T15 | Phoenix AI Harness | Codex | ✅ 完成 | server.py PhoenixAI 类 |
 | T16 | Intro 叙事序列实现（P1） | Zayn | ✅ 完成 | Story-Intro 11 帧 + GS 8 帧 + Bar-Intro 4 帧，合成导出方式 |
 | T17 | Phoenix 6 帧动画接入（P2） | Zayn | ✅ 完成 | img.src swap，phoenixSpritePaths，眨眼计时器；idle_talk/shake_blink 定义未触发 |
 | T18 | Chat UI 样式对齐（P3） | Zayn | ✅ 完成 | bar scene 迁移为 HTML 层（2048px 坐标），speech bubble + chat panel 匹配 proto2 |
-| T19 | Mixing Game 正式 UI（P4） | Zayn | 📝 设计完成 | 见 docs/design/MixingGame-Design.md；3 画面（Intro/Quiz/Result）+ 题目自动生成 + 爱心系统 |
+| T19 | Mixing Game 正式 UI（P4） | Zayn | ✅ 完成 | 3 画面（Intro/Quiz/Result）+ 题目自动生成 + 爱心系统 + whiskey pill bug 修复 |
 
 ---
 
@@ -126,3 +122,10 @@
 | T2 项目骨架完成（PR #23 merged）| 2026-05-28 |
 | T16 全部 Intro 序列实现（Story-Intro + GS + Bar-Intro，23 帧）| 2026-05-31 |
 | G2 入口屏场景设计完成 | 2026-05-31 |
+| T17 Phoenix 6 帧动画接入 | 2026-06-01 |
+| T18 Chat UI 样式对齐（HTML 2048px 层）| 2026-06-01 |
+| T19 Mixing Game 正式 UI 全量实现 | 2026-06-02 |
+| T13 Dockerfile + docker-compose.yml | 2026-06-02 |
+| T14 Gunicorn 生产服务器配置 | 2026-06-02 |
+| Kaplay CDN 本地化（供应链安全）| 2026-06-02 |
+| CORS 限制至生产域名 | 2026-06-02 |

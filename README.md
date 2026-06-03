@@ -1,90 +1,93 @@
-# HangoverGPT 🍹
+# Phoenix's Bar
 
-An AI-powered cocktail simulator website built with Python and Streamlit. Visit the site, tell us what ingredients you have or what mood you're in, and get personalized cocktail recipes with interactive step-by-step mixing guidance.
+A pixel art AI bar game. You walk into a nameless bar, sit down, and talk to Phoenix — a bartender who knows what you need before you do. Get a cocktail recommendation through conversation, then prove you can make it yourself in the Mixing Game.
+
+Live at [bar.chaostudio.org](https://bar.chaostudio.org)
 
 ---
 
-## Features
+## What it is
 
-- **Ingredient-based Recipe Matching** — Enter the ingredients you have and discover cocktails you can make right now
-- **AI-Powered Recommendations** — Describe your flavor preferences or mood and get personalized recipe suggestions
-- **Step-by-Step Mixing Simulation** — Follow guided mixing instructions one step at a time with a progress tracker
-- **Recipe Detail View** — View full recipe details with a serving size scaler that adjusts ingredient quantities automatically
+- **Conversation-driven** — Phoenix is an AI bartender with a real personality. No menus, no forms. Just talk.
+- **Mixing Game** — Phoenix can challenge you to a step-by-step quiz on how to make the drink. Get it wrong enough and you're cut off.
+- **Pixel art aesthetic** — Hand-drawn sprites, pixel font, a bar that feels like it's hiding something.
 
 ---
 
 ## Tech Stack
 
-| Item | Details |
+| Layer | Details |
 |---|---|
-| **Language** | Python 3.10+ |
-| **Framework** | Streamlit |
-| **AI Integration** | Minimax API (CN Endpoint, OpenAI-compatible) via `st.secrets` |
-| **Data Storage** | JSON file or SQLite for recipe data |
-| **Deployment** | Streamlit Community Cloud |
+| **Frontend** | Kaplay (Kaboom.js) canvas + HTML overlay |
+| **Backend** | Python / Flask + Gunicorn |
+| **AI** | Minimax API (OpenAI-compatible) |
+| **Deployment** | Docker + Caddy on a self-hosted Ubuntu server |
+
+---
+
+## Local Development
+
+```bash
+# Install Python dependencies
+pip install -r requirements.txt
+
+# Set up API key — create a .env file:
+# MINIMAX_API_KEY="your-key-here"
+
+# Run the Flask backend
+python server.py
+
+# Serve the frontend (open index.html, or):
+python -m http.server 8080
+```
+
+---
+
+## Production Deployment
+
+The backend runs in Docker behind Caddy. Caddy serves all static files directly and proxies only `/chat` to Flask.
+
+```bash
+git clone https://github.com/EpocheDrift/bar.git /srv/bar
+cd /srv/bar
+
+# Create .env with your API key
+cp .env.example .env
+
+# Start Flask container
+docker compose up -d
+```
+
+Caddy config (`Caddyfile`) is included. Point your DNS to the server and Caddy handles HTTPS automatically.
+
+---
+
+## Project Structure
+
+```
+index.html           # Entry point
+main.js              # Kaplay scenes and sprite logic
+chat.js              # Chat UI and API calls
+mixing-game.js       # Mixing Game UI and quiz engine
+style.css            # Overlay styles
+server.py            # Flask backend — single /chat route
+Dockerfile
+docker-compose.yml
+Caddyfile
+data/
+  recipes.json       # Cocktail recipe store
+docs/
+  character/         # Phoenix system prompt and personality
+  project/           # Cocktail list (31 drinks with steps)
+  design/            # Game flow and interaction design
+  assets/            # Pixel art sprites
+```
 
 ---
 
 ## Team
 
-| Role | Name |
+| Role | |
 |---|---|
-| **Client** | Phoenix |
-| **Developer** | Lisa Li |
-
----
-
-## Development Timeline
-
-**Project Start:** April 5, 2025
-**Final Deadline:** June 1, 2025
-
-### Check-in 1 — April 20
-- Project repository set up and dependencies configured
-- Basic Streamlit app skeleton running locally
-- Recipe data structure defined (JSON/SQLite schema)
-- Initial architecture PR submitted and reviewed
-
-### Check-in 2 — May 4
-- Ingredient input & recipe matching feature complete
-- AI-powered recommendation feature integrated and functional
-- Basic page layout and navigation in place
-
-### Check-in 3 — May 18
-- Step-by-step mixing simulation complete
-- Recipe detail view with serving size scaler complete
-- Overall UI styling and layout polished
-
-### Final Delivery — June 1
-- All features complete and tested
-- Bug fixes and edge cases handled
-- Deployed to Streamlit Community Cloud
-- Final documentation updated
-
----
-
-## Getting Started
-
-```bash
-# Clone the repository
-git clone <repo-url>
-cd pour-decisions
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Set up API key
-# Copy .streamlit/secrets.example.toml to .streamlit/secrets.toml
-# and set your Minimax API key:
-# MINIMAX_API_KEY = "your-key-here"
-# MINIMAX_BASE_URL = "https://api.minimax.chat/v1"
-
-# Run the app
-streamlit run app.py
-```
-
----
-
-## License
-
-This project was created as part of TECHIN 510 at the Global Innovation Exchange (GIX), University of Washington.
+| Development | Zayn |
+| Visual Design | Lisa |
