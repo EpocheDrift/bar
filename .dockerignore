@@ -1,0 +1,12 @@
+.git
+.gitignore
+.env
+.env.*
+.env.example
+__pycache__/
+*.pyc
+*.pyo
+*.db
+docker-compose.yml
+docker-compose.override.yml
+.DS_Store
