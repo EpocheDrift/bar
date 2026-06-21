@@ -1,4 +1,15 @@
 bar.chaostudio.org {
+    # Security response headers
+    header {
+        defer
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        -X-Powered-By
+        -Via
+    }
+
     # Block secrets, VCS metadata, server-side source and configs from being
     # served as static files — the site root is a full git working tree.
     @hidden path /.env* /.git /.git/* /.gitignore /server.py /Dockerfile /docker-compose.yml /requirements.txt /Caddyfile /CLAUDE.md *.md
