@@ -6,6 +6,6 @@ services:
       - "127.0.0.1:5000:5000"
     environment:
       - MINIMAX_API_KEY=${MINIMAX_API_KEY}
-      - MINIMAX_BASE_URL=${MINIMAX_BASE_URL:-https://api.minimax.chat/v1}
-      - MINIMAX_MODEL=${MINIMAX_MODEL:-MiniMax-Text-01}
+      - MINIMAX_BASE_URL=${MINIMAX_BASE_URL:-https://api.minimaxi.com/v1}
+      - MINIMAX_MODEL=${MINIMAX_MODEL:-MiniMax-M3.1-Flash}
       - ALLOWED_ORIGIN=https://bar.chaostudio.org

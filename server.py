@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import logging
 import os
 import random
 import re
@@ -22,6 +23,10 @@ COCKTAIL_LIST_PATH = BASE_DIR / "docs" / "project" / "Cocktail-List.md"
 GAME_MARKER_RE = re.compile(r"\[(?:GAME|Mixing\s*Game)\s*:\s*([^\]]+)\]", re.IGNORECASE)
 SUGGEST_RE = re.compile(r"(?:^|\n)SUGGEST:\s*(.+?)\s*$", re.MULTILINE)
 QUOTED_SUGGESTION_RE = re.compile(r'"([^"]+)"')
+# Reasoning models may inline their chain of thought; it must never reach the player.
+THINK_BLOCK_RE = re.compile(r"<think>.*?(?:</think>|\Z)", re.S | re.IGNORECASE)
+
+logger = logging.getLogger("phoenix")
 
 
 def read_text(path: Path) -> str:
@@ -80,9 +85,13 @@ class PhoenixAI:
             "it is stripped server-side and never shown to the user."
         )
         self.system_message = f"{prompt_text}\n\n---\n\n{game_protocol}\n\n---\n\n{suggest_protocol}"
-        self.model = os.getenv("MINIMAX_MODEL", "MiniMax-Text-01")
+        self.model = os.getenv("MINIMAX_MODEL", "MiniMax-M3.1-Flash")
+        # MiniMax-M3.x always reasons; reasoning tokens count against max_tokens,
+        # so keep reasoning short and leave headroom for the visible reply.
+        self.reasoning_effort = os.getenv("MINIMAX_REASONING_EFFORT", "low")
+        self.max_tokens = int(os.getenv("MINIMAX_MAX_TOKENS", "1200"))
         api_key = os.getenv("MINIMAX_API_KEY") or os.getenv("OPENAI_API_KEY")
-        base_url = os.getenv("MINIMAX_BASE_URL", "https://api.minimax.chat/v1")
+        base_url = os.getenv("MINIMAX_BASE_URL", "https://api.minimaxi.com/v1")
         self.client = OpenAI(api_key=api_key, base_url=base_url) if api_key and OpenAI else None
         self._cocktail_names = [
             n.strip()
@@ -102,14 +111,20 @@ class PhoenixAI:
                 model=self.model,
                 messages=[{"role": "system", "content": self.system_message}, *clean_messages],
                 temperature=0.85,
-                max_tokens=350,
+                max_tokens=self.max_tokens,
+                extra_body={"reasoning_effort": self.reasoning_effort} if self.reasoning_effort else None,
             )
-            reply = response.choices[0].message.content or ""
+            choice = response.choices[0]
+            reply = THINK_BLOCK_RE.sub("", choice.message.content or "").strip()
+            if not reply:
+                logger.warning("Empty reply from %s (finish_reason=%s)", self.model, choice.finish_reason)
+                return self._fallback(), None, []
             display_text, game, suggestions = self._parse_reply(reply)
             if not game:
                 game = self._extract_requested_game(clean_messages)
             return display_text, game, suggestions
         except Exception:
+            logger.exception("Chat completion failed (model=%s)", self.model)
             return self._fallback(), None, []
 
     def _extract_requested_game(self, messages: list[dict[str, str]]) -> str | None:
