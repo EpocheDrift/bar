@@ -21,10 +21,33 @@ BASE_DIR = Path(__file__).resolve().parent
 PROMPT_PATH = BASE_DIR / "docs" / "character" / "Phoenix-Prompt.md"
 COCKTAIL_LIST_PATH = BASE_DIR / "docs" / "project" / "Cocktail-List.md"
 GAME_MARKER_RE = re.compile(r"\[(?:GAME|Mixing\s*Game)\s*:\s*([^\]]+)\]", re.IGNORECASE)
-SUGGEST_RE = re.compile(r"(?:^|\n)SUGGEST:\s*(.+?)\s*$", re.MULTILINE)
+SUGGEST_RE = re.compile(r"(?:^|\n)\**SUGGEST\**:\s*(.+?)\s*$", re.MULTILINE | re.IGNORECASE)
 QUOTED_SUGGESTION_RE = re.compile(r'"([^"]+)"')
 # Reasoning models may inline their chain of thought; it must never reach the player.
 THINK_BLOCK_RE = re.compile(r"<think>.*?(?:</think>|\Z)", re.S | re.IGNORECASE)
+# Phoenix's challenge lines. The model sometimes says them but forgets the [GAME:] marker.
+CHALLENGE_RE = re.compile(
+    r"let['’]s find out|think you can (?:actually )?make|prove it|show me (?:what you|how|you can)",
+    re.IGNORECASE,
+)
+# Common spellings the model uses that differ from the names in Cocktail-List.md.
+COCKTAIL_ALIASES = {
+    "gin and tonic": "Gin Tonic",
+    "gin & tonic": "Gin Tonic",
+    "g&t": "Gin Tonic",
+    "whisky sour": "Whiskey Sour",
+    "piña colada": "Pina Colada",
+    "long island iced tea": "Long Island Ice Tea",
+}
+# Used when the model omits the SUGGEST line, so the quick-reply pills never vanish.
+DEFAULT_SUGGESTIONS = (
+    "Surprise me",
+    "Something stronger",
+    "Tell me more",
+    "Something lighter",
+    "What do you recommend?",
+    "Make it sour",
+)
 
 logger = logging.getLogger("phoenix")
 
@@ -84,7 +107,15 @@ class PhoenixAI:
             "This line is a machine-readable control signal — "
             "it is stripped server-side and never shown to the user."
         )
-        self.system_message = f"{prompt_text}\n\n---\n\n{game_protocol}\n\n---\n\n{suggest_protocol}"
+        final_check = (
+            "FINAL CHECK — before sending every response:\n"
+            "1. If you challenged the customer to make a drink, the second-to-last line is [GAME:Cocktail Name].\n"
+            '2. The very last line is always SUGGEST: "..." | "..." | "...". Never skip it.\n'
+            "3. Keep the spoken part to 1-4 short sentences."
+        )
+        self.system_message = (
+            f"{prompt_text}\n\n---\n\n{game_protocol}\n\n---\n\n{suggest_protocol}\n\n---\n\n{final_check}"
+        )
         self.model = os.getenv("MINIMAX_MODEL", "MiniMax-M3.1-Flash")
         # MiniMax-M3.x always reasons; reasoning tokens count against max_tokens,
         # so keep reasoning short and leave headroom for the visible reply.
@@ -97,6 +128,12 @@ class PhoenixAI:
             n.strip()
             for n in re.findall(r"###\s*\*{0,3}\d+\.\s+\*{0,3}([^(\n*✅]+)", cocktail_list)
             if n.strip()
+        ]
+        aliases = {name: name for name in self._cocktail_names}
+        aliases.update(COCKTAIL_ALIASES)
+        self._cocktail_patterns = [
+            (canonical, re.compile(r"(?<!\w)" + re.escape(alias) + r"(?!\w)", re.IGNORECASE))
+            for alias, canonical in aliases.items()
         ]
 
     def chat(self, messages: list[dict[str, Any]]) -> tuple[str, str | None, list[str]]:
@@ -121,25 +158,43 @@ class PhoenixAI:
                 return self._fallback(), None, []
             display_text, game, suggestions = self._parse_reply(reply)
             if not game:
-                game = self._extract_requested_game(clean_messages)
+                game = self._infer_game(display_text, clean_messages)
+            if not suggestions:
+                suggestions = random.sample(DEFAULT_SUGGESTIONS, 3)
             return display_text, game, suggestions
         except Exception:
             logger.exception("Chat completion failed (model=%s)", self.model)
             return self._fallback(), None, []
 
-    def _extract_requested_game(self, messages: list[dict[str, str]]) -> str | None:
+    def _infer_game(self, reply: str, messages: list[dict[str, str]]) -> str | None:
+        """Start the game when the model forgot the [GAME:] marker.
+
+        Triggers when Phoenix's reply contains a challenge line, or the player's
+        last message asks for the mixing game. The cocktail is the one most
+        recently mentioned, searching the reply first, then history newest-first.
+        """
         last_user = next(
             (m["content"] for m in reversed(messages) if m["role"] == "user"), ""
         )
-        if not re.search(r"mixing\s*game", last_user, re.IGNORECASE):
+        challenged = CHALLENGE_RE.search(reply)
+        requested = re.search(r"mixing\s*game", last_user, re.IGNORECASE)
+        if not (challenged or requested):
             return None
-        # Search full history newest-first for the most recently mentioned cocktail
-        for msg in reversed(messages):
-            lower = msg["content"].lower()
-            for name in self._cocktail_names:
-                if name.lower() in lower:
-                    return name
+        for text in (reply, *(m["content"] for m in reversed(messages))):
+            name = self._find_cocktail(text)
+            if name:
+                return name
         return None
+
+    def _find_cocktail(self, text: str) -> str | None:
+        """Return the cocktail mentioned last in text (longest name wins a tie)."""
+        best: tuple[int, int, str] | None = None
+        for canonical, pattern in self._cocktail_patterns:
+            for match in pattern.finditer(text):
+                key = (match.start(), len(match.group(0)), canonical)
+                if best is None or key[:2] > best[:2]:
+                    best = key
+        return best[2] if best else None
 
     def _clean_messages(self, messages: list[dict[str, Any]]) -> list[dict[str, str]]:
         clean: list[dict[str, str]] = []

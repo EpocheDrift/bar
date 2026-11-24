@@ -91,8 +91,9 @@ Stateless — the client (`chat.js` `messages` array) sends the full history eve
 
 - Model: **MiniMax** via the OpenAI SDK (OpenAI-compatible endpoint). Env: `MINIMAX_API_KEY` (falls back to `OPENAI_API_KEY`), `MINIMAX_BASE_URL`, `MINIMAX_MODEL` (default `MiniMax-M3.1-Flash`), `MINIMAX_REASONING_EFFORT` (default `low`), `MINIMAX_MAX_TOKENS` (default 1200). `ALLOWED_ORIGIN` controls CORS on `/chat`.
 - System prompt = the fenced block under `## SYSTEM PROMPT` in `docs/character/Phoenix-Prompt.md`, with the `[INJECT: …Cocktail-List.md…]` placeholder replaced by the full cocktail list, plus two appended protocols:
-  - **Game trigger**: Phoenix ends a reply with `[GAME:Cocktail Name]` to launch the Mixing Game. Server also falls back to detecting "mixing game" in the user's message and picking the most recently mentioned cocktail.
-  - **Suggestions**: every reply ends with `SUGGEST: "a" | "b" | "c"`.
+  - **Game trigger**: Phoenix ends a reply with `[GAME:Cocktail Name]` to launch the Mixing Game. The model often forgets the marker, so `_infer_game` also starts the game when Phoenix's reply contains a challenge line (`CHALLENGE_RE`, e.g. "Let's find out") or the user's last message says "mixing game", picking the most recently mentioned cocktail (word-boundary match, plus `COCKTAIL_ALIASES`).
+  - **Suggestions**: every reply should end with `SUGGEST: "a" | "b" | "c"`. MiniMax-M3.1-Flash drops this line in roughly half of replies (prompt wording didn't change that), so the server fills in 3 from `DEFAULT_SUGGESTIONS`.
+  - The MiniMax key has an RPM rate limit (429 → fallback line); avoid parallel load tests against it.
   Both markers and any `<think>…</think>` reasoning are stripped before the reply reaches the client.
 - Opening message (`__init__` or empty) returns a canned "Welcome." without calling the API.
 - On any failure / empty reply / missing key: a random cold one-liner from `fallback_lines`.
